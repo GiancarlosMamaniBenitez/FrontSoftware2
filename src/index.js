@@ -1,13 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import Home from './Home.js';
 
 import reportWebVitals from './reportWebVitals';
-import IngresosGastos from './IngresosGastos';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <IngresosGastos />
+    
+    
+    <Home />
   </React.StrictMode>
 );
 
