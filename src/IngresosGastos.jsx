@@ -2,6 +2,12 @@ import React from 'react';
 import { useState } from 'react';
 import { db } from './config/Backend';
 import { addDoc, collection, serverTimestamp} from 'firebase/firestore';
+import './App.css';
+
+import ProgressBar from './Components/ProgressBar.jsx';
+import Range from './Components/Range.jsx';
+import CombinedComponent from './Components/CombinedComponent';
+
 
 function MyPage() {
 
@@ -97,6 +103,13 @@ function MyPage() {
                         Actualizar
                     </button>
             
+            </div>
+            <div className="ProgresBar">
+                <div>
+                    <hi>LIMITE DE GASTOS</hi>
+                </div>
+                        <CombinedComponent></CombinedComponent>
+                        
             </div>
         </div>
     </div>
