@@ -1,0 +1,480 @@
+.nobullets {
+    list-style-type: none; /* Remove bullets */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margins */
+  }
+
+  li {
+    display: inline-block;
+  }
+
+  .profile-image-container {
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    padding: 0;
+    border: 0;
+    margin-top:0px;
+    margin-bottom: 0px;
+    margin-right: 0px;
+    margin-left: 0px;
+  }
+  
+  .profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin-top:0px;
+    margin-bottom: 0px;
+    margin-right: 0px;
+    margin-left: 0px;
+  }
+
+  .profile-image2 {
+    width: 200px;
+    height: 200px;
+    /*object-fit: cover;*/
+    margin-top:0px;
+    margin-bottom: 0px;
+    margin-right: 0px;
+    margin-left: 0px;
+  }
+  .profile-name{
+    width: 300px;
+    height: 300px;
+    flex: 1;
+    margin-top:0px;
+    margin-bottom: 0px;
+    margin-right: 0px;
+    margin-left: 0px;
+    padding: 0;
+    border: 0;
+  }
+  div{
+    background-color: white;
+  }
+  h3{
+    padding: 0;
+    margin: 0;
+    width: 960px;
+  }
+  .tituloPerfil{
+    width: 600px;
+    margin-right: 100px;
+    /*display: 1;*/
+  }
+  .botonGuardar{
+    width: 150px;
+    margin: 0;
+    margin-right: 50px;
+    padding: 0;
+    border: 0;
+    
+  }
+  .botonCancelar{
+    width: 150px;
+    margin: 0;
+    margin-right: 50px;
+    padding: 0;
+    border: 0;
+    
+  }
+  .cabeceraPerfil{
+    width: 1140px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    
+    flex-direction: row;
+    display: flex;
+    /*justify-content: space-between;*/
+    align-items: center;
+    
+  }
+  .contenedorSecundario{
+    width: 1140px;
+    
+  }
+  .NombrePersona{
+    background-color: none;
+    width: 200px;
+    
+    margin-top:0px;
+    margin-bottom: 100px;
+    margin-right: 50px;
+    margin-left: 0px;
+    padding: 0;
+    border: 1px solic black;
+    display: inline-block;
+
+  }
+  .input1{
+    margin:0px
+  }
+  .label1{
+    margin:0px;
+  }
+  .ApellidoPersona{
+    background-color: none;
+    border: 1px solic black;
+    width: 200px;
+    margin-top:0px;
+    margin-bottom: 0px;
+    margin-right: 50px;
+    margin-left: 0px;
+    padding: 0;
+    border: 0;
+    display: inline-block;
+  }
+  .input2{
+    margin:0px
+  }
+  .label2{
+    margin:0px;
+  }
+  .TipoDocumento{
+    background-color: none;
+    width: 200px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    margin: 0px;
+    display: inline-block;
+  }
+  .input3{
+    margin:0px
+  }
+  .label3{
+    margin:0px;
+  }
+  .Numero{
+    background-color: none;
+    width: 200px;
+    margin-top:0px;
+    margin-bottom: 0px;
+    margin-left: 300px;
+    margin-right: 0px;
+    padding: 0;
+    border: 0;
+    display: inline-block;
+  }
+  .input4{
+    margin:0px
+  }
+  .label4{
+    margin:0px;
+  }
+  .Rol{
+    background-color: none;
+    width: 200px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    display: inline-block;
+  }
+  .input5{
+    margin:0px
+  }
+  .label5{
+    margin:0px;
+  }
+  .Datos{
+    width: 800px;
+    height: 400px;
+    margin: 0;
+    border: 0;
+    padding: 0;
+    
+    flex: 1;
+    flex-direction: row;
+    display: block;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .InfoPersonal{
+    width: 1000px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    flex-direction: row;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+  }
+  .ParteDatos{
+    width: 700px;
+    height: 400px;
+  }
+  .DatosSecundarios{
+    width: 1140px;
+    margin-top:0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding: 0;
+    border: 0;
+
+  }
+  .DatoUsuario{
+    width: 1140px;
+    margin: 0;
+    border: 0;
+    padding: 0;
+    display: block;
+  }
+  .tab-content{
+    margin: 0;
+    padding: 0;
+    border: 0;
+
+  }
+  .user{
+    width: 200px;
+    height: 100px;
+    margin-top:30px;
+    margin-bottom: 0px;
+    margin-left: 10px;
+    margin-right: 1000px;
+    padding: 0;
+    border: 0;
+    flex: 1;
+    flex-direction: row;
+    
+    display: inline-block;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .labelUser{
+    width: 200px;
+    height: 30px;
+    margin-top:0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding: 0;
+    border: 0;
+  }
+  .inputUser{
+    width: 200px;
+    height: 30px;
+    margin-top:0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding: 0;
+    border: 1px solid black;
+  }
+  .tabPane1{
+    margin-top:0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding: 0;
+    border: 0px ;
+  }
+  .userData1{
+    margin:0;
+    padding: 0;
+    border: 0;
+  }
+  .password{
+    width: 200px;
+    height: 100px;
+    margin-top:20px;
+    margin-bottom: 0px;
+    margin-left: 10px;
+    margin-right: 50px;
+    padding: 0;
+    flex: 1;
+    border: 0;
+    display: inline-block;
+  }
+  .labelPass{
+    width: 200px;
+    height: 30px;
+    margin-top:0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding: 0;
+    border: 0;
+  }
+  .inputPass{
+    width: 200px;
+    height: 30px;
+    margin-top:0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding: 0;
+    border: 1px solid black;
+  }
+  .newPass{
+    width: 200px;
+    height: 100px;
+    margin-top:0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 50px;
+    padding: 0;
+    flex: 1;
+    border: 0;
+    display: inline-block;
+  }
+  .labelNew{
+    width: 200px;
+    height: 30px;
+    margin-top:0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding: 0;
+    border: 0;
+  }
+  .inputNew{
+    width: 200px;
+    height: 30px;
+    margin-top:0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding: 0;
+    border: 1px solid black;
+  }
+  .repPass{
+    width: 200px;
+    height: 100px;
+    margin-top:0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding: 1;
+    border: 0;
+    display: inline-block;
+  }
+  .labelRep{
+    width: 200px;
+    height: 30px;
+    margin-top:0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding: 0;
+    border: 0;
+  }
+  .inputRep{
+    width: 200px;
+    height: 30px;
+    margin-top:0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding: 0;
+    border: 1px solid black;
+  }
+.tabContenido1{
+  margin:0px;
+}
+.presentacionUser{
+  width: 1140px;
+    margin: 0;
+    border: 0;
+    padding: 0;
+    display: block;
+}
+.presentacion1{
+  height: 100px;
+  margin-top:20px;
+    margin-bottom: 0px;
+    margin-left: 15px;
+    margin-right: 0px;
+    padding: 0;
+    border: 0;
+}
+.labelPrest1{
+  width: 1140px;
+}
+.inputPrest1{
+  width: 800px;
+    margin-top:20px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding: 0;
+    border: 1px solid black;
+}
+.presentacion2{
+  height: 100px;
+  margin-top:20px;
+    margin-bottom: 0px;
+    margin-left: 15px;
+    margin-right: 0px;
+    padding: 0;
+    border: 0;
+  
+}
+.labelPrest2{
+  width: 1140px;
+}
+.inputPrest2{
+    width: 800px;
+    margin-top:20px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding: 0;
+    border: 1px solid black;
+}
+.universidadControl{
+  padding: 0;
+  width: 1140px;
+  margin-top:20px;
+  margin-bottom: 0px;
+  margin-left: 15px;
+  margin-right: 0px;
+  border: 0;
+  display: block;
+}
+.control1{
+  border-right: 3px solid black;
+  padding: 0;
+  width: 400px;
+  margin-top:20px;
+  margin-bottom: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+  display: inline-block;
+}
+.form1{
+  width: 300px;
+  margin: 0;
+}
+.control2{
+  
+  border-right: 3px solid black;
+  padding: 0;
+  width: 400px;
+  margin-top:20px;
+  margin-bottom: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+  display: inline-block;
+}
+.form2{
+  width: 300px;
+}
+.control3{
+  border: 0;
+  padding: 0;
+  width: 400px;
+  margin-top:20px;
+  margin-bottom: 0px;
+  margin-left: 20px;
+  margin-right: 0px;
+  display: inline-block;
+}
+.form3{
+  width: 300px;
+}

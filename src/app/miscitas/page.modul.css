@@ -1,0 +1,29 @@
+.contenedor{
+    display: flex;
+    background-repeat: no-repeat;
+}
+
+.card{
+    margin-left: 10px;
+    margin-right: 10px;
+    
+}
+
+.letra{
+    color: black;
+}
+
+#Boton{
+    margin-top: 10px;
+    margin-left: 955px;
+    display: flex;
+}
+
+h5{
+    margin-top: -80px;
+}
+.CPa{
+    margin-top: 10px;
+    margin-left: 955px;
+    display: flex;
+}
