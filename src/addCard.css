@@ -1,0 +1,58 @@
+body {
+    background-color: rgb(239, 235, 235);
+  }
+
+.name-input{
+    height: 20px;
+    
+}
+.addCard-container{
+    position: fixed;
+    width: 500px;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid gray;
+    margin: 20px;
+    padding: 20px;
+    background-color: white;
+    top:50%;
+    left:50%;
+    border-radius: 5px;
+    transform: translate(-50%, -50%);
+}
+.add-button {
+    background-color: #ee2020;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 180px;
+  }
+  hr {
+    border: none; /* Remove the default border */
+    border-top: 1px solid #ccc; /* Add a solid line with color */
+    
+    width: 180px;
+  }
+  .MM-input{
+    height: 20px;
+    width: 23px;
+    
+  }
+  .YYYY-input{
+    height: 20px;
+    width:50px;
+    
+  }
+  .cvv-input{
+    width: 50px;
+    height: 20px;
+  }
+  .number-input{
+    height: 20px;
+  }
