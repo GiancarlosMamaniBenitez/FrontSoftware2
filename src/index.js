@@ -2,15 +2,28 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import Home from './Home.js';
-
+import Login from './login.js';
+import ReactDOM from 'react-dom';
+import Terms from './terms';
+import SignUp from './signup';
 import reportWebVitals from './reportWebVitals';
+import Congratulations from './congrats';
+import AddCard from './addCard';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    
-    
-    <Home />
+    <Router>
+      <Routes>
+      <Route path="/" caseSensitive={false} element={<Login />} />
+      <Route path="/signup" caseSensitive={false} element={<SignUp />} />
+      <Route path="/terms-and-conditions" caseSensitive={false} element={<Terms />} />
+      <Route path="/home" caseSensitive={false} element={<Home/>} />
+      <Route path="/add-card" caseSensitive={false} element={<AddCard/>} />
+      <Route path="/congrats" caseSensitive={false} element={<Congratulations/>}/>
+      </Routes>
+    </Router>
   </React.StrictMode>
 );
 
