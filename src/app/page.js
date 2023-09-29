@@ -17,7 +17,9 @@ export default function Home() {
       </div>
 
       <div>
-        <NavBar></NavBar>
+        <NavBar>
+          
+        </NavBar>
       </div>
     </div>
 

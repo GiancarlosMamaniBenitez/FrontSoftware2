@@ -7,6 +7,7 @@ import ProgressBar from '../../components/ProgressBar.jsx';
 import Range from '../../components/Range.jsx';
 import CombinedComponent from '../../components/CombinedComponent.jsx';
 
+import VerticalMenu from '@/components/VerticalMenu';
 
 function MyPage() {
 
@@ -26,6 +27,13 @@ function MyPage() {
   return (
     <div className="container">
         <div className="row ">
+            <div className="col-2">
+                {/* Agregamos el VerticalMenu */}
+                
+                <VerticalMenu >
+
+                </VerticalMenu>
+            </div>
             <div className="col-10">
                 <div className="col h2 text-center">  
                     Tarjeta **variable**
