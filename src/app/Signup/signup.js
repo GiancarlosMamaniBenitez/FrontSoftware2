@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import './signup.css';
-import myImage from "./images/logo-colored.jpeg";
+import myImage from "../../../imagenes/logo-colored.jpeg";
 
 const SignUp = () => {
   const [username, setUsername] = useState("");
@@ -32,7 +32,7 @@ const SignUp = () => {
       <input className="register-input" type="text" name="username" placeholder="Username" value={username} onChange={(event) => setUsername(event.target.value)} />
       <input className="register-input" type="password" name="password" placeholder="Password" value={password} onChange={(event) => setPassword(event.target.value)} />
       <input className="register-input" type="password" name="confirmPassword" placeholder="Confirm Password" value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)} />
-      <button className="register-button" onClick={handleSubmit}><Link to="/congrats" className="create-link" >Create your new Account</Link></button>
+      <button className="register-button" onClick={handleSubmit}><Link to="../Congrats/congrats.js" className="create-link" >Create your new Account</Link></button>
       <hr></hr>
      
       <button className="already-button" onClick={handleSubmit}><Link to="/" className="already-link">Already have an account?</Link></button>
