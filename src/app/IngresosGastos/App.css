@@ -26,6 +26,7 @@
   
   .container {
     background-color: #61dafb;
+    margin-left: 200px;
   }
   
   @keyframes App-logo-spin {
