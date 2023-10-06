@@ -44,7 +44,7 @@ export default function Home() {
         <h1>Ahora podrás mejorar la gestión de tus controles de gastos de tu tarjeta de crédito o débito. Aparte contaras con métodos financieros para que pueda realizar esta gestión sin ningún problema. </h1>
         </div>
         <Image src="/Foquito.png" width="400" height="341" alt="Foquito" />
-        <Image src="/Finanzas.jpg" width="400" height="341" alt="Finanzas" />
+        <Image src="/Finanzas.png" width="400" height="341" alt="Finanzas" />
         <Image src="/GraficoBarras.jpg" width="400" height="341" alt="GraficoBarras" />
       </div>
 

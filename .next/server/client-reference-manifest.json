@@ -965,96 +965,12 @@
         ],
         "async": false
       }
-    },
-    "(app-client)/./src/app/IngresosGastos/page.js": {
-      "*": {
-        "id": "(sc_client)/./src/app/IngresosGastos/page.js",
-        "name": "*",
-        "chunks": [
-          "app/IngresosGastos/page:static/chunks/app/IngresosGastos/page.js"
-        ],
-        "async": false
-      },
-      "": {
-        "id": "(sc_client)/./src/app/IngresosGastos/page.js",
-        "name": "",
-        "chunks": [
-          "app/IngresosGastos/page:static/chunks/app/IngresosGastos/page.js"
-        ],
-        "async": false
-      },
-      "default": {
-        "id": "(sc_client)/./src/app/IngresosGastos/page.js",
-        "name": "default",
-        "chunks": [
-          "app/IngresosGastos/page:static/chunks/app/IngresosGastos/page.js"
-        ],
-        "async": false
-      }
-    },
-    "(app-client)/./imagenes/logo-colored.jpeg": {
-      "*": {
-        "id": "(sc_client)/./imagenes/logo-colored.jpeg",
-        "name": "*",
-        "chunks": [
-          "app/Login/page:static/chunks/app/Login/page.js"
-        ],
-        "async": false
-      },
-      "": {
-        "id": "(sc_client)/./imagenes/logo-colored.jpeg",
-        "name": "",
-        "chunks": [
-          "app/Login/page:static/chunks/app/Login/page.js"
-        ],
-        "async": false
-      },
-      "default": {
-        "id": "(sc_client)/./imagenes/logo-colored.jpeg",
-        "name": "default",
-        "chunks": [
-          "app/Login/page:static/chunks/app/Login/page.js"
-        ],
-        "async": false
-      }
-    },
-    "(app-client)/./src/app/Login/page.js": {
-      "*": {
-        "id": "(sc_client)/./src/app/Login/page.js",
-        "name": "*",
-        "chunks": [
-          "app/Login/page:static/chunks/app/Login/page.js"
-        ],
-        "async": false
-      },
-      "": {
-        "id": "(sc_client)/./src/app/Login/page.js",
-        "name": "",
-        "chunks": [
-          "app/Login/page:static/chunks/app/Login/page.js"
-        ],
-        "async": false
-      },
-      "default": {
-        "id": "(sc_client)/./src/app/Login/page.js",
-        "name": "default",
-        "chunks": [
-          "app/Login/page:static/chunks/app/Login/page.js"
-        ],
-        "async": false
-      }
     }
   },
   "edgeSSRModuleMapping": {},
   "cssFiles": {
     "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\src\\app\\page": [
       "static/css/app/page.css"
-    ],
-    "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\src\\app\\IngresosGastos\\page": [
-      "static/css/app/IngresosGastos/page.css"
-    ],
-    "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\src\\app\\Login\\page": [
-      "static/css/app/Login/page.css"
     ]
   },
   "clientModules": {
@@ -3166,99 +3082,6 @@
       "name": "default",
       "chunks": [
         "app/page:static/chunks/app/page.js"
-      ],
-      "async": false
-    },
-    "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\node_modules\\bootstrap\\dist\\css\\bootstrap.css#": {
-      "id": "null",
-      "name": "default",
-      "chunks": [
-        "static/css/app/IngresosGastos/page.css"
-      ]
-    },
-    "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\src\\components\\menu.css#": {
-      "id": "null",
-      "name": "default",
-      "chunks": [
-        "static/css/app/IngresosGastos/page.css"
-      ]
-    },
-    "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\src\\app\\IngresosGastos\\page.js": {
-      "id": "(app-client)/./src/app/IngresosGastos/page.js",
-      "name": "*",
-      "chunks": [
-        "app/IngresosGastos/page:static/chunks/app/IngresosGastos/page.js"
-      ],
-      "async": false
-    },
-    "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\src\\app\\IngresosGastos\\page.js#": {
-      "id": "(app-client)/./src/app/IngresosGastos/page.js",
-      "name": "",
-      "chunks": [
-        "app/IngresosGastos/page:static/chunks/app/IngresosGastos/page.js"
-      ],
-      "async": false
-    },
-    "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\src\\app\\IngresosGastos\\page.js#default": {
-      "id": "(app-client)/./src/app/IngresosGastos/page.js",
-      "name": "default",
-      "chunks": [
-        "app/IngresosGastos/page:static/chunks/app/IngresosGastos/page.js"
-      ],
-      "async": false
-    },
-    "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\src\\app\\Login\\login.css#": {
-      "id": "null",
-      "name": "default",
-      "chunks": [
-        "static/css/app/Login/page.css"
-      ]
-    },
-    "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\imagenes\\logo-colored.jpeg": {
-      "id": "(app-client)/./imagenes/logo-colored.jpeg",
-      "name": "*",
-      "chunks": [
-        "app/Login/page:static/chunks/app/Login/page.js"
-      ],
-      "async": false
-    },
-    "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\imagenes\\logo-colored.jpeg#": {
-      "id": "(app-client)/./imagenes/logo-colored.jpeg",
-      "name": "",
-      "chunks": [
-        "app/Login/page:static/chunks/app/Login/page.js"
-      ],
-      "async": false
-    },
-    "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\imagenes\\logo-colored.jpeg#default": {
-      "id": "(app-client)/./imagenes/logo-colored.jpeg",
-      "name": "default",
-      "chunks": [
-        "app/Login/page:static/chunks/app/Login/page.js"
-      ],
-      "async": false
-    },
-    "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\src\\app\\Login\\page.js": {
-      "id": "(app-client)/./src/app/Login/page.js",
-      "name": "*",
-      "chunks": [
-        "app/Login/page:static/chunks/app/Login/page.js"
-      ],
-      "async": false
-    },
-    "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\src\\app\\Login\\page.js#": {
-      "id": "(app-client)/./src/app/Login/page.js",
-      "name": "",
-      "chunks": [
-        "app/Login/page:static/chunks/app/Login/page.js"
-      ],
-      "async": false
-    },
-    "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\src\\app\\Login\\page.js#default": {
-      "id": "(app-client)/./src/app/Login/page.js",
-      "name": "default",
-      "chunks": [
-        "app/Login/page:static/chunks/app/Login/page.js"
       ],
       "async": false
     }

@@ -10,18 +10,6 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/layout.js"
-    ],
-    "/IngresosGastos/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/IngresosGastos/page.css",
-      "static/chunks/app/IngresosGastos/page.js"
-    ],
-    "/Login/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/Login/page.css",
-      "static/chunks/app/Login/page.js"
     ]
   }
 }

@@ -2,25 +2,11 @@ self.__RSC_CSS_MANIFEST={
   "cssImports": {
     "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\src\\app\\page.js": [
       "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\src\\app\\page.module.css"
-    ],
-    "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\src\\app\\IngresosGastos\\page.js": [
-      "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\src\\components\\menu.css",
-      "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\node_modules\\bootstrap\\dist\\css\\bootstrap.css"
-    ],
-    "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\src\\app\\Login\\page.js": [
-      "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\src\\app\\Login\\login.css"
     ]
   },
   "cssModules": {
     "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\src\\app\\page": [
       "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\src\\app\\page.module.css"
-    ],
-    "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\src\\app\\IngresosGastos\\page": [
-      "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\src\\components\\menu.css",
-      "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\node_modules\\bootstrap\\dist\\css\\bootstrap.css"
-    ],
-    "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\src\\app\\Login\\page": [
-      "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\src\\app\\Login\\login.css"
     ]
   }
 }
