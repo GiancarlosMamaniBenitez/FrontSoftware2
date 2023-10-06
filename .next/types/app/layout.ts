@@ -1,4 +1,4 @@
-// File: D:\FABRI\proyectos\frontsoftware2\src\app\layout.js
+// File: C:\Users\n04631\Downloads\PortableGit-2.42.0.2-64-bit.7z\FrontSoftware2\src\app\layout.js
 import * as entry from '../../../src/app/layout.js'
 import type { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

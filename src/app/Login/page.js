@@ -12,6 +12,7 @@ const Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     
+    
     console.log("Loging with username: " + username + ", password: " + password );
   };
   

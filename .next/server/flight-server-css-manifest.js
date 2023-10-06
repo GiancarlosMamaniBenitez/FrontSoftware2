@@ -1,21 +1,26 @@
 self.__RSC_CSS_MANIFEST={
   "cssImports": {
-    "D:\\FABRI\\proyectos\\frontsoftware2\\src\\app\\IngresosGastos\\page.js": [
-      "D:\\FABRI\\proyectos\\frontsoftware2\\src\\components\\menu.css",
-      "D:\\FABRI\\proyectos\\frontsoftware2\\node_modules\\bootstrap\\dist\\css\\bootstrap.css"
+    "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\src\\app\\page.js": [
+      "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\src\\app\\page.module.css"
     ],
-    "D:\\FABRI\\proyectos\\frontsoftware2\\src\\app\\page.js": [
-      "D:\\FABRI\\proyectos\\frontsoftware2\\src\\app\\page.module.css"
+    "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\src\\app\\IngresosGastos\\page.js": [
+      "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\src\\components\\menu.css",
+      "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\node_modules\\bootstrap\\dist\\css\\bootstrap.css"
+    ],
+    "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\src\\app\\Login\\page.js": [
+      "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\src\\app\\Login\\login.css"
     ]
   },
   "cssModules": {
-    "D:\\FABRI\\proyectos\\frontsoftware2\\src\\app\\IngresosGastos\\page": [
-      "D:\\FABRI\\proyectos\\frontsoftware2\\src\\components\\menu.css",
-      "D:\\FABRI\\proyectos\\frontsoftware2\\node_modules\\bootstrap\\dist\\css\\bootstrap.css"
+    "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\src\\app\\page": [
+      "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\src\\app\\page.module.css"
     ],
-    "D:\\FABRI\\proyectos\\frontsoftware2\\src\\app\\page": [
-      "D:\\FABRI\\proyectos\\frontsoftware2\\src\\app\\page.module.css"
+    "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\src\\app\\IngresosGastos\\page": [
+      "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\src\\components\\menu.css",
+      "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\node_modules\\bootstrap\\dist\\css\\bootstrap.css"
     ],
-    "D:\\FABRI\\proyectos\\frontsoftware2\\src\\app\\Terms\\page": []
+    "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\src\\app\\Login\\page": [
+      "C:\\Users\\n04631\\Downloads\\PortableGit-2.42.0.2-64-bit.7z\\FrontSoftware2\\src\\app\\Login\\login.css"
+    ]
   }
 }
