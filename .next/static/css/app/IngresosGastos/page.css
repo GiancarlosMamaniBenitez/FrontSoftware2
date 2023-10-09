@@ -12112,7 +12112,21 @@ textarea.form-control-lg {
     }
   }
 
-  
+  .SaldoAct{
+    width: 400px;
+  }
+  .FormIng{
+    width: 400px;
+  }
+  .GastoAct{
+    width: 400px;
+  }
+  .FormGast{
+    width: 400px;
+  }
+  .ProgresBar{
+    width: 400px;
+  }
 /*!*************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[2].oneOf[13].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[2].oneOf[13].use[3]!./src/app/Nuevo.css ***!
   \*************************************************************************************************************************************************************************************************************************************************************/
@@ -12176,6 +12190,7 @@ CSS de page.js
   display: flex;
   flex-direction: column;
   height: 100vh; /* Establece la altura al 100% de la ventana */
+  width: 1000px;
 }
 .page_login__1X_5s{
   text-align: left;
@@ -12192,6 +12207,7 @@ CSS de page.js
   display: flex;
   justify-content: left;
   align-items: right;
+  width: 1000px;
 }
 .page_SNosotros__uT7es {
   text-align: left;
@@ -12221,6 +12237,7 @@ CSS de page.js
   justify-content: left;
   align-items: center;
   margin-right: auto;
+  width: 1000px;
   
 }
 

@@ -38,4 +38,18 @@
     }
   }
 
-  
+  .SaldoAct{
+    width: 400px;
+  }
+  .FormIng{
+    width: 400px;
+  }
+  .GastoAct{
+    width: 400px;
+  }
+  .FormGast{
+    width: 400px;
+  }
+  .ProgresBar{
+    width: 400px;
+  }

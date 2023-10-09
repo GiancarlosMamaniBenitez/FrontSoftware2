@@ -17,7 +17,7 @@ function SaldoActual() {
         placeholder="Disabled readonly input"
         aria-label="Disabled input example"
         readOnly
-        value={'NO HAY SALDO CARAJO'}
+        value={'NO HAY SALDO'}
       />
     </>
   );

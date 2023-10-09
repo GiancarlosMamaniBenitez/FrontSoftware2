@@ -21,7 +21,7 @@ function MenuNuevo() {
     </Button>
     <br></br>
     <Button className="button-link">
-      <Link href="/">VER TARJETAS</Link>
+      <Link href="./VerTarjeta">VER TARJETAS</Link>
     </Button>
     <br></br>
     <Button className="button-link">
@@ -38,6 +38,10 @@ function MenuNuevo() {
     <br></br>
     <Button className="button-link">
       <Link href="./Terms">TERMINOS Y CONDICIONES</Link>
+    </Button>
+    <br></br>
+    <Button className="button-link">
+      <Link href="./Signup">SIGNUP</Link>
     </Button>
     </Nav.Item>
     

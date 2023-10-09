@@ -40,26 +40,26 @@ function TarjetaApp() {
             })}
             </div>
 
-            <div>
+            <div className="SaldoAct">
                 <h2>SALDO ACTUAL</h2>
                 <SaldoActual>
 
                 </SaldoActual>
             </div>
-            <div>
+            <div className="FormIng">
                 <h2>ACTUALIZAR INGRESOS</h2>
                 <FormularioIngreso>
                     
                 </FormularioIngreso>
 
             </div>
-            <div>
+            <div className="GastoAct">
                 <h2>GASTO ACTUAL</h2>
                 <GastoActual>
                     
                 </GastoActual>
             </div>
-            <div>
+            <div className="FormGast">
                 <h2>ACTUALIZAR GASTOS</h2>
                 <FormularioGasto>
 
@@ -72,7 +72,8 @@ function TarjetaApp() {
                 </div>
                 <CombinedComponent></CombinedComponent>
             </div>
-
+            <br>
+            </br>
             <div>
                 <BotonActualizar>
 

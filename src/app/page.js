@@ -17,9 +17,16 @@ export default function Home() {
         </div>
         <div className={styles.login}>
 
-        <button className={styles.miBoton1}>Ingresar sesión</button>
-        <button className={styles.miBoton2}>Registrarse</button>
-
+        <button className={styles.miBoton1}>
+          
+          <Link href="/Login" text="Ingresar sesion " />
+        </button>
+        <button className={styles.miBoton2}>
+        <Link href="/Signup" text="Registrarse " />
+        </button>
+        <button className={styles.miBoton2}>
+        <Link href="/IngresosGastos" text="INGRESOS GASTOS " />
+        </button>
          <Link href="/Login" text="LOGIN " />
          
          <Link href="/IngresosGastos" text=" INGRESOS GASTOS" />

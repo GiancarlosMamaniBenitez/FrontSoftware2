@@ -27,6 +27,7 @@ CSS de page.js
   display: flex;
   flex-direction: column;
   height: 100vh; /* Establece la altura al 100% de la ventana */
+  width: 1000px;
 }
 .page_login__1X_5s{
   text-align: left;
@@ -43,6 +44,7 @@ CSS de page.js
   display: flex;
   justify-content: left;
   align-items: right;
+  width: 1000px;
 }
 .page_SNosotros__uT7es {
   text-align: left;
@@ -72,6 +74,7 @@ CSS de page.js
   justify-content: left;
   align-items: center;
   margin-right: auto;
+  width: 1000px;
   
 }
 

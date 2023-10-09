@@ -1,33 +1,49 @@
 self.__RSC_CSS_MANIFEST={
   "cssImports": {
-    "C:\\Users\\Giancarlos\\Downloads\\FrontSoftware2\\src\\app\\page.js": [
-      "C:\\Users\\Giancarlos\\Downloads\\FrontSoftware2\\src\\app\\page.module.css"
+    "C:\\Users\\n04925\\Downloads\\FrontSoftware2\\src\\app\\page.js": [
+      "C:\\Users\\n04925\\Downloads\\FrontSoftware2\\src\\app\\page.module.css"
     ],
-    "C:\\Users\\Giancarlos\\Downloads\\FrontSoftware2\\src\\app\\IngresosGastos\\page.js": [
-      "C:\\Users\\Giancarlos\\Downloads\\FrontSoftware2\\src\\components\\menu.css",
-      "C:\\Users\\Giancarlos\\Downloads\\FrontSoftware2\\node_modules\\bootstrap\\dist\\css\\bootstrap.css",
-      "C:\\Users\\Giancarlos\\Downloads\\FrontSoftware2\\src\\app\\IngresosGastos\\App.css",
-      "C:\\Users\\Giancarlos\\Downloads\\FrontSoftware2\\src\\app\\Nuevo.css",
-      "C:\\Users\\Giancarlos\\Downloads\\FrontSoftware2\\src\\app\\page.module.css"
+    "C:\\Users\\n04925\\Downloads\\FrontSoftware2\\src\\app\\IngresosGastos\\page.js": [
+      "C:\\Users\\n04925\\Downloads\\FrontSoftware2\\src\\components\\menu.css",
+      "C:\\Users\\n04925\\Downloads\\FrontSoftware2\\node_modules\\bootstrap\\dist\\css\\bootstrap.css",
+      "C:\\Users\\n04925\\Downloads\\FrontSoftware2\\src\\app\\IngresosGastos\\App.css",
+      "C:\\Users\\n04925\\Downloads\\FrontSoftware2\\src\\app\\Nuevo.css",
+      "C:\\Users\\n04925\\Downloads\\FrontSoftware2\\src\\app\\page.module.css"
     ],
-    "C:\\Users\\Giancarlos\\Downloads\\FrontSoftware2\\src\\app\\Login\\page.js": [
-      "C:\\Users\\Giancarlos\\Downloads\\FrontSoftware2\\src\\app\\Login\\login.css"
+    "C:\\Users\\n04925\\Downloads\\FrontSoftware2\\src\\app\\Login\\page.js": [
+      "C:\\Users\\n04925\\Downloads\\FrontSoftware2\\src\\app\\Login\\login.css",
+      "C:\\Users\\n04925\\Downloads\\FrontSoftware2\\src\\app\\Signup\\signup.css"
+    ],
+    "C:\\Users\\n04925\\Downloads\\FrontSoftware2\\src\\app\\Signup\\page.js": [
+      "C:\\Users\\n04925\\Downloads\\FrontSoftware2\\src\\app\\Signup\\signup.css"
+    ],
+    "C:\\Users\\n04925\\Downloads\\FrontSoftware2\\src\\app\\Congrats\\page.js": [
+      "C:\\Users\\n04925\\Downloads\\FrontSoftware2\\src\\app\\Congrats\\congrats.css"
     ]
   },
   "cssModules": {
-    "C:\\Users\\Giancarlos\\Downloads\\FrontSoftware2\\src\\app\\page": [
-      "C:\\Users\\Giancarlos\\Downloads\\FrontSoftware2\\src\\app\\page.module.css"
+    "C:\\Users\\n04925\\Downloads\\FrontSoftware2\\src\\app\\page": [
+      "C:\\Users\\n04925\\Downloads\\FrontSoftware2\\src\\app\\page.module.css"
     ],
-    "C:\\Users\\Giancarlos\\Downloads\\FrontSoftware2\\src\\app\\IngresosGastos\\page": [
-      "C:\\Users\\Giancarlos\\Downloads\\FrontSoftware2\\src\\components\\menu.css",
-      "C:\\Users\\Giancarlos\\Downloads\\FrontSoftware2\\node_modules\\bootstrap\\dist\\css\\bootstrap.css",
-      "C:\\Users\\Giancarlos\\Downloads\\FrontSoftware2\\src\\app\\IngresosGastos\\App.css",
-      "C:\\Users\\Giancarlos\\Downloads\\FrontSoftware2\\src\\app\\Nuevo.css",
-      "C:\\Users\\Giancarlos\\Downloads\\FrontSoftware2\\src\\app\\page.module.css"
+    "C:\\Users\\n04925\\Downloads\\FrontSoftware2\\src\\app\\IngresosGastos\\page": [
+      "C:\\Users\\n04925\\Downloads\\FrontSoftware2\\src\\components\\menu.css",
+      "C:\\Users\\n04925\\Downloads\\FrontSoftware2\\node_modules\\bootstrap\\dist\\css\\bootstrap.css",
+      "C:\\Users\\n04925\\Downloads\\FrontSoftware2\\src\\app\\IngresosGastos\\App.css",
+      "C:\\Users\\n04925\\Downloads\\FrontSoftware2\\src\\app\\Nuevo.css",
+      "C:\\Users\\n04925\\Downloads\\FrontSoftware2\\src\\app\\page.module.css"
     ],
-    "C:\\Users\\Giancarlos\\Downloads\\FrontSoftware2\\src\\app\\Login\\page": [
-      "C:\\Users\\Giancarlos\\Downloads\\FrontSoftware2\\src\\app\\Login\\login.css"
+    "C:\\Users\\n04925\\Downloads\\FrontSoftware2\\src\\app\\Login\\page": [
+      "C:\\Users\\n04925\\Downloads\\FrontSoftware2\\src\\app\\Login\\login.css",
+      "C:\\Users\\n04925\\Downloads\\FrontSoftware2\\src\\app\\Signup\\signup.css"
     ],
-    "C:\\Users\\Giancarlos\\Downloads\\FrontSoftware2\\src\\app\\Terms\\page": []
+    "C:\\Users\\n04925\\Downloads\\FrontSoftware2\\src\\app\\Terms\\page": [],
+    "C:\\Users\\n04925\\Downloads\\FrontSoftware2\\src\\app\\Signup\\page": [
+      "C:\\Users\\n04925\\Downloads\\FrontSoftware2\\src\\app\\Signup\\signup.css"
+    ],
+    "C:\\Users\\n04925\\Downloads\\FrontSoftware2\\src\\app\\Congrats\\page": [
+      "C:\\Users\\n04925\\Downloads\\FrontSoftware2\\src\\app\\Congrats\\congrats.css"
+    ],
+    "C:\\Users\\n04925\\Downloads\\FrontSoftware2\\src\\app\\ForgotPassword\\page": [],
+    "C:\\Users\\n04925\\Downloads\\FrontSoftware2\\src\\app\\VerTarjeta\\page": []
   }
 }
