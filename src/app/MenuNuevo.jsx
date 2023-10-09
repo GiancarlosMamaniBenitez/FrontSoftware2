@@ -17,7 +17,7 @@ function MenuNuevo() {
     </Button>
     <br></br>
     <Button className="button-link">
-      <Link href="/">DATOS DE PERFIL</Link>
+      <Link href="./DatosPerfil">DATOS DE PERFIL</Link>
     </Button>
     <br></br>
     <Button className="button-link">
@@ -25,15 +25,19 @@ function MenuNuevo() {
     </Button>
     <br></br>
     <Button className="button-link">
-      <Link href="/">INGRESOS Y GASTOS</Link>
+      <Link href="./IngresosGastos">INGRESOS Y GASTOS</Link>
     </Button>
     <br></br>
     <Button className="button-link">
-      <Link href="/">ACTUALIZAR</Link>
+      <Link href="./ActualizarIngresos">ACTUALIZAR INGRESOS</Link>
     </Button>
     <br></br>
     <Button className="button-link">
-      <Link href="/">INFORME</Link>
+      <Link href="./ActualizarGastos">ACTUALIZAR GASTOS</Link>
+    </Button>
+    <br></br>
+    <Button className="button-link">
+      <Link href="./Informe">INFORME</Link>
     </Button>
     <br></br>
     <Button className="button-link">

@@ -1,15 +1,15 @@
 {
   "pages": {
+    "/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/page.css",
+      "static/chunks/app/page.js"
+    ],
     "/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/layout.js"
-    ],
-    "/Login/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/Login/page.css",
-      "static/chunks/app/Login/page.js"
     ],
     "/IngresosGastos/page": [
       "static/chunks/webpack.js",
@@ -17,10 +17,11 @@
       "static/css/app/IngresosGastos/page.css",
       "static/chunks/app/IngresosGastos/page.js"
     ],
-    "/Terms/page": [
+    "/VerTarjeta/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/Terms/page.js"
+      "static/css/app/VerTarjeta/page.css",
+      "static/chunks/app/VerTarjeta/page.js"
     ],
     "/Signup/page": [
       "static/chunks/webpack.js",
@@ -28,27 +29,41 @@
       "static/css/app/Signup/page.css",
       "static/chunks/app/Signup/page.js"
     ],
-    "/Congrats/page": [
+    "/Terms/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/Congrats/page.css",
-      "static/chunks/app/Congrats/page.js"
+      "static/css/app/Terms/page.css",
+      "static/chunks/app/Terms/page.js"
     ],
-    "/ForgotPassword/page": [
+    "/ActualizarGastos/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/ForgotPassword/page.js"
+      "static/css/app/ActualizarGastos/page.css",
+      "static/chunks/app/ActualizarGastos/page.js"
     ],
-    "/VerTarjeta/page": [
+    "/DatosPerfil/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/VerTarjeta/page.js"
+      "static/css/app/DatosPerfil/page.css",
+      "static/chunks/app/DatosPerfil/page.js"
     ],
-    "/page": [
+    "/ActualizarIngresos/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/page.css",
-      "static/chunks/app/page.js"
+      "static/css/app/ActualizarIngresos/page.css",
+      "static/chunks/app/ActualizarIngresos/page.js"
+    ],
+    "/Informe/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/Informe/page.css",
+      "static/chunks/app/Informe/page.js"
+    ],
+    "/Login/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/Login/page.css",
+      "static/chunks/app/Login/page.js"
     ]
   }
 }

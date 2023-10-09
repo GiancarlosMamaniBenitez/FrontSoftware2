@@ -13,6 +13,7 @@ import BotonActualizar from "@/Components/BotonActualizar";
 import SaldoActual from "@/Components/SaldoActual";
 import GastoActual from "@/Components/GastoActual";
 import MenuNuevo from "../MenuNuevo";
+import Button from 'react-bootstrap/Button';
 
 
 function TarjetaApp() {
@@ -46,25 +47,14 @@ function TarjetaApp() {
 
                 </SaldoActual>
             </div>
-            <div className="FormIng">
-                <h2>ACTUALIZAR INGRESOS</h2>
-                <FormularioIngreso>
-                    
-                </FormularioIngreso>
-
-            </div>
+            
             <div className="GastoAct">
                 <h2>GASTO ACTUAL</h2>
                 <GastoActual>
                     
                 </GastoActual>
             </div>
-            <div className="FormGast">
-                <h2>ACTUALIZAR GASTOS</h2>
-                <FormularioGasto>
-
-                </FormularioGasto>
-            </div>
+            
 
             <div className="ProgresBar">
                 <div>
@@ -75,9 +65,7 @@ function TarjetaApp() {
             <br>
             </br>
             <div>
-                <BotonActualizar>
-
-                </BotonActualizar>
+            <Button variant="primary">GUARDAR LIMITE GASTO</Button>{' '}
             </div>
         </div>
     )

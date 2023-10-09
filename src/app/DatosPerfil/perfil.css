@@ -65,3 +65,9 @@ body {
     
     width: 180px;
   }
+.row{
+  margin-left: 210px;
+}
+.col-2 d-flex flex-row-reverse align-items-center{
+  margin-left: 210px;
+}

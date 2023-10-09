@@ -1,0 +1,184 @@
+/*!*************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[2].oneOf[13].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[2].oneOf[13].use[3]!./src/app/Nuevo.css ***!
+  \*************************************************************************************************************************************************************************************************************************************************************/
+.Vertical{
+   
+  
+    
+    flex-direction: column;
+
+    height: 100%;
+    width: 200px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: grey;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.button-link {
+    display: block;
+    width: 100%;
+    padding: 8px 16px;
+    margin: 4px 0;
+    text-align: left;
+    border: none;
+    background-color: inherit;
+    cursor: pointer;
+    font-size: 16px;
+    background-color: white;
+    text-decoration: none;
+    transition: 0.3s;
+  }
+/*!*****************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[2].oneOf[8].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[2].oneOf[8].use[3]!./src/app/page.module.css ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************/
+/*
+CSS de page.js
+*/
+
+.page_main__ibFHK {
+  display: flex;
+}
+
+.page_inte__uQk5o{
+  position: absolute;
+  padding-top: 10vw;
+  padding-left: 40vw;
+
+}
+
+.page_centered__Eq0kB {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Esto centrará horizontal y verticalmente el contenido dentro del div 'centered' */
+}
+
+.page_container__HHToX {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Establece la altura al 100% de la ventana */
+  width: 1000px;
+}
+.page_login__1X_5s{
+  text-align: left;
+  position: relative;
+  align-items: left;
+  left: 50%;
+  bottom:-50%;
+  font-size: 20px;
+
+}
+.page_red__5J5KZ {
+  background-color: white; /* Color blanco para la parte suérior */
+  height: 10%; 
+  display: flex;
+  justify-content: left;
+  align-items: right;
+  width: 1000px;
+}
+.page_SNosotros__uT7es {
+  text-align: left;
+  position: relative;
+  color:rgb(7, 7, 7);
+  font-size: 12px;
+  left: 24%;
+  bottom:-160%;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}.page_PorqueE__guNCN {
+  text-align: left;
+  position: relative;
+  color:rgb(5, 5, 5);
+  font-size: 12px;
+  left: 2%;
+  left: 20%;
+  bottom:-160%;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}
+
+.page_content__rFejU {
+  background-color: #00a1e1; /* Color celeste para la parte inferior */
+  height: 75%; /* Tres cuartos de la altura de la ventana */
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin-right: auto;
+  width: 1000px;
+  
+}
+
+.page_centeredText____VE5 {
+  text-align: center; /* Centrar horizontalmente el texto */
+  position: relative;
+  z-index: 2; /* Un valor de z-index mayor que el del fondo */
+  text-align: left; /* Alineación a la izquierda */
+  color: #ffffff; /* Color blanco del texto */
+  width: 50%;
+  left: 2%;
+  bottom: 15%;
+  font-size: 24px;
+}
+
+.page_centeredText2__Ewrmn {
+  text-align: left;
+  position: relative;
+  color:rgb(113, 94, 69);
+  font-size: 25px;
+  left: 6%;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+}
+
+.page_Idioma__PS6w1 {
+  text-align: left;
+  position: relative;
+  color:rgb(10, 180, 248);
+  font-size: 15px;
+  left: 2%;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+}
+
+.page_Terminos__yJjc2 {
+  text-align: center; /* Centrar horizontalmente el texto */
+  position: relative;
+  bottom: 0%;
+  z-index: 2; /* Un valor de z-index mayor que el del fondo */
+  text-align: left; /* Alineación a la izquierda */
+  color: #ffffff; /* Color blanco del texto */
+  left: 2%;
+  bottom: 15%;
+  font-size: 15px;
+
+}
+
+.page_miBoton1__yZEXq {
+  background-color: #e9b85b; /* Color de fondo del botón */
+  color: #080808; /* Color del texto */
+  border: none; /* Elimina el borde */
+  padding: 15px 25px; /* Espaciado interno (arriba/abajo y izquierda/derecha) */
+  border-radius: 10px; /* Borde redondeado */
+  cursor: pointer; /* Cambia el cursor al pasar el ratón por encima */
+}
+
+.page_miBoton2__Ij162 {
+  background-color: #e9813c; /* Color de fondo del botón */
+  color: #080808; /* Color del texto */
+  border: none; /* Elimina el borde */
+  padding: 15px 25px; /* Espaciado interno (arriba/abajo y izquierda/derecha) */
+  border-radius: 10px; /* Borde redondeado */
+  cursor: pointer; /* Cambia el cursor al pasar el ratón por encima */
+}
+
+
+/*!**********************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[2].oneOf[13].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[2].oneOf[13].use[3]!./src/app/Terms/Terminos.css ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************/
+.Terminos{
+    margin-left: 210px;
+}

@@ -1,5 +1,7 @@
 {
-  "/favicon.ico/route": "app/favicon.ico/route.js",
   "/VerTarjeta/page": "app/VerTarjeta/page.js",
-  "/IngresosGastos/page": "app/IngresosGastos/page.js"
+  "/ActualizarIngresos/page": "app/ActualizarIngresos/page.js",
+  "/DatosPerfil/page": "app/DatosPerfil/page.js",
+  "/ActualizarGastos/page": "app/ActualizarGastos/page.js",
+  "/Terms/page": "app/Terms/page.js"
 }
