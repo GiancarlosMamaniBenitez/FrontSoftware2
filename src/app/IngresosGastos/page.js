@@ -6,7 +6,13 @@ import TarjetaMC from "./TarjetaComp/TarjetaMC";
 import VerticalMenu from "@/components/VerticalMenu";
 import CombinedComponent from "@/components/CombinedComponent";
 import 'bootstrap/dist/css/bootstrap.css'
-
+import './App.css';
+import FormularioIngreso from "@/Components/FormularioIngreso";
+import FormularioGasto from "@/Components/FormularioGasto";
+import BotonActualizar from "@/Components/BotonActualizar";
+import SaldoActual from "@/Components/SaldoActual";
+import GastoActual from "@/Components/GastoActual";
+import MenuNuevo from "@/app/MenuNuevo";
 
 function TarjetaApp() {
 
@@ -22,9 +28,9 @@ function TarjetaApp() {
             <div className="col-2">
                 {/* Agregamos el VerticalMenu */}
 
-                <VerticalMenu >
+                <MenuNuevo>
 
-                </VerticalMenu>
+                </MenuNuevo>
             </div>
             <div className="col-10">
             {tarjetas.map((tarjeta) => {
@@ -32,11 +38,44 @@ function TarjetaApp() {
                 return <TarjetaComponent tarjetaDetails={tarjeta} key={tarjeta.numero} />
             })}
             </div>
+
+            <div>
+                <h2>SALDO ACTUAL</h2>
+                <SaldoActual>
+
+                </SaldoActual>
+            </div>
+            <div>
+                <h2>ACTUALIZAR INGRESOS</h2>
+                <FormularioIngreso>
+                    
+                </FormularioIngreso>
+
+            </div>
+            <div>
+                <h2>GASTO ACTUAL</h2>
+                <GastoActual>
+                    
+                </GastoActual>
+            </div>
+            <div>
+                <h2>ACTUALIZAR GASTOS</h2>
+                <FormularioGasto>
+
+                </FormularioGasto>
+            </div>
+
             <div className="ProgresBar">
                 <div>
                     <h1>LIMITE DE GASTOS</h1>
                 </div>
                 <CombinedComponent></CombinedComponent>
+            </div>
+
+            <div>
+                <BotonActualizar>
+
+                </BotonActualizar>
             </div>
         </div>
     )

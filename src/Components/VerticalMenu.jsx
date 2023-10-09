@@ -2,6 +2,8 @@ import React from 'react';
 import { Nav } from 'react-bootstrap';
 import menu from "./menu.css";
 
+ 
+
 const VerticalMenu = () => {
   return (
     <div className="sidenav">
@@ -21,6 +23,7 @@ const VerticalMenu = () => {
     </div>
     
   );
+
 }
 
 export default VerticalMenu;

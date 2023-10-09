@@ -24,6 +24,8 @@ export default function Home() {
          
          <Link href="/IngresosGastos" text=" INGRESOS GASTOS" />
 
+         <Link href="/" text="INICIO " />
+
          </div> 
 
         <div className={styles.PorqueE}>
