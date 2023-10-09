@@ -27,6 +27,7 @@ self.__RSC_CSS_MANIFEST={
     ],
     "C:\\Users\\Giancarlos\\Downloads\\FrontSoftware2\\src\\app\\Login\\page": [
       "C:\\Users\\Giancarlos\\Downloads\\FrontSoftware2\\src\\app\\Login\\login.css"
-    ]
+    ],
+    "C:\\Users\\Giancarlos\\Downloads\\FrontSoftware2\\src\\app\\Terms\\page": []
   }
 }

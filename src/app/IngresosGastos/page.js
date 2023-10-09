@@ -12,7 +12,8 @@ import FormularioGasto from "@/Components/FormularioGasto";
 import BotonActualizar from "@/Components/BotonActualizar";
 import SaldoActual from "@/Components/SaldoActual";
 import GastoActual from "@/Components/GastoActual";
-import MenuNuevo from "@/app/MenuNuevo";
+import MenuNuevo from "../MenuNuevo";
+
 
 function TarjetaApp() {
 
@@ -29,7 +30,7 @@ function TarjetaApp() {
                 {/* Agregamos el VerticalMenu */}
 
                 <MenuNuevo>
-
+                    
                 </MenuNuevo>
             </div>
             <div className="col-10">

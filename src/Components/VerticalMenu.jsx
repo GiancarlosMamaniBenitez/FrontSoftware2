@@ -2,11 +2,43 @@ import React from 'react';
 import { Nav } from 'react-bootstrap';
 import menu from "./menu.css";
 
- 
+
+import Link from 'next/link';
+import Button from 'react-bootstrap/Button';
 
 const VerticalMenu = () => {
   return (
-    <div className="sidenav">
+
+    <Nav variant="pills" className='Vertical'>
+      <Nav.Item>
+      <Button className="button-link">
+        <Link href="../app/page.js">INICIO</Link>
+      </Button>
+      <br></br>
+      <Button className="button-link">
+        <Link href="/">DATOS DE PERFIL</Link>
+      </Button>
+      <br></br>
+      <Button className="button-link">
+        <Link href="/">VER TARJETAS</Link>
+      </Button>
+      <br></br>
+      <Button className="button-link">
+        <Link href="/">INGRESOS Y GASTOS</Link>
+      </Button>
+      <br></br>
+      <Button className="button-link">
+        <Link href="/">ACTUALIZAR</Link>
+      </Button>
+      <br></br>
+      <Button className="button-link">
+        <Link href="/">INFORME</Link>
+      </Button>
+      <br></br>
+      </Nav.Item>
+      
+    </Nav>
+    /*<div className="sidenav">
       <a href="#Inicio">Inicio</a>
             <br/>
             <a href="#DatosPerfil">Datos de Perfil</a>
@@ -20,7 +52,7 @@ const VerticalMenu = () => {
                 <a href="#">Actualizar</a>
                 <a href="#">Informe</a>
             </div>
-    </div>
+    </div>*/
     
   );
 

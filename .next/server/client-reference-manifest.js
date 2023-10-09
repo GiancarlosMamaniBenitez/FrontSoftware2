@@ -1043,6 +1043,32 @@ self.__RSC_MANIFEST={
         ],
         "async": false
       }
+    },
+    "(app-client)/./src/app/Terms/page.js": {
+      "*": {
+        "id": "(sc_client)/./src/app/Terms/page.js",
+        "name": "*",
+        "chunks": [
+          "app/Terms/page:static/chunks/app/Terms/page.js"
+        ],
+        "async": false
+      },
+      "": {
+        "id": "(sc_client)/./src/app/Terms/page.js",
+        "name": "",
+        "chunks": [
+          "app/Terms/page:static/chunks/app/Terms/page.js"
+        ],
+        "async": false
+      },
+      "default": {
+        "id": "(sc_client)/./src/app/Terms/page.js",
+        "name": "default",
+        "chunks": [
+          "app/Terms/page:static/chunks/app/Terms/page.js"
+        ],
+        "async": false
+      }
     }
   },
   "edgeSSRModuleMapping": {},
@@ -3274,6 +3300,30 @@ self.__RSC_MANIFEST={
       "name": "default",
       "chunks": [
         "app/Login/page:static/chunks/app/Login/page.js"
+      ],
+      "async": false
+    },
+    "C:\\Users\\Giancarlos\\Downloads\\FrontSoftware2\\src\\app\\Terms\\page.js": {
+      "id": "(app-client)/./src/app/Terms/page.js",
+      "name": "*",
+      "chunks": [
+        "app/Terms/page:static/chunks/app/Terms/page.js"
+      ],
+      "async": false
+    },
+    "C:\\Users\\Giancarlos\\Downloads\\FrontSoftware2\\src\\app\\Terms\\page.js#": {
+      "id": "(app-client)/./src/app/Terms/page.js",
+      "name": "",
+      "chunks": [
+        "app/Terms/page:static/chunks/app/Terms/page.js"
+      ],
+      "async": false
+    },
+    "C:\\Users\\Giancarlos\\Downloads\\FrontSoftware2\\src\\app\\Terms\\page.js#default": {
+      "id": "(app-client)/./src/app/Terms/page.js",
+      "name": "default",
+      "chunks": [
+        "app/Terms/page:static/chunks/app/Terms/page.js"
       ],
       "async": false
     }

@@ -1,6 +1,37 @@
 /*!*******************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[2].oneOf[13].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[2].oneOf[13].use[3]!./src/components/menu.css ***!
   \*******************************************************************************************************************************************************************************************************************************************************************/
+.Vertical{
+   
+  
+    
+  
+
+  height: 100%;
+  width: 200px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: grey;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.button-link {
+  display: block;
+  width: 100%;
+  padding: 8px 16px;
+  margin: 4px 0;
+  text-align: left;
+  border: none;
+  background-color: inherit;
+  cursor: pointer;
+  font-size: 16px;
+  background-color: white;
+  text-decoration: none;
+  transition: 0.3s;
+}
 .sidenav {
     height: 100%;
     width: 200px;
@@ -12090,7 +12121,32 @@ textarea.form-control-lg {
   
     
     flex-direction: column;
+
+    height: 100%;
+    width: 200px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: grey;
+    overflow-x: hidden;
+    padding-top: 20px;
 }
+
+.button-link {
+    display: block;
+    width: 100%;
+    padding: 8px 16px;
+    margin: 4px 0;
+    text-align: left;
+    border: none;
+    background-color: inherit;
+    cursor: pointer;
+    font-size: 16px;
+    background-color: white;
+    text-decoration: none;
+    transition: 0.3s;
+  }
 /*!*****************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[2].oneOf[8].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[2].oneOf[8].use[3]!./src/app/page.module.css ***!
   \*****************************************************************************************************************************************************************************************************************************************************************/
