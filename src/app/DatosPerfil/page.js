@@ -15,6 +15,8 @@ function DatosdePerfil() {
     const [newCorreo, setNewCorreo] = useState("")
     const [newPais, setNewPais] = useState("")
     const [newCiudad, setNewCiudad] = useState("")
+    const [newDireccion, setNewDireccion] = useState("")
+    const [newCodigoPostal, setNewCodigoPostal] = useState("")
 
  
 
@@ -24,7 +26,7 @@ function DatosdePerfil() {
 
     
     return (
-        <div className="container">
+        <div className="contenido">
            <div className="col-2">
                 {/* Agregamos el VerticalMenu */}
                 
@@ -40,10 +42,12 @@ function DatosdePerfil() {
                         DATOS DE PERFIL
                         <img src="" alt="" className='col'/>
                     </div>
+                    <br/><br/>
                     <div>
                         <div className="row h3">
                             Datos Obligatorios
                         </div>
+                        <br/><br/>
                         <div className='row'>
                             <div className='col'>
                                 <div className='col ms-4'>
@@ -64,7 +68,7 @@ function DatosdePerfil() {
                                 onChange={(e)=> setNewApellido(e.target.value)}/>
                             </div>
                         </div>
-
+                        <br/><br/> 
                         <div className='row'>
                             <div className='col'>
                                 <div className='ms-4'>
@@ -85,7 +89,7 @@ function DatosdePerfil() {
                                 onChange={(f)=> setNewTelefono(Number(f.target.value))}/>
                             </div>
                         </div>
-
+                        <br/><br/>
                         <div className='row'>
                             <div className='col'>
                                 <div className='ms-4'>
@@ -97,7 +101,7 @@ function DatosdePerfil() {
                                 onChange={(f)=> setNewCorreo(f.target.value)}/>
                             </div>
                         </div>
-
+                        <br/><br/>
                         <div className='row'>
                             <div className='col'>
                                 <div className='ms-4'>
@@ -117,6 +121,27 @@ function DatosdePerfil() {
                                 className='ms-4 form-control rounded'
                                 onChange={(f)=> setNewCiudad(f.target.value)}/>
                             </div>
+                            <br/><br/>
+                            <div className='row'>
+                              <div className='col'>
+                                <div className='ms-4'>
+                                    Dirección:
+                                </div>
+
+                                <input type = "Ingresar Dirección"
+                                className='ms-4 form-control rounded'
+                                onChange={(f)=> setNewDireccion(f.target.value)}/>
+                            </div>
+                            <div className='col'>
+                                <div className='ms-4'>
+                                    Codigo Postal:
+                                </div>
+
+                                <input type = "Ingresar codigoPostal"
+                                className='ms-4 form-control rounded'
+                                onChange={(f)=> setNewCodigoPostal(Number(f.target.value))}/>
+                            </div>
+                        </div>        
                         </div>        
                     </div>
                 </div>
@@ -132,7 +157,7 @@ function DatosdePerfil() {
             </div>
 
             <br/>
-            <div className='col-2 d-flex flex-row-reverse align-items-center'>
+            <div className='col-1 d-flex flex-row-reverse align-items-center'>
                     
                         <button className='btn btn-primary align-middle' 
                         type='button'
