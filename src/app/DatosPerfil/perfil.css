@@ -1,5 +1,10 @@
-body {
-    background-color: rgb(239, 235, 235);
+.contenido {
+    background-color: rgb(179, 235, 242);
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Establece la altura al 100% de la ventana */
+    width: 1600px;
+    margin-left: 210px;
   }
 
 .login-container {
@@ -66,8 +71,13 @@ body {
     width: 180px;
   }
 .row{
-  margin-left: 210px;
+  margin-left: 50px;
 }
 .col-2 d-flex flex-row-reverse align-items-center{
-  margin-left: 210px;
+  margin-left: 150px;
 }
+
+.col-1 d-flex flex-row-reverse align-items-center{
+  margin-left: 150px;
+}
+
