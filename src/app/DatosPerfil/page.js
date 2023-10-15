@@ -1,174 +1,101 @@
 'use client'
 
-import './perfil.css';
+import './perfil1.css';
 import ProgressBar from '../../components/ProgressBar.jsx';
 import Range from '../../components/Range.jsx';
 import { useState } from 'react';
 import MenuNuevo from '../MenuNuevo';
 
-function DatosdePerfil() {
+function Info() {
 
-    const [newNombre, setNewNombre] = useState("")
-    const [newApellido, setNewApellido] = useState("")
-    const [newDNI, setNewDNI] = useState(0)
-    const [newTelefono, setNewTelefono] = useState(0)
-    const [newCorreo, setNewCorreo] = useState("")
-    const [newPais, setNewPais] = useState("")
-    const [newCiudad, setNewCiudad] = useState("")
-    const [newDireccion, setNewDireccion] = useState("")
-    const [newCodigoPostal, setNewCodigoPostal] = useState("")
-
- 
-
-    const onSubmitDatos =  () => {
-        
-    }
-
-    
-    return (
-        <div className="contenido">
-           <div className="col-2">
+   return <div>
+    <div className="col-2">
                 {/* Agregamos el VerticalMenu */}
                 
                 <MenuNuevo>
                     
                 </MenuNuevo>
-            </div>
-            
-        
-            <div className="row ">
-                <div className="col-10">
-                    <div className="col h2 text-center">  
-                        DATOS DE PERFIL
-                        <img src="" alt="" className='col'/>
-                    </div>
-                    <br/><br/>
-                    <div>
-                        <div className="row h3">
-                            Datos Obligatorios
-                        </div>
-                        <br/><br/>
-                        <div className='row'>
-                            <div className='col'>
-                                <div className='col ms-4'>
-                                    Nombre:
-                                </div>
-                                <input 
-                                type="Ingresar nombre" 
-                                className='ms-4 form-control rounded'
-                                onChange={(e)=> setNewNombre(e.target.value)}/>
-                            </div>
-                            <div className='col'>
-                                <div className='ms-4'>
-                                    Apellido:
-                                </div>
-                                <input 
-                                type="Ingresar apellido" 
-                                className='ms-4 form-control rounded'
-                                onChange={(e)=> setNewApellido(e.target.value)}/>
-                            </div>
-                        </div>
-                        <br/><br/> 
-                        <div className='row'>
-                            <div className='col'>
-                                <div className='ms-4'>
-                                    DNI:
-                                </div>
-                                
-                                <input type="Ingresar DNI" 
-                                className='ms-4 form-control rounded'
-                                onChange={(f)=> setNewDNI(Number(f.target.value))}/>
-                            </div>
-                            <div className='col'>
-                                <div className='ms-4'>
-                                    Celular:
-                                </div>
-                                
-                                <input type="Ingresar celular" 
-                                className='ms-4 form-control rounded'
-                                onChange={(f)=> setNewTelefono(Number(f.target.value))}/>
-                            </div>
-                        </div>
-                        <br/><br/>
-                        <div className='row'>
-                            <div className='col'>
-                                <div className='ms-4'>
-                                    Correo:
-                                </div>
-
-                                <input type = "Ingresar correo"
-                                className='ms-4 form-control rounded'
-                                onChange={(f)=> setNewCorreo(f.target.value)}/>
-                            </div>
-                        </div>
-                        <br/><br/>
-                        <div className='row'>
-                            <div className='col'>
-                                <div className='ms-4'>
-                                    Pais:
-                                </div>
-
-                                <input type = "Ingresar Pais"
-                                className='ms-4 form-control rounded'
-                                onChange={(f)=> setNewPais(f.target.value)}/>
-                            </div>
-                            <div className='col'>
-                                <div className='ms-4'>
-                                    Ciudad:
-                                </div>
-
-                                <input type = "Ingresar ciudad"
-                                className='ms-4 form-control rounded'
-                                onChange={(f)=> setNewCiudad(f.target.value)}/>
-                            </div>
-                            <br/><br/>
-                            <div className='row'>
-                              <div className='col'>
-                                <div className='ms-4'>
-                                    Dirección:
-                                </div>
-
-                                <input type = "Ingresar Dirección"
-                                className='ms-4 form-control rounded'
-                                onChange={(f)=> setNewDireccion(f.target.value)}/>
-                            </div>
-                            <div className='col'>
-                                <div className='ms-4'>
-                                    Codigo Postal:
-                                </div>
-
-                                <input type = "Ingresar codigoPostal"
-                                className='ms-4 form-control rounded'
-                                onChange={(f)=> setNewCodigoPostal(Number(f.target.value))}/>
-                            </div>
-                        </div>        
-                        </div>        
-                    </div>
-                </div>
-                <div className='col-2 d-flex flex-row-reverse align-items-center'>
-                    
-                        <button className='btn btn-primary align-middle' 
-                        type='button'
-                        onClick={()=> {onSubmitDatos();
-                        }}>
-                            EDITAR DATOS
-                        </button>
-                </div>
-            </div>
-
-            <br/>
-            <div className='col-1 d-flex flex-row-reverse align-items-center'>
-                    
-                        <button className='btn btn-primary align-middle' 
-                        type='button'
-                        onClick={()=> {onSubmitDatos();
-                        }}>
-                            GUARDAR DATOS
-                        </button>
-                </div>
-            
         </div>
-      );
+        <table className="tablaInfo">           
+            <tr>
+                <td><h1 style={{fontSize:30, marginTop:30}}>Mi Perfil</h1></td>
+                <td><button class="cancelar">Cancelar</button></td>
+                <td><button class="guardar">Guardar</button></td>
+            </tr>
+        </table>
+        <hr></hr>
+        <br/><br/>
+        <h2 >Informacion Personal</h2>
+        <table>
+            <tr>
+                <td style={{width: "20%"}}><div className="Contenedor"><label class="label">Nombre</label><br/><input type="text" class="texto" name="" id="" /></div></td>
+                <td style={{width: "20%"}}><div className="Contenedor"><label class="label">Apellidos</label><br/><input type="text" class="texto" name="" id=""/></div></td>
+                <td style={{width: "20%"}}><div className="Contenedor"><label class="label">DNI</label><br/><input type="text" class="texto" name="" id=""/></div></td>
+                <td style={{width: "20%"}}><img src="https://img.freepik.com/premium-photo/blue-circle-with-man-s-head-circle-with-white-background_745528-3499.jpg" style={{ width: "50%" }} alt=""/></td></tr>
+            
+            <tr>
+            <td><div className="Contenedor"><label class="label">Correo</label><br/><input type="text" class="texto" name="" id=""/></div></td>
+                <td></td>
+                
+                <td><div className="Contenedor"><label class="label">Numero</label><br/><input type="text" class="texto" name="" id=""/></div></td>
+                <td>Adjuntar foto</td>
+            </tr>
+        </table>
+        <br/><br/>
+   </div>
+}
+
+
+
+function Datos(){
+
+    const [opt, setOpt] = useState(0)
+
+    let x
+    if (opt === 0){
+        x = <table className="tablaDatos"><br/>
+        <tr>
+            <td><div className="Contenedor"><br/><input type="text" class="texto3" name="" id=""/><label class="label3">Pais</label></div></td>
+        </tr>
+        <tr>
+            <td><div className="Contenedor"><label class="label3">Ciudad</label><br/><input type="password" class="texto3" name="" id=""/></div></td>
+            <td><div className="Contenedor"><label class="label3">Dirección</label><br/><input type="password" class="texto3" name="" id="" /></div></td>
+            <td><div className="Contenedor"><label class="label3">Codigo Postal</label><br/><input type="password" class="texto3" name="" id="" /></div></td>
+        </tr>
+        </table>
     }
+    else if(opt === 1){
+        x = <table className="tablaDatos"><br/>
+        <tr>
+            <td><div className="Contenedor"><label htmlFor="" class="label3" type="text" >Estudiante o trabajador</label><br/><input type="text" class="texto3"/></div></td>
+           
     
-    export default DatosdePerfil;
+            <td><div className="Contenedor"><label htmlFor="" class="label3">Te encuentras trabajando actualmente?</label><br/><input type="text" class="texto3" name="" id=""/></div></td>
+        </tr>
+        <tr>
+            <td><div className="Contenedor"><label class="label3">¿Cuanto es tu ingreso mensual?</label><br/><input type="text" class="texto3" name=""/></div></td>
+        </tr>   
+        </table>
+    }
+    else{
+        x = <table className="tablaDatos"><br/>
+            <tr><div className="Contenedor"><label class="label2">Empresa de trabajo</label><br/><input type="text" class="texto2" name=""/></div></tr>
+            <tr><div className="Contenedor"><label class="label2">Cuanto tiempo llevas ahi</label><br/><input type="text" class="texto2" name=""/></div></tr>
+            </table>
+    }
+    return <div><button className="datos" onClick={()=>setOpt(0)}>Lugar donde vive</button><button className="datos" onClick={()=>setOpt(1)}>Situación Actual</button><button className="datos" onClick={()=>setOpt(2)}>Lugar de trabajo</button>
+    {x}
+    </div>
+}
+
+function DatosdePerfil(){
+    return <div>
+        <div className = "row">
+            <div className = "col-md-11"><Info/>
+            </div>
+                <Datos/>
+        </div>
+    </div>
+    }
+
+export default DatosdePerfil
