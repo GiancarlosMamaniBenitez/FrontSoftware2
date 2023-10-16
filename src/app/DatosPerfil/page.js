@@ -2,7 +2,7 @@
 
 import { Tab } from "bootstrap"
 import { useState } from "react"
-import ".//perfil1.css"
+import ".//perfil.css"
 import Form from 'react-bootstrap/Form'
 
 
