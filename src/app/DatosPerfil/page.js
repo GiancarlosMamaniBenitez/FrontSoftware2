@@ -1,6 +1,6 @@
 'use client'
 
-import './perfil1.css';
+import './perfil.css';
 import ProgressBar from '../../components/ProgressBar.jsx';
 import Range from '../../components/Range.jsx';
 import { useState } from 'react';
