@@ -83,7 +83,7 @@ body{
 }
 
 .cancelar:hover {
-  color: white;
+  color: rgb(179, 235, 242);
   border-color: #3e79ee;
   background-color: #3e79ee;
 }
@@ -100,8 +100,8 @@ body{
 
 .Contenedor{
   position: relative;
-  height: 50px;
-  width: 250px;
+  height: 30px;
+  width: 200px;
   margin-bottom: 30px;
 }
 
@@ -111,8 +111,44 @@ body{
   padding: 20px;
 }
 
-
 /* Datos */
+
+.datos {
+    position:relative;
+    width: 120px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    color: black;
+    background-color: rgb(179, 235, 242);
+    border: 40px;
+    cursor: pointer;
+    order: 0;
+    flex-grow: 0;
+  }
+  
+  .datos:hover {
+    color: white;
+    border-color: #3e79ee;
+    background-color: #3e79ee;
+  }
+  
+  .datos:active {
+    border-color: #3e79ee;
+    background-color: #3e79ee;
+  }
+  
+  .datos:focus {
+    outline: none;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  }
+
+
+/* tablas Datos */
 .tablaDatos {
   
   height: 370px;
@@ -266,8 +302,7 @@ body{
   background-color: none;
   color: #723880;
   font-size: 16px;
-  transition: 0.5s;
-  z-index: 0;
+  
 }
 
 .label2 {
@@ -291,8 +326,7 @@ body{
   background-color: none;
   color: #723880;
   font-size: 16px;
-  transition: 0.5s;
-  z-index: 0;
+  
 }
 
 .contenido {
@@ -320,6 +354,4 @@ body{
 .col-1 d-flex flex-row-reverse align-items-center{
   margin-left: 150px;
 }
-
-
 
