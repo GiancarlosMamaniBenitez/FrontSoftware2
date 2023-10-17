@@ -1,6 +1,7 @@
 import Form from 'react-bootstrap/Form';
-
+import React, { useState } from 'react';
 function GastoActual() {
+  const [gastoValue, setGastoValue] = useState(5);
   return (
     <>
       <Form.Control
@@ -17,7 +18,7 @@ function GastoActual() {
         placeholder="Disabled readonly input"
         aria-label="Disabled input example"
         readOnly
-        value={'TIENES MUCHOS GASTOS'}
+        value={gastoValue}
       />
     </>
   );
