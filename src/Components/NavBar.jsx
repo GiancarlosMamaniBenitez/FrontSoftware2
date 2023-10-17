@@ -1,23 +1,31 @@
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
+import React, { useState } from 'react';
+import './navbar.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars, faUser } from '@fortawesome/free-solid-svg-icons';
+import Sidebar from './SideBar'; 
 
-function NavBar() {
+function NavBar(){
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
   return (
-    <>
-      <Navbar bg="dark" data-bs-theme="dark">
-        <Container>
-          <Navbar.Brand href="#home">Navbar</Navbar.Brand>
-          <Nav className="me-auto">
-            <Nav.Link href="/Login ">Home</Nav.Link>
-            <Nav.Link href="/IngresosGastos">Features</Nav.Link>
-            <Nav.Link href="/Terms">Pricing</Nav.Link>
-          </Nav>
-        </Container>
-      </Navbar>
-      <br />
+    <div className="navbar">
+      <button className="left-button" onClick={toggleSidebar}>
+        <FontAwesomeIcon icon={faBars} />
+      </button>
+      {isSidebarOpen && <Sidebar />}
+
       
-    </>
+      <div className="title">WiseWallet</div>
+      <button className="right-button">
+        <FontAwesomeIcon icon={faUser} />
+      </button>
+
+      
+
+    </div>
   );
 }
 

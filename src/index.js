@@ -9,16 +9,16 @@ import SignUp from './signup';
 import reportWebVitals from './reportWebVitals';
 import Congratulations from './congrats';
 import AddCard from './addCard';
-
+import NavBar from './Components/NavBar';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Router>
       <Routes>
+      <NavBar/>
       <Route path="/" caseSensitive={false} element={<Login />} />
       <Route path="/signup" caseSensitive={false} element={<SignUp />} />
-      <Route path="/terms-and-conditions" caseSensitive={false} element={<Terms />} />
       <Route path="/home" caseSensitive={false} element={<Home/>} />
       <Route path="/add-card" caseSensitive={false} element={<AddCard/>} />
       <Route path="/congrats" caseSensitive={false} element={<Congratulations/>}/>

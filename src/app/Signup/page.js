@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import Link from "next/link";
 /*import { Link } from "react-router-dom";*/
 import './signup.css';
-import myImage from "../../../imagenes/logo-colored.jpeg";
 
 
 const SignUp = () => {
@@ -29,7 +28,7 @@ const SignUp = () => {
   return (
     <div className="register-container">
       <h1>Sign Up for</h1>
-      <img src={myImage} alt="" />
+      <img src="https://cdn.discordapp.com/attachments/1025977476096204862/1162442035278659604/logo-name.jpeg?ex=653bf382&is=65297e82&hm=530a33fa80ce87770b863c679e0da9e2cfa806c99cfea4f8bf423de6a7ee639f&" alt="" />
 
       <input className="register-input" type="text" name="email" placeholder="Email" value={email} onChange={(event) => setEmail(event.target.value)} />
       <input className="register-input" type="text" name="username" placeholder="Username" value={username} onChange={(event) => setUsername(event.target.value)} />
@@ -49,8 +48,8 @@ const SignUp = () => {
         </Link>
       </button>
       <hr></hr>
-      <a className="terms">By selecting Create your new Account, you agree to our 
-        <Link href="/terms-and-conditions" className="terms">
+      <a className="terms">By selecting Create your new Account, you agree to our <a> </a>
+        <Link href="./Terms" className="terms">
           Terms and Conditions
         </Link>
       </a>

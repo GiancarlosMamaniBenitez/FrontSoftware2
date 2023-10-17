@@ -7,9 +7,9 @@ import VerticalMenu from './Components/VerticalMenu';
 const App = () => {
     return (
       <Router>
-        <div>
-          
-        </div>
+        <Routes>
+        <NavBar/>
+        </Routes>
       </Router>
     );
   }
