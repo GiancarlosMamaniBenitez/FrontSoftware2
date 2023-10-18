@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import NavBar from "@/Components/NavBar";
 
 const AddCard = () => {
@@ -10,6 +10,23 @@ const AddCard = () => {
   const [cardsname, setCardsname] = useState("");
   const [selectedCard, setSelectedCard] = useState("");
   const [error, setError] = useState(null);
+
+  // Cargar datos de tarjeta desde localStorage al acceder a la página
+  useEffect(() => {
+    const authenticatedUser = JSON.parse(localStorage.getItem("currentUser"));
+    const userCards = authenticatedUser && authenticatedUser.cards ? authenticatedUser.cards : [];
+    
+    if (userCards.length > 0) {
+      // Puedes cargar el primer elemento de userCards como ejemplo
+      const firstCard = userCards[0];
+      setCardsname(firstCard.cardsname);
+      setNumber(firstCard.number);
+      setMm(firstCard.mm);
+      setYyyy(firstCard.yyyy);
+      setCvv(firstCard.cvv);
+      setSelectedCard(firstCard.selectedCard);
+    }
+  }, []);
 
   const handleNumberChange = (event) => {
     const numericValue = event.target.value.replace(/\D/g, "").slice(0, 16);
@@ -41,15 +58,12 @@ const AddCard = () => {
   };
 
   const redirectToHome = () => {
-    window.location.href = "/Home";
+    window.location.href = "/VerTarjeta";
   };
 
   const checkIfCardExists = (cardData, authenticatedUser) => {
-    const usersData = JSON.parse(localStorage.getItem("usersData")) || {};
-
-    if (usersData[authenticatedUser.username]) {
-      const cards = usersData[authenticatedUser.username].cards;
-      if (cards.some((card) => card.number === cardData.number)) {
+    if (authenticatedUser && authenticatedUser.cards) {
+      if (authenticatedUser.cards.some((card) => card.number === cardData.number)) {
         setError("La tarjeta ya está asociada a tu cuenta.");
         return true;
       }
@@ -62,9 +76,8 @@ const AddCard = () => {
     event.preventDefault();
 
     if (validateFields()) {
-      const authenticatedUser = {
-        username: "usuario_ejemplo",
-      };
+      // Obtener el usuario autenticado desde el Local Storage
+      const authenticatedUser = JSON.parse(localStorage.getItem("currentUser"));
 
       const cardData = {
         number,
@@ -79,21 +92,18 @@ const AddCard = () => {
         return;
       }
 
-      const usersData = JSON.parse(localStorage.getItem("usersData")) || {};
+      // Agregar la nueva tarjeta al usuario autenticado
+      if (authenticatedUser) {
+        if (!authenticatedUser.cards) {
+          authenticatedUser.cards = [];
+        }
+        authenticatedUser.cards.push(cardData);
 
-      if (!usersData[authenticatedUser.username]) {
-        usersData[authenticatedUser.username] = {
-          cards: [],
-        };
+        localStorage.setItem("currentUser", JSON.stringify(authenticatedUser));
+
+        redirectToHome();
+        console.log("Registering new card:", cardData);
       }
-
-      usersData[authenticatedUser.username].cards.push(cardData);
-
-      localStorage.setItem("usersData", JSON.stringify(usersData));
-
-      redirectToHome();
-      console.log("Registering new card:", cardData);
-      console.log("User data:", usersData);
     }
   };
 

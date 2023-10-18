@@ -1,12 +1,7 @@
 import React from 'react';
 import './EliminarTarjeta.css';
 
-function ButtonEliminarTarjeta({ userCards, setUserCards }) {
-  const handleCardDeletion = (cardType) => {
-    // Agrega lógica para eliminar la tarjeta del usuario y actualizar el estado
-    // Asegúrate de manejar adecuadamente la eliminación de tarjetas.
-  };
-
+function ButtonEliminarTarjeta({ userCards, handleCardDeletion }) {
   return (
     <div>
       <div className="card-container">

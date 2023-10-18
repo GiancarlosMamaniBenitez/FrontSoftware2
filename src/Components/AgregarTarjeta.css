@@ -1,35 +1,39 @@
 /* AgregarTarjeta.css */
-
 .card-container {
-  display: flex; /* Muestra las opciones en línea */
-  align-items: center; /* Alinea verticalmente las opciones en el centro */
-  justify-content: space-between; /* Distribuye el espacio entre las opciones */
-  flex-wrap: wrap; /* Permite que las opciones se envuelvan si el espacio es insuficiente */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
 }
 
 .card-option {
-  margin: 10px; /* Agrega un margen entre las opciones */
-  display:inline-flex; /* Asegura que los elementos internos también estén en línea */
-  align-items: center; /* Alinea verticalmente los elementos internos */
- width: 30%;
-
-}
-
-.card-image-container {
-  margin-right: 10px; /* Aumenta el margen derecho entre la imagen y la casilla de verificación */
-}
-
-.card-checkbox {
-  width: 20px; /* Ajusta el ancho de la casilla de verificación según tus preferencias */
-  height: 20px; /* Ajusta el alto de la casilla de verificación según tus preferencias */
+  text-align: center;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
 .card-image {
-  width: 100px; /* Ajusta el ancho de la imagen según tus preferencias */
-  height: 60px; /* Ajusta el alto de la imagen según tus preferencias */
+  max-width: 100px;
+  max-height: 60px;
 }
 
-.form-container {
-  margin-top: 20px; /* Aumenta el margen superior del formulario */
-  width: 100%; /* Asegura que el formulario ocupe todo el ancho disponible */
+.card-button {
+  margin-top: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.card-button.selected {
+  background-color: #0056b3;
+}
+
+.card-button:hover {
+  background-color: #0056b3;
 }

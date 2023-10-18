@@ -1,5 +1,7 @@
+
 'use client'
 
+'use client'
 import Link from "next/link";
 import React, { useState } from "react";
 import './signup.css';
@@ -10,8 +12,8 @@ const SignUp = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [email, setEmail] = useState("");
   
-  // Inicializa el contador en 1
-  const [userCounter, setUserCounter] = useState(1);
+  // Obtén la lista de usuarios del Local Storage
+  const usersList = JSON.parse(localStorage.getItem("users")) || [];
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -23,19 +25,32 @@ const SignUp = () => {
       setPassword("");
       setConfirmPassword("");
     } else {
-      // Genera un ID único para el usuario utilizando el contador
-      const userId = userCounter;
+      // Genera un ID único para el usuario
+      const userId = usersList.length + 1;
 
-      // Almacena los datos en el Local Storage con el ID del usuario
-      localStorage.setItem("user_" + userId, JSON.stringify({ id: userId, username, password, email }));
+      // Crea un nuevo usuario
+      var user = {
+        id: userId,
+        username,
+        password,
+        email,
+        cards: [] // Agregar un array para almacenar las tarjetas asociadas al usuario
+      };
 
-      // Incrementa el contador para el próximo usuario
-      setUserCounter(userCounter + 1);
+      // Agrega el usuario a la lista de usuarios
+      usersList.push(user);
+
+      // Almacena la lista actualizada en el Local Storage
+      localStorage.setItem("users", JSON.stringify(usersList));
+
+      // Muestra la lista de usuarios en la consola
+      console.log("Lista de usuarios actualizada:", usersList);
 
       // Redirige al usuario a la página de confirmación después de un registro exitoso
       window.location.href = `/Congrats?userId=${userId}`;
     }
   };
+
   return (
     <div className="register-container">
       <h1>Sign Up for</h1>
