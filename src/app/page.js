@@ -3,15 +3,16 @@
 
 import Link from '../components/Link/Link.jsx';
 import NavBar from '@/components/NavBar';
-import MenuNuevo from './MenuNuevo';
+import MenuNuevo from '../Components/MenuNuevo.jsx';
 import Image from 'next/image';
 import './page.css';
+import NavBarInicio from './NavBarInicio.jsx';
 export default function Home() {
   return (
     
     <div>
 <div>
-<MenuNuevo/>
+<NavBarInicio/>
 </div>
 <div className='container'>
       <h1>Bienvenido</h1>
@@ -43,7 +44,6 @@ Nuestra misi√≥n es proporcionar a cada usuario una experiencia transparente y f√
     </div>
   );
 }
-
 
 
 

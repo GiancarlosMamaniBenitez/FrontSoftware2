@@ -3,7 +3,7 @@ import React from 'react';
 import Tarjeta from './TarjetaComp/Tarjeta';
 import TarjetaVisa from './TarjetaComp/TarjetaVisa';
 import TarjetaMC from './TarjetaComp/TarjetaMC';
-import MenuNuevo from '../MenuNuevo';
+import MenuNuevo from '../../Components/MenuNuevo';
 import useFetchTarjetas from '@/fetchs/useFetchTarjetas';
 import SaldoActual from '@/Components/SaldoActual';
 import GastoActual from '@/Components/GastoActual';

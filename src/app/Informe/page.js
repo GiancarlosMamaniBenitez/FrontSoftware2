@@ -1,5 +1,5 @@
 'use client'
-import MenuNuevo from "../MenuNuevo";
+import MenuNuevo from "../../Components/MenuNuevo";
 import './Info.css';
 function Informe(){
 

@@ -1,5 +1,5 @@
 'use client'
-import MenuNuevo from "../MenuNuevo";
+import MenuNuevo from "../../Components/MenuNuevo";
 import BotonActualizar from "@/Components/BotonActualizar";
 import actGast from './actGast.css';
 import FormularioGasto from "@/Components/FormularioGasto";

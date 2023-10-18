@@ -1,0 +1,35 @@
+/* AgregarTarjeta.css */
+
+.card-container {
+  display: flex; /* Muestra las opciones en línea */
+  align-items: center; /* Alinea verticalmente las opciones en el centro */
+  justify-content: space-between; /* Distribuye el espacio entre las opciones */
+  flex-wrap: wrap; /* Permite que las opciones se envuelvan si el espacio es insuficiente */
+}
+
+.card-option {
+  margin: 10px; /* Agrega un margen entre las opciones */
+  display:inline-flex; /* Asegura que los elementos internos también estén en línea */
+  align-items: center; /* Alinea verticalmente los elementos internos */
+ width: 30%;
+
+}
+
+.card-image-container {
+  margin-right: 10px; /* Aumenta el margen derecho entre la imagen y la casilla de verificación */
+}
+
+.card-checkbox {
+  width: 20px; /* Ajusta el ancho de la casilla de verificación según tus preferencias */
+  height: 20px; /* Ajusta el alto de la casilla de verificación según tus preferencias */
+}
+
+.card-image {
+  width: 100px; /* Ajusta el ancho de la imagen según tus preferencias */
+  height: 60px; /* Ajusta el alto de la imagen según tus preferencias */
+}
+
+.form-container {
+  margin-top: 20px; /* Aumenta el margen superior del formulario */
+  width: 100%; /* Asegura que el formulario ocupe todo el ancho disponible */
+}

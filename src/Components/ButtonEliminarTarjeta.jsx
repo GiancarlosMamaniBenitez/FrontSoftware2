@@ -1,110 +1,29 @@
-import Button from 'react-bootstrap/Button';
-import React, { useState } from "react";
-import Form from 'react-bootstrap/Form';
+import React from 'react';
+import './EliminarTarjeta.css';
 
-import Image from 'next/image';
+function ButtonEliminarTarjeta({ userCards, setUserCards }) {
+  const handleCardDeletion = (cardType) => {
+    // Agrega lógica para eliminar la tarjeta del usuario y actualizar el estado
+    // Asegúrate de manejar adecuadamente la eliminación de tarjetas.
+  };
 
-function ButtonEliminarTarjeta() {
   return (
     <div>
-      
-      <div>
-        <Form>
-        {[ 'radio'].map((type) => (
-          <div key={`inline-${type}`} className="mb-3">
-            
-            <div>
-            <img src="/TarjetaVisa.png" alt="TarjetaVisa" width="200" height="200" />
-            <Form.Check
-              inline
-              label=""
-              name="group1"
-              type={type}
-              id={`inline-${type}-4`}
-            />
+      <div className="card-container">
+        {userCards.map((cardType, index) => (
+          <div key={index} className="card-option">
+            <div className="card-image-container">
+              <img src={`/${cardType}.png`} alt={cardType} className="card-image" />
+              <button
+                onClick={() => handleCardDeletion(cardType)}
+                className="card-button"
+              >
+                Eliminar
+              </button>
             </div>
-            
-            <div>
-            <Image src="/TarjetaVisa.png" alt="TarjetaVisa" width="200" height="200" />
-            <Form.Check
-              inline
-              label=""
-              name="group1"
-              type={type}
-              id={`inline-${type}-4`}
-            />
-            </div>
-
-            <div>
-            <Image src="/Mastercard.jpeg" alt="Mastercard" width="200" height="200" />
-            <Form.Check
-              inline
-              label=""
-              name="group1"
-              type={type}
-              id={`inline-${type}-4`}
-            />
-            </div>
-
-            <div>
-            <img src="/AmericanExpress.jpeg" alt="AmericanExpress" width="200" height="200" />
-            <Form.Check
-              inline
-              label=""
-              name="group1"
-              type={type}
-              id={`inline-${type}-4`}
-            />
-            </div>
-
-            <div>
-            <img src="/DinersClub.png" alt="DinersClub" width="200" height="200" />
-            <Form.Check
-              inline
-              label=""
-              name="group1"
-              type={type}
-              id={`inline-${type}-4`}
-            />
-            </div>
-
-            <div>
-            <img src="/Maestro.jpeg" alt="Maestro" width="200" height="200" />
-            <Form.Check
-              inline
-              label=""
-              name="group1"
-              type={type}
-              id={`inline-${type}-4`}
-            />
-            </div>
-
-            <div>
-            <img src="/BCP.jpeg" alt="BCP" width="200" height="200" />
-            <Form.Check
-              inline
-              label=""
-              name="group1"
-              type={type}
-              id={`inline-${type}-4`}
-            />
-            </div>
-
-            
           </div>
         ))}
-        </Form>
-      
-      
-      
       </div>
-
-      <div>
-        <Button className="mb-2" variant="primary" size="lg">
-          ELIMINAR TARJETA
-      </Button>{' '}
-      </div>
-      
     </div>
   );
 }
