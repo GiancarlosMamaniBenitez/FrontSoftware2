@@ -1,62 +1,49 @@
 'use client'
-
-import Link from "next/link";
 import React, { useState } from "react";
-import './signup.css';
-import AuthService from "../AuthService";
+import './login.css';
+import Link from "next/link";
 
-const SignUp = () => {
+
+const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [email, setEmail] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (username === "" || password === "" || confirmPassword === "" || email === "") {
-      alert("Please complete all fields.");
-    } else if (password !== confirmPassword) {
-      alert("Passwords do not match.");
-      setPassword("");
-      setConfirmPassword("");
-    } else {
-      const newUser = AuthService.signup(username, password, email);
+    // Verificar credenciales y autenticar al usuario
+    const isAuthenticated = true; // Reemplaza con tu lógica de autenticación
 
-      if (newUser) {
-        window.location.href = `/Congrats?userId=${newUser.id}`;
-      } else {
-        alert("Username already exists. Please choose a different one.");
-      }
+    if (isAuthenticated) {
+      // Al autenticar con éxito, establecer una marca en el Local Storage
+      localStorage.setItem("userLoggedIn", "true");
+
+      // Redirigir al usuario a la página de inicio (Home)
+      window.location.href = "/Home";
+    } else {
+      alert("Credenciales incorrectas. Por favor, inténtalo de nuevo.");
     }
   };
   return (
-    <div className="register-container">
-      <h1>Sign Up for</h1>
-      <img src="https://cdn.discordapp.com/attachments/1025977476096204862/1162442035278659604/logo-name.jpeg?ex=653bf382&is=65297e82&hm=530a33fa80ce87770b863c679e0da9e2cfa806c99cfea4f8bf423de6a7ee639f&" alt="" />
-
-      <input className="register-input" type="text" name="email" placeholder="Email" value={email} onChange={(event) => setEmail(event.target.value)} />
-      <input className="register-input" type="text" name="username" placeholder="Username" value={username} onChange={(event) => setUsername(event.target.value)} />
-      <input className="register-input" type="password" name="password" placeholder="Password" value={password} onChange={(event) => setPassword(event.target.value)} />
-      <input className="register-input" type="password" name="confirmPassword" placeholder="Confirm Password" value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)} />
-      <button className="register-button" onClick={handleSubmit}>
-        Create your new Account
+    <>
+    <div className="login-container">
+      <img src="https://cdn.discordapp.com/attachments/1025977476096204862/1162442034884390962/logo-colored.jpeg?ex=653bf382&is=65297e82&hm=89132243369e55b33a9c51123383eeaa0f1f95e3116481e49d82043faab9a0fc&" alt="" />
+      <input className="login-input" type="text" name="username" placeholder="Username" value={username} onChange={(event) => setUsername(event.target.value)} />
+      <input className="login-input" type="password" name="password" placeholder="Password" value={password} onChange={(event) => setPassword(event.target.value)} />
+      <button className="login-button" onClick={handleSubmit}>
+        Sign in
       </button>
       <hr></hr>
-      <button className="already-button">
-        <Link href="/Login">
-          Already have an account?
-        </Link>
-      </button>
+      <Link href="/ForgotPassword" className="forgotpassword">Forgot password?</Link>
       <hr></hr>
-      <a className="terms">By selecting Create your new Account, you agree to our <a> </a>
-        <Link href="./Terms">
-          Terms and Conditions
-        </Link>
-      </a>
+      <button className="create-button">
+        <Link href="/Signup" className="create-link">Create new account</Link>
+      </button>
     </div>
+    </>
   );
 };
 
-export default SignUp;
+export default Login;
+
 
