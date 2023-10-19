@@ -2,8 +2,13 @@
 
 
 
+
 import React, { useState, useEffect } from "react";
 import NavBar from "@/Components/NavBar";
+
+
+
+import './addCard.css';
 
 const AddCard = () => {
   const [number, setNumber] = useState("");
@@ -13,6 +18,7 @@ const AddCard = () => {
   const [cardsname, setCardsname] = useState("");
   const [selectedCard, setSelectedCard] = useState("");
   const [error, setError] = useState(null);
+
   const [incomes, setIncomes] = useState([]);
   const [expenses, setExpenses] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -24,6 +30,7 @@ const AddCard = () => {
     const userCards = authenticatedUser.cards || [];
 
     if (userCards.length > 0) {
+
       const firstCard = userCards[0];
       setCardsname(firstCard.cardsname);
       setNumber(firstCard.number);
@@ -31,11 +38,13 @@ const AddCard = () => {
       setYyyy(firstCard.yyyy);
       setCvv(firstCard.cvv);
       setSelectedCard(firstCard.selectedCard);
+
       setIncomes(firstCard.incomes || []);
       setExpenses(firstCard.expenses || []);
       setCategories(firstCard.categories || []);
       setSpendingLimit(firstCard.spendingLimit || 0); // Cargar el límite de gasto
       setSavingsGoal(firstCard.savingsGoal || 0); // Cargar la meta de ahorro
+
     }
   }, []);
 
@@ -60,11 +69,13 @@ const AddCard = () => {
     setCvv(numericValue);
   };
 
+
   const addCategory = (categoryName) => {
     if (categoryName) {
       setCategories([...categories, categoryName]);
     }
   };
+
 
   const validateFields = () => {
     if (!cardsname || !number || !mm || !yyyy || !cvv) {
@@ -79,7 +90,9 @@ const AddCard = () => {
   };
 
   const checkIfCardExists = (cardData, authenticatedUser) => {
+
     if (authenticatedUser.cards) {
+
       if (authenticatedUser.cards.some((card) => card.number === cardData.number)) {
         setError("La tarjeta ya está asociada a tu cuenta.");
         return true;
@@ -89,9 +102,11 @@ const AddCard = () => {
     return false;
   };
 
+
   const handleSubmit = () => {
     if (validateFields()) {
       const authenticatedUser = JSON.parse(localStorage.getItem("currentUser")) || { cards: [] };
+
 
       const cardData = {
         number,
@@ -100,16 +115,19 @@ const AddCard = () => {
         cvv,
         cardsname,
         selectedCard,
+
         incomes,
         expenses,
         categories,
         spendingLimit, // Nuevo atributo
         savingsGoal, // Nuevo atributo
+
       };
 
       if (checkIfCardExists(cardData, authenticatedUser)) {
         return;
       }
+
 
       const existingCard = authenticatedUser.cards.find((card) => card.number === cardData.number);
       if (existingCard) {
@@ -126,6 +144,7 @@ const AddCard = () => {
 
       redirectToHome();
       console.log("Registering new card:", cardData);
+
     }
   };
 
@@ -188,9 +207,11 @@ const AddCard = () => {
           onChange={handleCvvChange}
         />
         <hr />
+
         
         
         <hr />
+
         <button className="add-button" onClick={handleSubmit}>
           Confirm
         </button>
