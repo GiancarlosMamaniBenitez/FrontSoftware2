@@ -1,0 +1,35 @@
+/* finances.css */
+
+/* Estilos para el contenedor principal */
+.finances-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Estilos para el título de la página */
+  h1 {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Estilos para el menú desplegable de selección de tarjeta */
+  select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 16px;
+  }
+  
+  /* Estilos para el gráfico de categorías */
+  .category-chart {
+    text-align: center;
+    margin: 20px 0;
+  }
+  
+  /* Estilos para otros gráficos */
+  .other-charts {
+    margin: 20px 0;
+  }
+  

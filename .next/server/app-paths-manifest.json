@@ -1,6 +1,0 @@
-{
-  "/ActualizarGastos/page": "app/ActualizarGastos/page.js",
-  "/IngresosGastos/page": "app/IngresosGastos/page.js",
-  "/ActualizarIngresos/page": "app/ActualizarIngresos/page.js",
-  "/VerTarjeta/page": "app/VerTarjeta/page.js"
-}

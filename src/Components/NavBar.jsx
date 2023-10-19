@@ -26,7 +26,7 @@ function NavBar(){
       
       <button className="right-button" onClick={perfil}>
         
-        <Link href='/DatosPerfil'><FontAwesomeIcon icon={faUser} /></Link>
+        <Link href='/Perfil'><FontAwesomeIcon icon={faUser} /></Link>
       </button>
 
       

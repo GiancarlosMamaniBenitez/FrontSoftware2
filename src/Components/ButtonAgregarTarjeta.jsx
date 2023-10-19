@@ -1,110 +1,44 @@
-import Button from 'react-bootstrap/Button';
-import React, { useState } from "react";
-import Form from 'react-bootstrap/Form';
-
-import Image from 'next/image';
+import React, { useState } from 'react';
+import './AgregarTarjeta.css';
+import Link from 'next/link';
 
 function ButtonAgregarTarjeta() {
+  const [selectedCard, setSelectedCard] = useState('');
+
+  const handleCardSelection = (cardType) => {
+    setSelectedCard(cardType);
+  };
+
   return (
     <div>
-      <div>
-        <Form>
-        {[ 'radio'].map((type) => (
-          <div key={`inline-${type}`} className="mb-3">
-            
-            <div>
-            <img src="/TarjetaVisa.png" alt="TarjetaVisa" width="200" height="200" />
-            <Form.Check
-              inline
-              label=""
-              name="group1"
-              type={type}
-              id={`inline-${type}-4`}
-            />
+      <div className="card-container">
+        {['TarjetaVisa', 'Mastercard', 'AmericanExpress', 'DinersClub'].map((cardType) => (
+          <div key={cardType} className="card-option">
+            <div className="card-image-container">
+              <img src={`/${cardType}.png`} alt={cardType} className="card-image" />
+              <button
+                onClick={() => handleCardSelection(cardType)}
+                className={`card-button ${selectedCard === cardType ? 'selected' : ''}`}
+              >
+                {selectedCard === cardType ? 'Seleccionada' : 'Seleccionar'}
+              </button>
             </div>
-            
-            <div>
-            <Image src="/TarjetaVisa.png" alt="TarjetaVisa" width="200" height="200" />
-            <Form.Check
-              inline
-              label=""
-              name="group1"
-              type={type}
-              id={`inline-${type}-4`}
-            />
-            </div>
-
-            <div>
-            <Image src="/Mastercard.jpeg" alt="Mastercard" width="200" height="200" />
-            <Form.Check
-              inline
-              label=""
-              name="group1"
-              type={type}
-              id={`inline-${type}-4`}
-            />
-            </div>
-
-            <div>
-            <img src="/AmericanExpress.jpeg" alt="AmericanExpress" width="200" height="200" />
-            <Form.Check
-              inline
-              label=""
-              name="group1"
-              type={type}
-              id={`inline-${type}-4`}
-            />
-            </div>
-
-            <div>
-            <img src="/DinersClub.png" alt="DinersClub" width="200" height="200" />
-            <Form.Check
-              inline
-              label=""
-              name="group1"
-              type={type}
-              id={`inline-${type}-4`}
-            />
-            </div>
-
-            <div>
-            <img src="/Maestro.jpeg" alt="Maestro" width="200" height="200" />
-            <Form.Check
-              inline
-              label=""
-              name="group1"
-              type={type}
-              id={`inline-${type}-4`}
-            />
-            </div>
-
-            <div>
-            <img src="/BCP.jpeg" alt="BCP" width="200" height="200" />
-            <Form.Check
-              inline
-              label=""
-              name="group1"
-              type={type}
-              id={`inline-${type}-4`}
-            />
-            </div>
-
-            
           </div>
         ))}
-        </Form>
-      
-      
-      
       </div>
-           
-
       <div>
-        <Button className="mb-2" variant="primary" size="lg">
-          REGISTRAR TARJETA
-      </Button>{' '}
+        <Link href={`/Add-card?cardType=${selectedCard}`}>
+          
+            <button
+              className="mb-2"
+              variant="primary"
+              size="lg"
+            >
+              ASOCIAR TARJETA
+            </button>
+          
+        </Link>
       </div>
-      
     </div>
   );
 }

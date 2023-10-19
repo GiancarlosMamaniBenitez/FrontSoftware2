@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from "react";
-import MenuNuevo from "../MenuNuevo";
+import MenuNuevo from "../../Components/MenuNuevo";
 import './Terminos.css'
 const Terms =() => {
     return(

@@ -6,7 +6,7 @@ body {
     width: 500px;
     margin: 0 auto;
     text-align: center;
-    display: flex;
+    display:flex;
     align-items: center;
     flex-direction: column;
     justify-content: space-between;
@@ -64,4 +64,8 @@ body {
     border-top: 1px solid #ccc; /* Add a solid line with color */
     
     width: 180px;
+  }
+  body{
+    text-align: center;
+    
   }

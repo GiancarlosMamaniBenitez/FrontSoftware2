@@ -1,0 +1,12 @@
+.card-image-container {
+    width: 200px; /* Ancho deseado para cada tarjeta */
+    height: 200px; /* Alto deseado para cada tarjeta */
+    display: inline-block; /* Hace que las tarjetas aparezcan una al lado de la otra */
+    margin-right: 10px; /* Espacio entre las tarjetas */
+  }
+  
+  .card-image {
+    max-width: 100%;
+    max-height: 100%;
+  }
+  
