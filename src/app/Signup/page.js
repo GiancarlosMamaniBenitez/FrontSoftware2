@@ -1,49 +1,84 @@
+
 'use client'
-import React, { useState } from "react";
-import './login.css';
+
+'use client'
 import Link from "next/link";
+import React, { useState } from "react";
+import './signup.css';
 
-
-const Login = () => {
+const SignUp = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [email, setEmail] = useState("");
+  
+  // Obtén la lista de usuarios del Local Storage
+  const usersList = JSON.parse(localStorage.getItem("users")) || [];
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    // Verificar credenciales y autenticar al usuario
-    const isAuthenticated = true; // Reemplaza con tu lógica de autenticación
-
-    if (isAuthenticated) {
-      // Al autenticar con éxito, establecer una marca en el Local Storage
-      localStorage.setItem("userLoggedIn", "true");
-
-      // Redirigir al usuario a la página de inicio (Home)
-      window.location.href = "/Home";
+    if (username === "" || password === "" || confirmPassword === "" || email === "") {
+      alert("Por favor, complete todos los campos.");
+    } else if (password !== confirmPassword) {
+      alert("Las contraseñas no coinciden.");
+      setPassword("");
+      setConfirmPassword("");
     } else {
-      alert("Credenciales incorrectas. Por favor, inténtalo de nuevo.");
+      // Genera un ID único para el usuario
+      const userId = usersList.length + 1;
+
+      // Crea un nuevo usuario
+      var user = {
+        id: userId,
+        username,
+        password,
+        email,
+        cards: [] // Agregar un array para almacenar las tarjetas asociadas al usuario
+      };
+
+      // Agrega el usuario a la lista de usuarios
+      usersList.push(user);
+
+      // Almacena la lista actualizada en el Local Storage
+      localStorage.setItem("users", JSON.stringify(usersList));
+
+      // Muestra la lista de usuarios en la consola
+      console.log("Lista de usuarios actualizada:", usersList);
+
+      // Redirige al usuario a la página de confirmación después de un registro exitoso
+      window.location.href = `/Congrats?userId=${userId}`;
     }
   };
+
   return (
-    <>
-    <div className="login-container">
-      <img src="https://cdn.discordapp.com/attachments/1025977476096204862/1162442034884390962/logo-colored.jpeg?ex=653bf382&is=65297e82&hm=89132243369e55b33a9c51123383eeaa0f1f95e3116481e49d82043faab9a0fc&" alt="" />
-      <input className="login-input" type="text" name="username" placeholder="Username" value={username} onChange={(event) => setUsername(event.target.value)} />
-      <input className="login-input" type="password" name="password" placeholder="Password" value={password} onChange={(event) => setPassword(event.target.value)} />
-      <button className="login-button" onClick={handleSubmit}>
-        Sign in
+    <div className="register-container">
+      <h1>Sign Up for</h1>
+      <img src="https://cdn.discordapp.com/attachments/1025977476096204862/1162442035278659604/logo-name.jpeg?ex=653bf382&is=65297e82&hm=530a33fa80ce87770b863c679e0da9e2cfa806c99cfea4f8bf423de6a7ee639f&" alt="" />
+
+      <input className="register-input" type="text" name="email" placeholder="Email" value={email} onChange={(event) => setEmail(event.target.value)} />
+      <input className="register-input" type="text" name="username" placeholder="Username" value={username} onChange={(event) => setUsername(event.target.value)} />
+      <input className="register-input" type="password" name="password" placeholder="Password" value={password} onChange={(event) => setPassword(event.target.value)} />
+      <input className="register-input" type="password" name="confirmPassword" placeholder="Confirm Password" value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)} />
+      <button className="register-button" onClick={handleSubmit}>
+        Create your new Account
       </button>
       <hr></hr>
-      <Link href="/ForgotPassword" className="forgotpassword">Forgot password?</Link>
-      <hr></hr>
-      <button className="create-button">
-        <Link href="/Signup" className="create-link">Create new account</Link>
+      <button className="already-button">
+        <Link href="/Login">
+          Already have an account?
+        </Link>
       </button>
+      <hr></hr>
+      <a className="terms">By selecting Create your new Account, you agree to our <a> </a>
+        <Link href="./Terms">
+          Terms and Conditions
+        </Link>
+      </a>
     </div>
-    </>
   );
 };
 
-export default Login;
+export default SignUp;
 
 
