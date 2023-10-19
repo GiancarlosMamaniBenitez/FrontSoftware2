@@ -1,4 +1,3 @@
-
 'use client'
 
 import Link from "next/link";
@@ -19,9 +18,7 @@ const SignUp = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-
     if (firstName === "" || lastName === "" || username === "" || password === "" || confirmPassword === "" || email === "") {
-
       alert("Por favor, complete todos los campos.");
     } else if (password !== confirmPassword) {
       alert("Las contraseñas no coinciden.");
@@ -34,10 +31,8 @@ const SignUp = () => {
       // Crea un nuevo usuario
       var user = {
         id: userId,
-
         firstName,
         lastName,
-
         username,
         password,
         email,
@@ -89,4 +84,3 @@ const SignUp = () => {
 };
 
 export default SignUp;
-

@@ -1,7 +1,6 @@
 'use client'
 
 
-
 import React, { useEffect } from 'react';
 import ButtonAgregarTarjeta from '@/Components/ButtonAgregarTarjeta';
 import ButtonEliminarTarjeta from '@/Components/ButtonEliminarTarjeta';
@@ -45,7 +44,6 @@ function VerTarjeta() {
       return;
     }
 
-
     const authenticatedUser = JSON.parse(localStorage.getItem("currentUser"));
 
     if (authenticatedUser) {
@@ -88,11 +86,9 @@ function VerTarjeta() {
                   </div>
                 </div>
               ))}
-
               {userCards.length < maxCardLimit && (
                 <ButtonAgregarTarjeta handleCardAddition={handleCardAddition} />
               )}
-
             </div>
           ) : (
             <div>

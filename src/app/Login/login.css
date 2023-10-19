@@ -3,10 +3,11 @@ body {
   }
 
 .login-container {
+     position: fixed;
     width: 500px;
     margin: 0 auto;
     text-align: center;
-    display:flex;
+    display: flex;
     align-items: center;
     flex-direction: column;
     justify-content: space-between;
@@ -14,8 +15,10 @@ body {
     margin: 20px;
     padding: 20px;
     background-color: white;
-    transform: translateX(60%) ;
+    top:50%;
+    left:50%;
     border-radius: 5px;
+    transform: translate(-50%, -50%);
   }
   .forgotpassword{
     text-decoration: none !important ;  

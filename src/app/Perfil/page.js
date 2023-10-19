@@ -1,16 +1,13 @@
 'use client'
-
-
-
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import "./perfil.css"; // Asegúrate de importar el archivo CSS
+import "./perfil.css";
 
 const Profile = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState("******");
   const [email, setEmail] = useState("");
   const [isEditing, setIsEditing] = useState(false);
 
@@ -22,7 +19,6 @@ const Profile = () => {
       setFirstName(authenticatedUser.firstName);
       setLastName(authenticatedUser.lastName);
       setUsername(authenticatedUser.username);
-      setPassword(authenticatedUser.password);
       setEmail(authenticatedUser.email);
     }
   }, []);
@@ -40,7 +36,6 @@ const Profile = () => {
       authenticatedUser.firstName = firstName;
       authenticatedUser.lastName = lastName;
       authenticatedUser.username = username;
-      authenticatedUser.password = password;
       authenticatedUser.email = email;
 
       localStorage.setItem("currentUser", JSON.stringify(authenticatedUser));
@@ -91,15 +86,7 @@ const Profile = () => {
       </div>
       <div className="profile-details">
         <label>Password:</label>
-        {isEditing ? (
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        ) : (
-          <span>*******</span>
-        )}
+        <span>*******</span>
       </div>
       <div className="profile-details">
         <label>Email:</label>
@@ -123,11 +110,9 @@ const Profile = () => {
             Edit
           </button>
         )}
-        <hr />
         <Link href="/Home">
-        <button className="edit-button">
-          Regresar
-        </button></Link>
+          <button className="edit-button">Regresar</button>
+        </Link>
       </div>
     </div>
   );

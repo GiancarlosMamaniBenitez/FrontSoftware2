@@ -1,0 +1,140 @@
+/*
+CSS de page.js
+*/
+
+.main {
+  display: flex;
+}
+
+.inte{
+  position: absolute;
+  padding-top: 10vw;
+  padding-left: 40vw;
+
+}
+
+.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Esto centrará horizontal y verticalmente el contenido dentro del div 'centered' */
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Establece la altura al 100% de la ventana */
+  width: 1000px;
+}
+.login{
+  text-align: left;
+  position: relative;
+  align-items: left;
+  left: 50%;
+  bottom:-50%;
+  font-size: 20px;
+
+}
+.red {
+  background-color: white; /* Color blanco para la parte suérior */
+  height: 10%; 
+  display: flex;
+  justify-content: left;
+  align-items: right;
+  width: 1000px;
+}
+.SNosotros {
+  text-align: left;
+  position: relative;
+  color:rgb(7, 7, 7);
+  font-size: 12px;
+  left: 24%;
+  bottom:-160%;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}.PorqueE {
+  text-align: left;
+  position: relative;
+  color:rgb(5, 5, 5);
+  font-size: 12px;
+  left: 2%;
+  left: 20%;
+  bottom:-160%;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}
+
+.content {
+  background-color: #00a1e1; /* Color celeste para la parte inferior */
+  height: 75%; /* Tres cuartos de la altura de la ventana */
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin-right: auto;
+  width: 1000px;
+  
+}
+
+.centeredText {
+  text-align: center; /* Centrar horizontalmente el texto */
+  position: relative;
+  z-index: 2; /* Un valor de z-index mayor que el del fondo */
+  text-align: left; /* Alineación a la izquierda */
+  color: #ffffff; /* Color blanco del texto */
+  width: 50%;
+  left: 2%;
+  bottom: 15%;
+  font-size: 24px;
+}
+
+.centeredText2 {
+  text-align: left;
+  position: relative;
+  color:rgb(113, 94, 69);
+  font-size: 25px;
+  left: 6%;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+}
+
+.Idioma {
+  text-align: left;
+  position: relative;
+  color:rgb(10, 180, 248);
+  font-size: 15px;
+  left: 2%;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+}
+
+.Terminos {
+  text-align: center; /* Centrar horizontalmente el texto */
+  position: relative;
+  bottom: 0%;
+  z-index: 2; /* Un valor de z-index mayor que el del fondo */
+  text-align: left; /* Alineación a la izquierda */
+  color: #ffffff; /* Color blanco del texto */
+  left: 2%;
+  bottom: 15%;
+  font-size: 15px;
+
+}
+
+.miBoton1 {
+  background-color: #e9b85b; /* Color de fondo del botón */
+  color: #080808; /* Color del texto */
+  border: none; /* Elimina el borde */
+  padding: 15px 25px; /* Espaciado interno (arriba/abajo y izquierda/derecha) */
+  border-radius: 10px; /* Borde redondeado */
+  cursor: pointer; /* Cambia el cursor al pasar el ratón por encima */
+}
+
+.miBoton2 {
+  background-color: #e9813c; /* Color de fondo del botón */
+  color: #080808; /* Color del texto */
+  border: none; /* Elimina el borde */
+  padding: 15px 25px; /* Espaciado interno (arriba/abajo y izquierda/derecha) */
+  border-radius: 10px; /* Borde redondeado */
+  cursor: pointer; /* Cambia el cursor al pasar el ratón por encima */
+}
+

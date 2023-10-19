@@ -9,7 +9,13 @@ import Link from "next/link";
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  
+  
+  const generateRandomPassword = () => {
+    // Generar una contraseña aleatoria de 5 dígitos
+    const newPassword = Math.floor(10000 + Math.random() * 90000).toString();
+    setNewPassword(newPassword);
+  };
   const handleSubmit = (event) => {
     event.preventDefault();
 

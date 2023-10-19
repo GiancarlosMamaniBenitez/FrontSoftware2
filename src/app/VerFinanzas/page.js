@@ -1,13 +1,19 @@
+'use client'
+
+
+
+
 import React, { useState, useEffect } from "react";
 import NavBar from "@/Components/NavBar";
 import "./finances.css"; // Importar el archivo CSS
-import Chart from 'chart.js/auto'; // Importar Chart.js
 
 const Finances = () => {
   const [selectedCard, setSelectedCard] = useState("");
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("currentUser")));
   const [userCards, setUserCards] = useState(user?.cards || []);
-
+  const [totalIncomes, setTotalIncomes] = useState(0);
+  const [totalExpensesByCategory, setTotalExpensesByCategory] = useState({});
+  const [recentIncomes, setRecentIncomes] = useState([]);
   const [newExpense, setNewExpense] = useState(0);
   const [expenseCategory, setExpenseCategory] = useState("");
   const [newIncome, setNewIncome] = useState(0);
@@ -15,11 +21,20 @@ const Finances = () => {
   const [spendingLimit, setSpendingLimit] = useState(0);
   const [savingsGoal, setSavingsGoal] = useState(0);
   const [warning, setWarning] = useState("");
-
-  const [totalIncomes, setTotalIncomes] = useState(0);
-  const [totalExpensesByCategory, setTotalExpensesByCategory] = useState({});
-  const [recentIncomes, setRecentIncomes] = useState([]);
   const [recentExpenses, setRecentExpenses] = useState([]);
+  const [currentIncomesAndExpenses, setCurrentIncomesAndExpenses] = useState({
+    incomes: [],
+    expenses: [],
+  });
+  const [hasExceededSpendingLimit, setHasExceededSpendingLimit] = useState(false); // Nueva variable de estado
+
+  function getCurrentDate() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }
 
   const getCurrentIncomesAndExpenses = () => {
     if (selectedCard) {
@@ -35,14 +50,34 @@ const Finances = () => {
     return { incomes: [], expenses: [] };
   };
 
-  const [currentIncomesAndExpenses, setCurrentIncomesAndExpenses] = useState(getCurrentIncomesAndExpenses());
-
   useEffect(() => {
     setCurrentIncomesAndExpenses(getCurrentIncomesAndExpenses());
   }, [selectedCard, userCards]);
 
   useEffect(() => {
     calculateTotals();
+    checkSpendingLimit(); // Mover esta llamada aquí
+  }, [currentIncomesAndExpenses]);
+
+  const checkSpendingLimit = () => {
+    if (selectedCard && spendingLimit > 0) {
+      const currentExpenses = currentIncomesAndExpenses.expenses;
+      const totalExpensesAmount = currentExpenses.reduce(
+        (total, expense) => total + expense.amount,
+        0
+      );
+
+      if (totalExpensesAmount > spendingLimit) {
+        setHasExceededSpendingLimit(true);
+      } else {
+        setHasExceededSpendingLimit(false);
+      }
+    }
+  };
+
+  useEffect(() => {
+    calculateTotals();
+    checkSpendingLimit(); // Mover esta llamada aquí
   }, [currentIncomesAndExpenses]);
 
   const handleSelectedCardChange = (event) => {
@@ -55,7 +90,7 @@ const Finances = () => {
   };
 
   const addNewExpense = () => {
-    if (newExpense > 0 && selectedCard && expenseCategory) {
+    if (newExpense > 0 && selectedCard && expenseCategory && !hasExceededSpendingLimit) {
       const updatedUserCards = [...userCards];
       const cardIndex = updatedUserCards.findIndex((card) => card.number === selectedCard);
       if (cardIndex !== -1) {
@@ -75,6 +110,7 @@ const Finances = () => {
           { id: expenseId, amount: newExpense, category: expenseCategory },
         ];
         setUserCards(updatedUserCards);
+        saveExpenseToLocalStorage(newExpense, expenseCategory); // Almacena el gasto
         localStorage.setItem("currentUser", JSON.stringify({ ...user, cards: updatedUserCards }));
         setCurrentIncomesAndExpenses(getCurrentIncomesAndExpenses());
         setNewExpense(0);
@@ -141,6 +177,7 @@ const Finances = () => {
 
     setTotalExpensesByCategory(expensesByCategory);
 
+    // Mostrar solo los 3 últimos ingresos y gastos
     const sortedIncomes = incomes.slice().sort((a, b) => b.id - a.id);
     const sortedExpenses = expenses.slice().sort((a, b) => b.id - a.id);
 
@@ -173,67 +210,36 @@ const Finances = () => {
     }
   };
 
-  useEffect(() => {
-    // Calcula los datos para el gráfico de gastos por categoría
-    const expensesData = calculateExpensesData();
+  const saveExpenseToLocalStorage = (amount, category) => {
+    const currentDate = getCurrentDate();
+    const currentMonth = currentDate.slice(0, 7);
+    const dailyData = JSON.parse(localStorage.getItem("dailyData")) || {};
 
-    // Dibuja el gráfico de gastos por categoría
-    drawExpensesChart(expensesData);
+    if (!dailyData[currentDate]) {
+      dailyData[currentDate] = { expenses: {} };
+    }
 
-    // Calcula los datos para el gráfico de ingresos en el tiempo
-    const incomesData = calculateIncomesData();
+    if (!dailyData[currentDate].expenses[category]) {
+      dailyData[currentDate].expenses[category] = amount;
+    } else {
+      dailyData[currentDate].expenses[category] += amount;
+    }
 
-    // Dibuja el gráfico de ingresos en el tiempo
-    drawIncomesChart(incomesData);
-  }, [currentIncomesAndExpenses]);
+    localStorage.setItem("dailyData", JSON.stringify(dailyData));
 
-  const calculateExpensesData = () => {
-    const categories = Object.keys(totalExpensesByCategory);
-    const amounts = Object.values(totalExpensesByCategory);
-    return { categories, amounts };
-  };
+    const monthlyData = JSON.parse(localStorage.getItem("monthlyData")) || {};
 
-  const drawExpensesChart = (data) => {
-    const ctx = document.getElementById('expenses-chart');
-    new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: data.categories,
-        datasets: [
-          {
-            label: 'Total Expenses',
-            data: data.amounts,
-            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-            borderColor: 'rgba(75, 192, 192, 1)',
-            borderWidth: 1,
-          },
-        ],
-      },
-    });
-  };
+    if (!monthlyData[currentMonth]) {
+      monthlyData[currentMonth] = { incomes: 0, expenses: {} };
+    }
 
-  const calculateIncomesData = () => {
-    const labels = recentIncomes.map((income) => `Income ${income.id}`);
-    const amounts = recentIncomes.map((income) => income.amount);
-    return { labels, amounts };
-  };
+    if (!monthlyData[currentMonth].expenses[category]) {
+      monthlyData[currentMonth].expenses[category] = amount;
+    } else {
+      monthlyData[currentMonth].expenses[category] += amount;
+    }
 
-  const drawIncomesChart = (data) => {
-    const ctx = document.getElementById('incomes-chart');
-    new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: data.labels,
-        datasets: [
-          {
-            label: 'Incomes Over Time',
-            data: data.amounts,
-            borderColor: 'blue',
-            fill: false,
-          },
-        ],
-      },
-    });
+    localStorage.setItem("monthlyData", JSON.stringify(monthlyData));
   };
 
   return (
@@ -254,7 +260,15 @@ const Finances = () => {
         {selectedCard && (
           <div>
             <h2>Card: {selectedCard}</h2>
-
+            <div className="add-income">
+              <input
+                type="number"
+                value={newIncome}
+                onChange={(e) => setNewIncome(parseFloat(e.target.value))}
+                placeholder="Enter New Income"
+              />
+              <button onClick={addNewIncome}>Add Income</button>
+            </div>
             <div className="add-expense">
               <input
                 type="number"
@@ -273,18 +287,9 @@ const Finances = () => {
                   </option>
                 ))}
               </select>
+              {hasExceededSpendingLimit && <p className="warning">Has superado tu límite de gasto.</p>}
               {warning && <p className="warning">{warning}</p>}
               <button onClick={addNewExpense}>Add Expense</button>
-            </div>
-
-            <div className="add-income">
-              <input
-                type="number"
-                value={newIncome}
-                onChange={(e) => setNewIncome(parseFloat(e.target.value))}
-                placeholder="Enter New Income"
-              />
-              <button onClick={addNewIncome}>Add Income</button>
             </div>
 
             <div className="add-category">
@@ -332,7 +337,7 @@ const Finances = () => {
                 ))}
               </ul>
             </div>
-
+            {/* Agregando límite de gasto y meta de ahorro */}
             <div>
               <h3>Spending Limit:</h3>
               <input
@@ -349,14 +354,6 @@ const Finances = () => {
                 onChange={handleSavingsGoalChange}
                 placeholder="Enter Savings Goal"
               />
-            </div>
-
-            <div className="chart-container">
-              <canvas id="expenses-chart" width={400} height={200}></canvas>
-            </div>
-
-            <div className="chart-container">
-              <canvas id="incomes-chart" width={400} height={200}></canvas>
             </div>
           </div>
         )}

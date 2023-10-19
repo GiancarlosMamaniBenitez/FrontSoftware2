@@ -1,3 +1,12 @@
+.main-container {
+  transition: margin-left 0.3s;
+}
+
+.main-container.pushed {
+  margin-left: 250px; /* Ajusta este valor según el ancho de tu Sidebar */
+}
+
+
 .Vertical{
    
   

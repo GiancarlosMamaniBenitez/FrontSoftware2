@@ -1,50 +1,60 @@
-/* styles.css */
+/* perfil.css */
+
+body {
+  background: linear-gradient(135deg, #007BFF, #0056b3);
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
 
 .profile-container {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f8f8f8;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .profile-details {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-  }
-  
-  label {
-    font-weight: bold;
-    flex: 1;
-  }
-  
-  span,
-  input {
-    flex: 2;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-  }
-  
-  button {
-    display: block;
-    margin: 10px 0;
-    padding: 10px 20px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    align-items: center;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
- 
-  
+  width: 1000px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profile-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.profile-details input[type="text"],
+.profile-details input[type="password"],
+.profile-details span {
+  width: 60%;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none; /* Elimina el borde al hacer clic */
+}
+
+.profile-details span {
+  text-align: left;
+}
+
+.profile-actions {
+  margin-top: 20px;
+}
+
+.edit-button,
+.save-button {
+  background: #007BFF;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 5px;
+  transition: background-color 0.3s ease;
+}
+
+.edit-button:hover,
+.save-button:hover {
+  background: #0056b3;
+}
