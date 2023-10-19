@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect } from "react";
 import NavBar from "@/Components/NavBar";
-
+import './addCard.css';
 const AddCard = () => {
   const [number, setNumber] = useState("");
   const [mm, setMm] = useState("");
