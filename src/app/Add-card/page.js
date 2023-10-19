@@ -1,7 +1,15 @@
 'use client'
+
+
+
+
 import React, { useState, useEffect } from "react";
 import NavBar from "@/Components/NavBar";
+
+
+
 import './addCard.css';
+
 const AddCard = () => {
   const [number, setNumber] = useState("");
   const [mm, setMm] = useState("");
@@ -11,13 +19,18 @@ const AddCard = () => {
   const [selectedCard, setSelectedCard] = useState("");
   const [error, setError] = useState(null);
 
-  // Cargar datos de tarjeta desde localStorage al acceder a la página
+  const [incomes, setIncomes] = useState([]);
+  const [expenses, setExpenses] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [spendingLimit, setSpendingLimit] = useState(0); // Nuevo estado para el límite de gasto
+  const [savingsGoal, setSavingsGoal] = useState(0); // Nuevo estado para la meta de ahorro
+
   useEffect(() => {
-    const authenticatedUser = JSON.parse(localStorage.getItem("currentUser"));
-    const userCards = authenticatedUser && authenticatedUser.cards ? authenticatedUser.cards : [];
-    
+    const authenticatedUser = JSON.parse(localStorage.getItem("currentUser")) || { cards: [] };
+    const userCards = authenticatedUser.cards || [];
+
     if (userCards.length > 0) {
-      // Puedes cargar el primer elemento de userCards como ejemplo
+
       const firstCard = userCards[0];
       setCardsname(firstCard.cardsname);
       setNumber(firstCard.number);
@@ -25,6 +38,13 @@ const AddCard = () => {
       setYyyy(firstCard.yyyy);
       setCvv(firstCard.cvv);
       setSelectedCard(firstCard.selectedCard);
+
+      setIncomes(firstCard.incomes || []);
+      setExpenses(firstCard.expenses || []);
+      setCategories(firstCard.categories || []);
+      setSpendingLimit(firstCard.spendingLimit || 0); // Cargar el límite de gasto
+      setSavingsGoal(firstCard.savingsGoal || 0); // Cargar la meta de ahorro
+
     }
   }, []);
 
@@ -49,6 +69,14 @@ const AddCard = () => {
     setCvv(numericValue);
   };
 
+
+  const addCategory = (categoryName) => {
+    if (categoryName) {
+      setCategories([...categories, categoryName]);
+    }
+  };
+
+
   const validateFields = () => {
     if (!cardsname || !number || !mm || !yyyy || !cvv) {
       setError("Por favor, complete todos los campos.");
@@ -62,7 +90,9 @@ const AddCard = () => {
   };
 
   const checkIfCardExists = (cardData, authenticatedUser) => {
-    if (authenticatedUser && authenticatedUser.cards) {
+
+    if (authenticatedUser.cards) {
+
       if (authenticatedUser.cards.some((card) => card.number === cardData.number)) {
         setError("La tarjeta ya está asociada a tu cuenta.");
         return true;
@@ -72,12 +102,11 @@ const AddCard = () => {
     return false;
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
 
+  const handleSubmit = () => {
     if (validateFields()) {
-      // Obtener el usuario autenticado desde el Local Storage
-      const authenticatedUser = JSON.parse(localStorage.getItem("currentUser"));
+      const authenticatedUser = JSON.parse(localStorage.getItem("currentUser")) || { cards: [] };
+
 
       const cardData = {
         number,
@@ -86,24 +115,36 @@ const AddCard = () => {
         cvv,
         cardsname,
         selectedCard,
+
+        incomes,
+        expenses,
+        categories,
+        spendingLimit, // Nuevo atributo
+        savingsGoal, // Nuevo atributo
+
       };
 
       if (checkIfCardExists(cardData, authenticatedUser)) {
         return;
       }
 
-      // Agregar la nueva tarjeta al usuario autenticado
-      if (authenticatedUser) {
-        if (!authenticatedUser.cards) {
-          authenticatedUser.cards = [];
-        }
+
+      const existingCard = authenticatedUser.cards.find((card) => card.number === cardData.number);
+      if (existingCard) {
+        existingCard.incomes = cardData.incomes;
+        existingCard.expenses = cardData.expenses;
+        existingCard.categories = cardData.categories;
+        existingCard.spendingLimit = cardData.spendingLimit; // Actualizar el límite de gasto
+        existingCard.savingsGoal = cardData.savingsGoal; // Actualizar la meta de ahorro
+      } else {
         authenticatedUser.cards.push(cardData);
-
-        localStorage.setItem("currentUser", JSON.stringify(authenticatedUser));
-
-        redirectToHome();
-        console.log("Registering new card:", cardData);
       }
+
+      localStorage.setItem("currentUser", JSON.stringify(authenticatedUser));
+
+      redirectToHome();
+      console.log("Registering new card:", cardData);
+
     }
   };
 
@@ -166,6 +207,11 @@ const AddCard = () => {
           onChange={handleCvvChange}
         />
         <hr />
+
+        
+        
+        <hr />
+
         <button className="add-button" onClick={handleSubmit}>
           Confirm
         </button>

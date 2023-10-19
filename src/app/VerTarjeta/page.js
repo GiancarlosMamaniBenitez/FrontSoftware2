@@ -1,6 +1,8 @@
 'use client'
+
+
+
 import React, { useEffect } from 'react';
-import Link from 'next/link'; // Importa el componente Link
 import ButtonAgregarTarjeta from '@/Components/ButtonAgregarTarjeta';
 import ButtonEliminarTarjeta from '@/Components/ButtonEliminarTarjeta';
 import MenuNuevo from '@/Components/MenuNuevo';
@@ -8,13 +10,12 @@ import { useState } from 'react';
 
 function VerTarjeta() {
   const [userCards, setUserCards] = useState([]);
+  const maxCardLimit = 5;
 
   useEffect(() => {
-    // Verificar si el usuario ha iniciado sesión
     const userIsLoggedIn = localStorage.getItem("userLoggedIn") === "true";
 
     if (userIsLoggedIn) {
-      // Obtener los datos del usuario autenticado desde el Local Storage
       const authenticatedUser = JSON.parse(localStorage.getItem("currentUser"));
 
       if (authenticatedUser && authenticatedUser.cards) {
@@ -24,7 +25,6 @@ function VerTarjeta() {
   }, []);
 
   const handleCardDeletion = (cardType) => {
-    // Eliminar una tarjeta por su tipo
     const updatedUserCards = userCards.filter((card) => card.type !== cardType);
     const authenticatedUser = JSON.parse(localStorage.getItem("currentUser"));
 
@@ -36,18 +36,16 @@ function VerTarjeta() {
   };
 
   const handleCardDetails = (cardType) => {
-    // Redirige a la página de edición de la tarjeta
-    // La URL incluirá el tipo de tarjeta como un parámetro
     window.location.href = `/Edit-card?cardType=${cardType}`;
   };
 
   const handleCardAddition = (cardType) => {
-    if (userCards.length >= 5) {
+    if (userCards.length >= maxCardLimit) {
       alert('No puedes agregar más de 5 tarjetas.');
       return;
     }
 
-    // Agregar una tarjeta al usuario autenticado
+
     const authenticatedUser = JSON.parse(localStorage.getItem("currentUser"));
 
     if (authenticatedUser) {
@@ -90,6 +88,11 @@ function VerTarjeta() {
                   </div>
                 </div>
               ))}
+
+              {userCards.length < maxCardLimit && (
+                <ButtonAgregarTarjeta handleCardAddition={handleCardAddition} />
+              )}
+
             </div>
           ) : (
             <div>
