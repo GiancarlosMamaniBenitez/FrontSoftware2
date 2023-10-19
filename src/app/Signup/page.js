@@ -1,56 +1,35 @@
-
 'use client'
 
-'use client'
 import Link from "next/link";
 import React, { useState } from "react";
 import './signup.css';
+import AuthService from "../AuthService";
 
 const SignUp = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [email, setEmail] = useState("");
-  
-  // Obtén la lista de usuarios del Local Storage
-  const usersList = JSON.parse(localStorage.getItem("users")) || [];
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     if (username === "" || password === "" || confirmPassword === "" || email === "") {
-      alert("Por favor, complete todos los campos.");
+      alert("Please complete all fields.");
     } else if (password !== confirmPassword) {
-      alert("Las contraseñas no coinciden.");
+      alert("Passwords do not match.");
       setPassword("");
       setConfirmPassword("");
     } else {
-      // Genera un ID único para el usuario
-      const userId = usersList.length + 1;
+      const newUser = AuthService.signup(username, password, email);
 
-      // Crea un nuevo usuario
-      var user = {
-        id: userId,
-        username,
-        password,
-        email,
-        cards: [] // Agregar un array para almacenar las tarjetas asociadas al usuario
-      };
-
-      // Agrega el usuario a la lista de usuarios
-      usersList.push(user);
-
-      // Almacena la lista actualizada en el Local Storage
-      localStorage.setItem("users", JSON.stringify(usersList));
-
-      // Muestra la lista de usuarios en la consola
-      console.log("Lista de usuarios actualizada:", usersList);
-
-      // Redirige al usuario a la página de confirmación después de un registro exitoso
-      window.location.href = `/Congrats?userId=${userId}`;
+      if (newUser) {
+        window.location.href = `/Congrats?userId=${newUser.id}`;
+      } else {
+        alert("Username already exists. Please choose a different one.");
+      }
     }
   };
-
   return (
     <div className="register-container">
       <h1>Sign Up for</h1>
@@ -80,3 +59,4 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
