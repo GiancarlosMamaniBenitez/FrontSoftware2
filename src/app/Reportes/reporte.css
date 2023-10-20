@@ -1,14 +1,10 @@
-/* finances.css */
-body{
-  background-color: #84b6f4;
-}
+
 /* Estilos para el contenedor principal */
-.reports-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-  }
+.Contenedor {
   
+   text-align: center;
+   content: center;
+  }
   /* Estilos para el título de la página */
   h1 {
     font-size: 24px;
@@ -16,6 +12,8 @@ body{
     margin-bottom: 20px;
   }
   
+
+
   /* Estilos para el menú desplegable de selección de tarjeta */
   select {
     width: 100%;
@@ -35,14 +33,8 @@ body{
     margin: 20px 0;
   }
   
-  .generate-button{
-    background-color: rgb(252,157,157);
-    color: #fff;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    width: 180px;
-    font-weight: bold;
-    
+  .form-select{
+    width: auto;
+    color: blue;
+    border-color: blue;
   }
