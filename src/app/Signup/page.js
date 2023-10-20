@@ -3,7 +3,10 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import './signup.css';
-
+import {auth} from '../../config/Backend'
+import {db} from '../../config/Backend'
+import {doc, setDoc} from 'firebase/firestore'
+import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 const SignUp = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -13,13 +16,44 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
 
   const nameRegex = /^[A-Za-z]+$/;
-  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{5,}$/;
+  
+  function registrarUsuario(email,password, firstName, lastName, username) {
+    createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // Signed in 
+      const user = userCredential.user;
+      // ...
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // ..
+    });
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // User is signed in, see docs for a list of available properties
+      // https://firebase.google.com/docs/reference/js/auth.user
+      
+      const uid = user.uid;
+      const docuRef = doc(db, `Usuario/${uid}`)
+      setDoc(docuRef, {email: email, firstName :firstName, lastName :lastName, username :username})
+      window.location.href = `/Congrats?userId=${uid}`;
+      // ...
+    } else {
+      // User is signed out
+      // ...
+      console.log("no se creo la cuenta")
+    }
+  });
 
-  const usersList = JSON.parse(localStorage.getItem("users")) || [];
+    
+  }
+  //const usersList = JSON.parse(localStorage.getItem("users")) || [];
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
+    registrarUsuario(email,password, firstName, lastName, username);
+/*
     if (firstName === "" || lastName === "" || username === "" || password === "" || confirmPassword === "" || email === "") {
       alert("Por favor, complete todos los campos.");
     } else if (!nameRegex.test(firstName) || !nameRegex.test(lastName)) {
@@ -41,12 +75,13 @@ const SignUp = () => {
         email,
         cards: []
       };
-
+      
       usersList.push(user);
       localStorage.setItem("users", JSON.stringify(usersList));
       console.log("Lista de usuarios actualizada:", usersList);
+      registrarUsuario(email,password, firstName, lastName, username);
       window.location.href = `/Congrats?userId=${userId}`;
-    }
+    }*/
   };
 
   return (
@@ -98,16 +133,15 @@ const SignUp = () => {
         onChange={(event) => setUsername(event.target.value)}
       />
 
-      <input
+<input
         className="register-input"
         type="password"
         name="password"
         placeholder="Password"
         value={password}
         onChange={(event) => {
-          if (passwordRegex.test(event.target.value)) {
-            setPassword(event.target.value);
-          }
+           setPassword(event.target.value);
+          
         }}
       />
 
@@ -118,12 +152,10 @@ const SignUp = () => {
         placeholder="Confirm Password"
         value={confirmPassword}
         onChange={(event) => {
-          if (passwordRegex.test(event.target.value)) {
-            setConfirmPassword(event.target.value);
-          }
+          setConfirmPassword(event.target.value);
+          
         }}
       />
-
       <button className="register-button" onClick={handleSubmit}>
         Create your new Account
       </button>

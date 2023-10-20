@@ -7,14 +7,15 @@ import Link from 'next/link';
 import './page.css';
 import MenuNuevo from '@/Components/MenuNuevo';
 import NavBarInicio from '../NavBarInicio';
+import {auth} from '../../config/Backend'
 export default function Home() {
   
-
+  const currentUser = auth.currentUser;
+  
   
 
   // Obtén el nombre del usuario desde el Local Storage
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-  const userName = currentUser ? currentUser.username : "";
+ 
 
   return (
     <div>
@@ -25,7 +26,7 @@ export default function Home() {
         <MenuNuevo /> 
           {currentUser ? (
             <div className="about-us">
-              <h1>Bienvenido, {userName} </h1>
+              <h1>Bienvenido, fetch </h1>
               <p>Ahora puedes mejorar la gestión de tus controles de gastos de tu tarjeta de crédito o débito con WiseWallet. Nuestra plataforma te brinda métodos financieros para simplificar la gestión de tus finanzas.</p>
               
               

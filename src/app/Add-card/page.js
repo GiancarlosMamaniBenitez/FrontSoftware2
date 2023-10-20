@@ -4,6 +4,9 @@
 import React, { useState, useEffect } from "react";
 import NavBar from "@/Components/NavBar";
 import './addCard.css';
+import {auth} from '../../config/Backend'
+import {  onAuthStateChanged} from "firebase/auth";
+import axios from "axios";
 
 const AddCard = () => {
   const [number, setNumber] = useState("");
@@ -109,7 +112,34 @@ const AddCard = () => {
         savingsGoal,
         reporte, 
       };
-
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          const uid = user.uid;
+          console.log(uid)
+          // User is signed in, see docs for a list of available properties
+          // https://firebase.google.com/docs/reference/js/auth.user
+          await axios.post(`https://us-central1-software-backend-43062.cloudfunctions.net/app/usuarios/${uid}/crear-tarjeta` ,{
+            number,
+            mm,
+            yyyy,
+            cvv,
+            cardsname,
+            selectedCard,
+            incomes,
+            expenses,
+            categories,
+            spendingLimit,
+            savingsGoal
+          });
+          
+          
+          // ...
+        } else {
+          // User is signed out
+          // ...
+          console.log("Usuario sin logear")
+        }
+      });
       if (checkIfCardExists(cardData, authenticatedUser)) {
         return;
       }

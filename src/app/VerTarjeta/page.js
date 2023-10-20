@@ -10,6 +10,7 @@ import './tarjeta.css'
 function VerTarjeta() {
   const [userCards, setUserCards] = useState([]);
   const maxCardLimit = 5;
+  //const { tarjetas } = useFetchTarjetas
 
   useEffect(() => {
     const userIsLoggedIn = localStorage.getItem("userLoggedIn") === "true";

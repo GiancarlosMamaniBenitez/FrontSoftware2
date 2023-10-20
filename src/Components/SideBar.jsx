@@ -2,11 +2,16 @@
 import React from "react";
 import Link from "next/link";
 import './sidebar.css'
+import {auth} from '../config/Backend'
+import { signOut } from 'firebase/auth';
 function SideBar(){
   const handleLogout = () => {
     // Elimina la marca o token de autenticación del Local Storage
     localStorage.removeItem("userLoggedIn");
     localStorage.removeItem("currentUser")
+    signOut(auth).then(()=>{
+      console.log('Signed out')
+  })
     // Redirige al usuario a la página de inicio de sesión
     window.location.href = "/Home";
   };
