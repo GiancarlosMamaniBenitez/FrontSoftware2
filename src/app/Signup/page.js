@@ -12,7 +12,9 @@ const SignUp = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [email, setEmail] = useState("");
 
-  // Obtén la lista de usuarios del Local Storage
+  const nameRegex = /^[A-Za-z]+$/;
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{5,}$/;
+
   const usersList = JSON.parse(localStorage.getItem("users")) || [];
 
   const handleSubmit = (event) => {
@@ -20,35 +22,29 @@ const SignUp = () => {
 
     if (firstName === "" || lastName === "" || username === "" || password === "" || confirmPassword === "" || email === "") {
       alert("Por favor, complete todos los campos.");
+    } else if (!nameRegex.test(firstName) || !nameRegex.test(lastName)) {
+      alert("El nombre y apellido deben contener solo letras.");
+    } else if (!passwordRegex.test(password) || !passwordRegex.test(confirmPassword)) {
+      alert("La contraseña debe tener al menos 5 caracteres, incluyendo una letra, un dígito y un carácter especial.");
     } else if (password !== confirmPassword) {
       alert("Las contraseñas no coinciden.");
       setPassword("");
       setConfirmPassword("");
     } else {
-      // Genera un ID único para el usuario
       const userId = usersList.length + 1;
-
-      // Crea un nuevo usuario
-      var user = {
+      const user = {
         id: userId,
         firstName,
         lastName,
         username,
         password,
         email,
-        cards: [] // Agregar un array para almacenar las tarjetas asociadas al usuario
+        cards: []
       };
 
-      // Agrega el usuario a la lista de usuarios
       usersList.push(user);
-
-      // Almacena la lista actualizada en el Local Storage
       localStorage.setItem("users", JSON.stringify(usersList));
-
-      // Muestra la lista de usuarios en la consola
       console.log("Lista de usuarios actualizada:", usersList);
-
-      // Redirige al usuario a la página de confirmación después de un registro exitoso
       window.location.href = `/Congrats?userId=${userId}`;
     }
   };
@@ -58,21 +54,85 @@ const SignUp = () => {
       <h1>Sign Up for</h1>
       <img src="https://cdn.discordapp.com/attachments/1025977476096204862/1162442035278659604/logo-name.jpeg?ex=653bf382&is=65297e82&hm=530a33fa80ce87770b863c679e0da9e2cfa806c99cfea4f8bf423de6a7ee639f&" alt="" />
 
-      <input className="register-input" type="text" name="firstName" placeholder="First Name" value={firstName} onChange={(event) => setFirstName(event.target.value)} />
-      <input className="register-input" type="text" name="lastName" placeholder="Last Name" value={lastName} onChange={(event) => setLastName(event.target.value)} />
-      <input className="register-input" type="text" name="email" placeholder="Email" value={email} onChange={(event) => setEmail(event.target.value)} />
-      <input className="register-input" type="text" name="username" placeholder="Username" value={username} onChange={(event) => setUsername(event.target.value)} />
-      <input className="register-input" type="password" name="password" placeholder="Password" value={password} onChange={(event) => setPassword(event.target.value)} />
-      <input className="register-input" type="password" name="confirmPassword" placeholder="Confirm Password" value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)} />
+      <input
+        className="register-input"
+        type="text"
+        name="firstName"
+        placeholder="First Name"
+        value={firstName}
+        onChange={(event) => {
+          if (nameRegex.test(event.target.value)) {
+            setFirstName(event.target.value);
+          }
+        }}
+      />
+
+      <input
+        className="register-input"
+        type="text"
+        name="lastName"
+        placeholder="Last Name"
+        value={lastName}
+        onChange={(event) => {
+          if (nameRegex.test(event.target.value)) {
+            setLastName(event.target.value);
+          }
+        }}
+      />
+
+      <input
+        className="register-input"
+        type="text"
+        name="email"
+        placeholder="Email"
+        value={email}
+        onChange={(event) => setEmail(event.target.value)}
+      />
+
+      <input
+        className="register-input"
+        type="text"
+        name="username"
+        placeholder="Username"
+        value={username}
+        onChange={(event) => setUsername(event.target.value)}
+      />
+
+      <input
+        className="register-input"
+        type="password"
+        name="password"
+        placeholder="Password"
+        value={password}
+        onChange={(event) => {
+          if (passwordRegex.test(event.target.value)) {
+            setPassword(event.target.value);
+          }
+        }}
+      />
+
+      <input
+        className="register-input"
+        type="password"
+        name="confirmPassword"
+        placeholder="Confirm Password"
+        value={confirmPassword}
+        onChange={(event) => {
+          if (passwordRegex.test(event.target.value)) {
+            setConfirmPassword(event.target.value);
+          }
+        }}
+      />
+
       <button className="register-button" onClick={handleSubmit}>
         Create your new Account
       </button>
       <hr></hr>
-      
-        <Link href="/Login" className="already-button">
-          Already have an account?
-        </Link>
-      
+
+      <Link href="/Login" className="already-button">
+        Already have an account?
+      </Link>
+
       <hr></hr>
       <a className="terms">By selecting Create your new Account, you agree to our <a> </a>
         <Link href="./Terms">

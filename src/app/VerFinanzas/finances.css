@@ -1,12 +1,9 @@
-body{
-  background-color: #84b6f4;
-}
 .finances-container {
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
     font-family: Arial, sans-serif;
-    background-color: rgb(252,157,157);
+    background-color: #f5f5f5;
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   }
@@ -49,14 +46,12 @@ body{
   
   button {
     padding: 10px 20px;
-    background-color: rgb(252,157,157);
+    background-color: #007bff;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.2s;
-    width: fit-content;
-    height: fit-content;
   }
   
   button:hover {

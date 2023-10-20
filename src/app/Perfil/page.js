@@ -5,7 +5,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import "./perfil.css";
-import NavBar from "@/Components/NavBar";
+
 const Profile = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -49,8 +49,6 @@ const Profile = () => {
   };
 
   return (
-    <div>
-      <NavBar/>
     <div className="profile-container">
       <h1>Your Profile</h1>
       <div className="profile-details">
@@ -127,7 +125,6 @@ const Profile = () => {
           <button className="edit-button">Regresar</button>
         </Link>
       </div>
-    </div>
     </div>
   );
 };

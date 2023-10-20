@@ -1,10 +1,12 @@
+/* finances.css */
 
 /* Estilos para el contenedor principal */
-.Contenedor {
-  
-   text-align: center;
-   content: center;
+.finances-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
   }
+  
   /* Estilos para el título de la página */
   h1 {
     font-size: 24px;
@@ -12,8 +14,6 @@
     margin-bottom: 20px;
   }
   
-
-
   /* Estilos para el menú desplegable de selección de tarjeta */
   select {
     width: 100%;
@@ -33,8 +33,3 @@
     margin: 20px 0;
   }
   
-  .form-select{
-    width: auto;
-    color: blue;
-    border-color: blue;
-  }

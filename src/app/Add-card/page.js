@@ -1,23 +1,24 @@
 'use client'
 
 
-
 import React, { useState, useEffect } from "react";
 import NavBar from "@/Components/NavBar";
-import './addCard.css'
+import './addCard.css';
+
 const AddCard = () => {
   const [number, setNumber] = useState("");
   const [mm, setMm] = useState("");
   const [yyyy, setYyyy] = useState("");
   const [cvv, setCvv] = useState("");
+  const [reporte, setReporte] = useState([]); 
   const [cardsname, setCardsname] = useState("");
   const [selectedCard, setSelectedCard] = useState("");
   const [error, setError] = useState(null);
   const [incomes, setIncomes] = useState([]);
   const [expenses, setExpenses] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [spendingLimit, setSpendingLimit] = useState(0); // Nuevo estado para el límite de gasto
-  const [savingsGoal, setSavingsGoal] = useState(0); // Nuevo estado para la meta de ahorro
+  const [spendingLimit, setSpendingLimit] = useState(0);
+  const [savingsGoal, setSavingsGoal] = useState(0);
 
   useEffect(() => {
     const authenticatedUser = JSON.parse(localStorage.getItem("currentUser")) || { cards: [] };
@@ -30,12 +31,13 @@ const AddCard = () => {
       setMm(firstCard.mm);
       setYyyy(firstCard.yyyy);
       setCvv(firstCard.cvv);
+      setReporte(firstCard.reporte || []); 
       setSelectedCard(firstCard.selectedCard);
       setIncomes(firstCard.incomes || []);
       setExpenses(firstCard.expenses || []);
       setCategories(firstCard.categories || []);
-      setSpendingLimit(firstCard.spendingLimit || 0); // Cargar el límite de gasto
-      setSavingsGoal(firstCard.savingsGoal || 0); // Cargar la meta de ahorro
+      setSpendingLimit(firstCard.spendingLimit || 0);
+      setSavingsGoal(firstCard.savingsGoal || 0);
     }
   }, []);
 
@@ -103,8 +105,9 @@ const AddCard = () => {
         incomes,
         expenses,
         categories,
-        spendingLimit, // Nuevo atributo
-        savingsGoal, // Nuevo atributo
+        spendingLimit,
+        savingsGoal,
+        reporte, 
       };
 
       if (checkIfCardExists(cardData, authenticatedUser)) {
@@ -116,8 +119,9 @@ const AddCard = () => {
         existingCard.incomes = cardData.incomes;
         existingCard.expenses = cardData.expenses;
         existingCard.categories = cardData.categories;
-        existingCard.spendingLimit = cardData.spendingLimit; // Actualizar el límite de gasto
-        existingCard.savingsGoal = cardData.savingsGoal; // Actualizar la meta de ahorro
+        existingCard.spendingLimit = cardData.spendingLimit;
+        existingCard.savingsGoal = cardData.savingsGoal;
+        existingCard.reporte = cardData.reporte; 
       } else {
         authenticatedUser.cards.push(cardData);
       }
@@ -188,7 +192,6 @@ const AddCard = () => {
           onChange={handleCvvChange}
         />
         <hr />
-        
         
         <hr />
         <button className="add-button" onClick={handleSubmit}>

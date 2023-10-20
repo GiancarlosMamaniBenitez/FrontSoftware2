@@ -56,8 +56,6 @@ function VerTarjeta() {
       localStorage.setItem("currentUser", JSON.stringify(authenticatedUser));
       setUserCards([...userCards, { type: cardType, data: {} }]);
     }
-
-    
   };
 
   return (
@@ -86,7 +84,6 @@ function VerTarjeta() {
                       className="card-button"
                     >
                       Ver más
-                      
                     </button>
                   </div>
                 </div>
