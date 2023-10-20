@@ -23,5 +23,13 @@
     text-decoration: none;
     color: white;
   }
+ button{
+  border: none;
+  background: none;
+  padding: 0; 
+  outline: none;
+  color: white;
+  font-weight: bold;
+ }
   
   

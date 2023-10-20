@@ -26,16 +26,10 @@ function ButtonAgregarTarjeta() {
           </div>
         ))}
       </div>
-      <div>
-        <Link href={`/Add-card?cardType=${selectedCard}`}>
+      <div className='button-addcard'>
+        <Link href={`/Add-card?cardType=${selectedCard}`} className='button-addcard'>
           
-            <button
-              className="mb-2"
-              variant="primary"
-              size="lg"
-            >
-              ASOCIAR TARJETA
-            </button>
+            ASOCIAR TARJETA
           
         </Link>
       </div>

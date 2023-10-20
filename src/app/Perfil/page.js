@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import "./perfil.css";
+import MenuNuevo from "@/Components/MenuNuevo";
 
 const Profile = () => {
   const [firstName, setFirstName] = useState("");
@@ -46,10 +47,12 @@ const Profile = () => {
   };
 
   return (
+    <div>
+      <MenuNuevo/>
     <div className="profile-container">
-      <h1>Your Profile</h1>
+      <h1>Tu perfil</h1>
       <div className="profile-details">
-        <label>First Name:</label>
+        <label>Nombre:</label>
         {isEditing ? (
           <input
             type="text"
@@ -61,7 +64,7 @@ const Profile = () => {
         )}
       </div>
       <div className="profile-details">
-        <label>Last Name:</label>
+        <label>Apellido:</label>
         {isEditing ? (
           <input
             type="text"
@@ -73,7 +76,7 @@ const Profile = () => {
         )}
       </div>
       <div className="profile-details">
-        <label>Username:</label>
+        <label>Usuario:</label>
         {isEditing ? (
           <input
             type="text"
@@ -85,11 +88,11 @@ const Profile = () => {
         )}
       </div>
       <div className="profile-details">
-        <label>Password:</label>
+        <label>Contraseña:</label>
         <span>*******</span>
       </div>
       <div className="profile-details">
-        <label>Email:</label>
+        <label>Correo:</label>
         {isEditing ? (
           <input
             type="text"
@@ -103,17 +106,18 @@ const Profile = () => {
       <div className="profile-actions">
         {isEditing ? (
           <button className="save-button" onClick={handleSave}>
-            Save
+            Guardar
           </button>
         ) : (
           <button className="edit-button" onClick={handleEdit}>
-            Edit
+            Editar
           </button>
         )}
         <Link href="/Home">
           <button className="edit-button">Regresar</button>
         </Link>
       </div>
+    </div>
     </div>
   );
 };

@@ -1,6 +1,7 @@
-.Agregar{
-    margin-left: 210px;
+
+h1,h2{
+    text-align: center;
 }
-.Eliminar{
-    margin-left: 210px;
+body{
+    background-color: #84b6f4;
 }

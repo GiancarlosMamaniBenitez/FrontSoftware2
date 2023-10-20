@@ -57,6 +57,7 @@ body {
     border-radius: 5px;
     width: 180px;
     font-weight: bold;
+    text-decoration: none;
   }
   .already-link{
     text-decoration: none;

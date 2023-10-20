@@ -15,13 +15,7 @@ export default function Home() {
 <NavBarInicio/>
 </div>
 <div className='container'>
-      <h1>Bienvenido</h1>
-      <p>Ahora podrás mejorar la gestión de tus controles de gastos de tu tarjeta de créd
-        ito o débito. Aparte contaras con métodos financieros para que pueda realizar esta
-         gestión sin ningún problema.</p>
-         <Image src="/Foquito.png" width="200" height="170" alt="Foquito" />
-        <Image src="/Finanzas.png" width="200" height="170" alt="Finanzas" />
-        <Image src="/GraficoBarras.jpg" width="200" height="170" alt="GraficoBarras" />
+      
         <h1>Por qué elegirnos</h1>
         <h3>Simplicidad en la Complejidad</h3>
 <p>Con WiseWallet, decir adiós al caos financiero es más fácil que nunca. Nuestra plataforma está diseñada para simplificar la gestión de múltiples tarjetas y cuentas, permitiéndote mantener un control total con unos pocos clics.</p>

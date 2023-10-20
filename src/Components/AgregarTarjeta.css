@@ -22,7 +22,7 @@
 
 .card-button {
   margin-top: 10px;
-  background-color: #007bff;
+  background-color: rgb(144,12,63);
   color: white;
   border: none;
   padding: 10px 20px;
@@ -31,9 +31,26 @@
 }
 
 .card-button.selected {
-  background-color: #0056b3;
+  background-color: rgb(252,157,157);
 }
 
 .card-button:hover {
-  background-color: #0056b3;
+  background-color: rgb(252,157,157);
+}
+.mb-2{
+  text-align: center;
+}
+.button-addcard{
+  text-align: center;
+  text-decoration: none;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: rgb(252,157,157);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    width: fit-content;
+    margin: 0 auto;
+    margin-top: 20px;
 }

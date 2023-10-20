@@ -6,26 +6,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import './page.css';
 import MenuNuevo from '@/Components/MenuNuevo';
-
+import NavBarInicio from '../NavBarInicio';
 export default function Home() {
-  useEffect(() => {
-    // Verifica si el usuario ha iniciado sesión
-    const userIsLoggedIn = localStorage.getItem("userLoggedIn") === "true";
+  
 
-    if (!userIsLoggedIn) {
-      // Si el usuario no ha iniciado sesión, redirige a la página de inicio de sesión (Login)
-      window.location.href = "/Login";
-    }
-  }, []);
-
-  const handleLogout = () => {
-    // Elimina la marca o token de autenticación del Local Storage
-    localStorage.removeItem("userLoggedIn");
-    localStorage.removeItem("currentUser"); // Elimina los datos del usuario actual
-
-    // Redirige al usuario a la página de inicio de sesión
-    window.location.href = "/Login";
-  };
+  
 
   // Obtén el nombre del usuario desde el Local Storage
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -33,10 +18,11 @@ export default function Home() {
 
   return (
     <div>
-      <MenuNuevo />
+      
       <div className='container'>
         
         <div>
+        <MenuNuevo /> 
           {currentUser ? (
             <div className="about-us">
               <h1>Bienvenido, {userName} </h1>
@@ -45,10 +31,13 @@ export default function Home() {
               
             </div>
           ) : (
+            
              <div className="about-us">
+              <NavBarInicio/>
               <h1>Bienvenido a WiseWallet</h1>
               <p>Por favor, inicia sesión para acceder a nuestros servicios.</p>
             </div>
+            
           )}
         </div>
         <div className="about-us">
@@ -80,11 +69,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div>
-        <Link href="/Login" className="return-link">
-          Cerrar sesión
-        </Link>
-      </div>
+      
     </div>
   );
 }

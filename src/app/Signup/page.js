@@ -68,11 +68,11 @@ const SignUp = () => {
         Create your new Account
       </button>
       <hr></hr>
-      <button className="already-button">
-        <Link href="/Login">
+      
+        <Link href="/Login" className="already-button">
           Already have an account?
         </Link>
-      </button>
+      
       <hr></hr>
       <a className="terms">By selecting Create your new Account, you agree to our <a> </a>
         <Link href="./Terms">

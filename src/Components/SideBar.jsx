@@ -6,9 +6,9 @@ function SideBar(){
   const handleLogout = () => {
     // Elimina la marca o token de autenticación del Local Storage
     localStorage.removeItem("userLoggedIn");
-
+    localStorage.removeItem("currentUser")
     // Redirige al usuario a la página de inicio de sesión
-    window.location.href = "/Login";
+    window.location.href = "/Home";
   };
   return (
     <div>

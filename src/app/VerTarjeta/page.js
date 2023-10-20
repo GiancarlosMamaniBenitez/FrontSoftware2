@@ -6,7 +6,7 @@ import ButtonAgregarTarjeta from '@/Components/ButtonAgregarTarjeta';
 import ButtonEliminarTarjeta from '@/Components/ButtonEliminarTarjeta';
 import MenuNuevo from '@/Components/MenuNuevo';
 import { useState } from 'react';
-
+import './Tarjeta.css'
 function VerTarjeta() {
   const [userCards, setUserCards] = useState([]);
   const maxCardLimit = 5;

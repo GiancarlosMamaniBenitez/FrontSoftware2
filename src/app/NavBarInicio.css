@@ -10,3 +10,7 @@
     cursor: pointer;
     text-decoration: none;
   }
+  .title{
+    text-align: center;
+    margin-left: 10%;
+  }

@@ -1,20 +1,27 @@
 /* perfil.css */
 
 body {
-  background: linear-gradient(135deg, #007BFF, #0056b3);
+  background-color: #84b6f4;
   margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
 }
+h1{
+  text-align: center;
+}
 
 .profile-container {
-  width: 1000px;
+  width: 500px;
   padding: 20px;
   background: #fff;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .profile-details {
@@ -44,7 +51,7 @@ body {
 
 .edit-button,
 .save-button {
-  background: #007BFF;
+  background: rgb(252,157,157);
   color: white;
   border: none;
   padding: 10px 20px;
@@ -56,5 +63,5 @@ body {
 
 .edit-button:hover,
 .save-button:hover {
-  background: #0056b3;
+  background: rgb(144,12,63);
 }

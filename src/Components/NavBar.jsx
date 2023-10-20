@@ -22,7 +22,7 @@ function NavBar(){
       {isSidebarOpen && <Sidebar />}
 
       
-      <div className="title"><Link href='./' className='title'>WiseWallet</Link></div>
+      <div className="title"><Link href='./Home' className='title'>WiseWallet</Link></div>
       
       <button className="right-button" onClick={perfil}>
         

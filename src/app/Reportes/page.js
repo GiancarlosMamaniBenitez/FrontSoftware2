@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect } from "react";
 import NavBar from "@/Components/NavBar";
-
+import './finances.css'
 const Reports = () => {
   const [selectedCard, setSelectedCard] = useState("");
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("currentUser")));
