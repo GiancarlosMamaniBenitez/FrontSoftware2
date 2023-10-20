@@ -246,10 +246,10 @@ const Finances = () => {
     <div>
       <NavBar />
       <div className="finances-container">
-        <h1>View Finances</h1>
+        <h1>Ver Finanzas</h1>
 
         <select value={selectedCard} onChange={handleSelectedCardChange}>
-          <option value="">Select a Card</option>
+          <option value="">Seleciona tu Tarjeta</option>
           {userCards.map((card) => (
             <option key={card.number} value={card.number}>
               {card.cardsname} - {card.number}

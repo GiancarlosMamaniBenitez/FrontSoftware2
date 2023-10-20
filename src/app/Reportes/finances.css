@@ -1,7 +1,9 @@
 /* finances.css */
-
+body{
+  background-color: #84b6f4;
+}
 /* Estilos para el contenedor principal */
-.finances-container {
+.reports-container {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
@@ -33,3 +35,14 @@
     margin: 20px 0;
   }
   
+  .generate-button{
+    background-color: rgb(252,157,157);
+    color: #fff;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 180px;
+    font-weight: bold;
+    
+  }

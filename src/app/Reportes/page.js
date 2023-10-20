@@ -127,7 +127,7 @@ const Reports = () => {
           </select>
         </div>
 
-        <button onClick={generateReport}>Generate Report</button>
+        <button className="generate-button" onClick={generateReport}>Generate Report</button>
 
         <div>
           <h2>Reports List</h2>
