@@ -2,7 +2,7 @@
 'use client'
 import React, { useState, useEffect } from "react";
 import NavBar from "@/Components/NavBar";
-
+import './addCard.css'
 const EditCard = () => {
   const [number, setNumber] = useState("");
   const [mm, setMm] = useState("");
@@ -96,7 +96,7 @@ const EditCard = () => {
   return (
     <div>
       <NavBar />
-      <div className="editCard-container">
+      <div className="addCard-container">
         <h1>Edit your card.</h1>
         {error && <p className="error-message">{error}</p>}
         <hr />
@@ -152,7 +152,7 @@ const EditCard = () => {
           onChange={handleCvvChange}
         />
         <hr />
-        <button className="edit-button" onClick={handleSubmit}>
+        <button className="add-button" onClick={handleSubmit}>
           Save Changes
         </button>
       </div>
@@ -161,3 +161,4 @@ const EditCard = () => {
 };
 
 export default EditCard;
+

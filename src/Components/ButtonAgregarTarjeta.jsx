@@ -13,6 +13,7 @@ function ButtonAgregarTarjeta() {
     <div>
       <div className="card-container">
         {['TarjetaVisa', 'Mastercard', 'AmericanExpress', 'DinersClub'].map((cardType) => (
+          
           <div key={cardType} className="card-option">
             <div className="card-image-container">
               <img src={`/${cardType}.png`} alt={cardType} className="card-image" />

@@ -1,14 +1,16 @@
 'use client'
+
+
+
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import "./perfil.css";
-import MenuNuevo from "@/Components/MenuNuevo";
 
 const Profile = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("******");
+  const [password, setPassword] = useState("*******");
   const [email, setEmail] = useState("");
   const [isEditing, setIsEditing] = useState(false);
 
@@ -47,12 +49,10 @@ const Profile = () => {
   };
 
   return (
-    <div>
-      <MenuNuevo/>
     <div className="profile-container">
-      <h1>Tu perfil</h1>
+      <h1>Your Profile</h1>
       <div className="profile-details">
-        <label>Nombre:</label>
+        <label>First Name:</label>
         {isEditing ? (
           <input
             type="text"
@@ -64,7 +64,7 @@ const Profile = () => {
         )}
       </div>
       <div className="profile-details">
-        <label>Apellido:</label>
+        <label>Last Name:</label>
         {isEditing ? (
           <input
             type="text"
@@ -76,7 +76,7 @@ const Profile = () => {
         )}
       </div>
       <div className="profile-details">
-        <label>Usuario:</label>
+        <label>Username:</label>
         {isEditing ? (
           <input
             type="text"
@@ -88,11 +88,19 @@ const Profile = () => {
         )}
       </div>
       <div className="profile-details">
-        <label>Contraseña:</label>
-        <span>*******</span>
+        <label>Password:</label>
+        {isEditing ? (
+          <input
+            type="text"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        ) : (
+          <span>{password}</span>
+        )}
       </div>
       <div className="profile-details">
-        <label>Correo:</label>
+        <label>Email:</label>
         {isEditing ? (
           <input
             type="text"
@@ -106,18 +114,17 @@ const Profile = () => {
       <div className="profile-actions">
         {isEditing ? (
           <button className="save-button" onClick={handleSave}>
-            Guardar
+            Save
           </button>
         ) : (
           <button className="edit-button" onClick={handleEdit}>
-            Editar
+            Edit
           </button>
         )}
         <Link href="/Home">
           <button className="edit-button">Regresar</button>
         </Link>
       </div>
-    </div>
     </div>
   );
 };

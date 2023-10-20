@@ -6,7 +6,7 @@ import ButtonAgregarTarjeta from '@/Components/ButtonAgregarTarjeta';
 import ButtonEliminarTarjeta from '@/Components/ButtonEliminarTarjeta';
 import MenuNuevo from '@/Components/MenuNuevo';
 import { useState } from 'react';
-import './Tarjeta.css'
+import './tarjeta.css'
 function VerTarjeta() {
   const [userCards, setUserCards] = useState([]);
   const maxCardLimit = 5;
@@ -67,7 +67,9 @@ function VerTarjeta() {
           {userCards && userCards.length > 0 ? (
             <div>
               <h2>¿Desea eliminar alguna tarjeta o ver más detalles?</h2>
+              <div className="card-container">
               {userCards.map((card, index) => (
+
                 <div key={index} className="card-option">
                   <div className="card-image-container">
                     <img src={`/${card.type}.png`} alt={card.type} className="card-image" />
@@ -85,9 +87,14 @@ function VerTarjeta() {
                     </button>
                   </div>
                 </div>
+                
               ))}
+              </div>
               {userCards.length < maxCardLimit && (
+                <div>
+                <h2>¿Qué tipo de tarjeta desea registrar?</h2>
                 <ButtonAgregarTarjeta handleCardAddition={handleCardAddition} />
+              </div>
               )}
             </div>
           ) : (
