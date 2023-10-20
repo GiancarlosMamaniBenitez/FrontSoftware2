@@ -1,171 +1,102 @@
 'use client'
-import React, { useState, useEffect } from "react";
-import NavBar from "@/Components/NavBar";
-import './finances.css'
-const Reports = () => {
-  const [selectedCard, setSelectedCard] = useState("");
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("currentUser")));
-  const [userCards, setUserCards] = useState(user?.cards || []);
+import './reporte.css'
+import React, { useEffect, useState } from 'react';
+import GraficoPye from '@/Components/Grafico/GraficoPye';
+import MenuNuevo from '@/Components/MenuNuevo';
+import { autocompleteClasses } from '@mui/material';
 
-  const [selectedReportType, setSelectedReportType] = useState("daily");
-  const [selectedReportCategory, setSelectedReportCategory] = useState("");
-  const [reports, setReports] = useState([]);
-  const [reportData, setReportData] = useState(null);
+const Report = () => {
+  const [totalExpensesByCategory, setTotalExpensesByCategory] = useState({});
+  const [totalIncomes, setTotalIncomes] = useState(0);
 
   useEffect(() => {
-    // Realizar la lógica de carga de informes desde el almacenamiento local
-    // y establecerlos en el estado "reports" cuando la página se monta
-    const loadedReports = JSON.parse(localStorage.getItem("reports")) || [];
-    setReports(loadedReports);
-  }, []);
-
-  const handleSelectedCardChange = (event) => {
-    setSelectedCard(event.target.value);
-  };
-
-  const handleSelectedReportTypeChange = (event) => {
-    setSelectedReportType(event.target.value);
-  };
-
-  const handleSelectedReportCategoryChange = (event) => {
-    setSelectedReportCategory(event.target.value);
-  };
-
-  const generateReport = () => {
-    // Realizar la generación de informes y guardarlos en el almacenamiento local
-    const currentDate = getCurrentDate();
-    const currentMonth = currentDate.slice(0, 7);
-    const dailyData = JSON.parse(localStorage.getItem("dailyData")) || {};
-    const monthlyData = JSON.parse(localStorage.getItem("monthlyData")) || {};
-
-    const selectedCardData = userCards.find((card) => card.number === selectedCard);
-    const category = selectedReportCategory;
-
-    if (selectedReportType === "daily") {
-      if (dailyData[currentDate]) {
-        const expenses = dailyData[currentDate].expenses[category] || 0;
-        const incomes = selectedCardData.incomes || [];
-
-        const totalIncome = incomes.reduce((total, income) => total + income.amount, 0);
-        const savings = totalIncome - expenses;
-
-        const report = {
-          type: "Daily",
-          date: currentDate,
-          category: category,
-          expenses: expenses,
-          incomes: totalIncome,
-          savings: savings,
-        };
-
-        const updatedReports = [...reports, report];
-        setReports(updatedReports);
-
-        localStorage.setItem("reports", JSON.stringify(updatedReports));
-      }
-    } else if (selectedReportType === "monthly") {
-      if (monthlyData[currentMonth]) {
-        const expenses = monthlyData[currentMonth].expenses[category] || 0;
-        const incomes = selectedCardData.incomes || [];
-
-        const totalIncome = incomes.reduce((total, income) => total + income.amount, 0);
-        const savings = totalIncome - expenses;
-
-        const report = {
-          type: "Monthly",
-          date: currentMonth,
-          category: category,
-          expenses: expenses,
-          incomes: totalIncome,
-          savings: savings,
-        };
-
-        const updatedReports = [...reports, report];
-        setReports(updatedReports);
-
-        localStorage.setItem("reports", JSON.stringify(updatedReports));
+    const userData = JSON.parse(localStorage.getItem('currentUser'));
+    if (userData && userData.cards) {
+      const selectedCard = userData.cards[0]; // Selecciona la primera tarjeta como ejemplo
+      if (selectedCard) {
+        if (selectedCard.expenses) {
+          const expensesByCategory = selectedCard.expenses.reduce((result, expense) => {
+            const category = expense.category;
+            if (category in result) {
+              result[category] += expense.amount;
+            } else {
+              result[category] = expense.amount;
+            }
+            return result;
+          }, {});
+          setTotalExpensesByCategory(expensesByCategory);
+        }
+        if (selectedCard.incomes) {
+          const totalIncomeAmount = selectedCard.incomes.reduce((total, income) => total + income.amount, 0);
+          setTotalIncomes(totalIncomeAmount);
+        }
       }
     }
-  };
-
-  const handleReportClick = (report) => {
-    setReportData(report);
-  };
+  }, []);
 
   return (
     <div>
-      <NavBar />
-      <div className="reports-container">
-        <h1>Reports</h1>
-
-        <select value={selectedCard} onChange={handleSelectedCardChange}>
-          <option value="">Select a Card</option>
-          {userCards.map((card) => (
-            <option key={card.number} value={card.number}>
-              {card.cardsname} - {card.number}
-            </option>
-          ))}
-        </select>
-
-        <div>
-          <label>Report Type:</label>
-          <select value={selectedReportType} onChange={handleSelectedReportTypeChange}>
-            <option value="daily">Daily</option>
-            <option value="monthly">Monthly</option>
-          </select>
+       <MenuNuevo />
+      <div>
+        <h1>REPORTE DE INGRESOS Y GASTOS ESTADISTICOS</h1>
+      </div>
+      <hr/>
+      <div class ="Contenedor">
+        <div className="chart-container">
+          <h2>TOTAL DE INGRESOS</h2>
+          <p>${totalIncomes}</p>
         </div>
-
-        <div>
-          <label>Report Category:</label>
-          <select value={selectedReportCategory} onChange={handleSelectedReportCategoryChange}>
-            <option value="">Select Category</option>
-            {userCards.find((card) => card.number === selectedCard)?.categories?.map((category) => (
-              <option key={category} value={category}>
-                {category}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <button className="generate-button" onClick={generateReport}>Generate Report</button>
-
-        <div>
-          <h2>Reports List</h2>
+        <div className="chart-container">
+          <h3>Expenses by Category</h3>
           <ul>
-            {reports.map((report, index) => (
-              <li key={index} onClick={() => handleReportClick(report)}>
-                {report.type} Report - {report.date}
-              </li>
-            ))}
+          {Object.entries(totalExpensesByCategory).map(([category, totalAmount]) => (
+            <li key={category}>
+              Category: {category}, Total Amount: ${totalAmount}
+            </li>
+          ))}
           </ul>
         </div>
-
+        <div className='' style={{width: "20%"}}>
+          <GraficoPye
+          />
+        </div>
         <div>
-          {reportData && (
-            <div>
-              <h2>Report Details</h2>
-              <p>Type: {reportData.type}</p>
-              <p>Date: {reportData.date}</p>
-              <p>Category: {reportData.category}</p>
-              <p>Expenses: ${reportData.expenses}</p>
-              <p>Incomes: ${reportData.incomes}</p>
-              <p>Savings: ${reportData.savings}</p>
-              {/* Agregar más detalles según el contenido del informe */}
-            </div>
-          )}
+                <label class="label">MES Y AÑO DE REPORTE</label>
+                <br/> 
+                <div class="grupo">
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                        <select class="form-select">
+                            <option value></option>
+                            <option value ="01">Enero</option>
+                            <option value ="02">Febrero</option>
+                            <option value ="03">Marzo</option>
+                            <option value ="04">Abril</option>
+                            <option value ="05">Mayo</option>
+                            <option value ="06">Junio</option>
+                            <option value ="07">Julio</option>
+                            <option value ="08">Agosto</option>
+                            <option value ="09">Setiembre</option>
+                            <option value ="10">Octubre</option>
+                            <option value ="11">Noviembre</option>
+                            <option value ="11">Diciembre</option>
+                        </select>
+                        <i class= "icon-angle-down select-form02"></i>
+                        &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+                        <select class="form-select">
+                            <option value></option>
+                            <option value ="2023">2023</option>
+                            <option value ="2024">2024</option>
+                            <option value ="2025">2025</option>
+                            <option value ="2026">2026</option>
+            
+                        </select>
+                        <i class= "icon-angle-down select-form02"></i>
+                    </div>    
+                </div>
         </div>
       </div>
-    </div>
+      </div>
   );
 };
 
-export default Reports;
-
-// Función para obtener la fecha actual en formato "YYYY-MM-DD"
-function getCurrentDate() {
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, "0");
-  const day = String(now.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
-}
+export default Report;
