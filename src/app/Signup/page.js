@@ -1,12 +1,11 @@
 'use client'
 
-import Link from "next/link";
+
+
 import React, { useState } from "react";
 import './signup.css';
-import {auth} from '../../config/Backend'
-import {db} from '../../config/Backend'
-import {doc, setDoc} from 'firebase/firestore'
-import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import Link from "next/link";
+
 const SignUp = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -15,49 +14,18 @@ const SignUp = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [email, setEmail] = useState("");
 
-  const nameRegex = /^[A-Za-z]+$/;
-  
-  function registrarUsuario(email,password, firstName, lastName, username) {
-    createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in 
-      const user = userCredential.user;
-      // ...
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // ..
-    });
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/auth.user
-      
-      const uid = user.uid;
-      const docuRef = doc(db, `Usuario/${uid}`)
-      setDoc(docuRef, {email: email, firstName :firstName, lastName :lastName, username :username})
-      window.location.href = `/Congrats?userId=${uid}`;
-      // ...
-    } else {
-      // User is signed out
-      // ...
-      console.log("no se creo la cuenta")
-    }
-  });
+  const nameRegex = /^[A-Za-z\s]+$/; // Permite espacios
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{5,}$/;
 
-    
-  }
-  //const usersList = JSON.parse(localStorage.getItem("users")) || [];
+  const usersList = JSON.parse(localStorage.getItem("users")) || [];
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    registrarUsuario(email,password, firstName, lastName, username);
-/*
+
     if (firstName === "" || lastName === "" || username === "" || password === "" || confirmPassword === "" || email === "") {
       alert("Por favor, complete todos los campos.");
     } else if (!nameRegex.test(firstName) || !nameRegex.test(lastName)) {
-      alert("El nombre y apellido deben contener solo letras.");
+      alert("El nombre y apellido deben contener solo letras y espacios.");
     } else if (!passwordRegex.test(password) || !passwordRegex.test(confirmPassword)) {
       alert("La contraseña debe tener al menos 5 caracteres, incluyendo una letra, un dígito y un carácter especial.");
     } else if (password !== confirmPassword) {
@@ -75,13 +43,14 @@ const SignUp = () => {
         email,
         cards: []
       };
-      
+
       usersList.push(user);
       localStorage.setItem("users", JSON.stringify(usersList));
       console.log("Lista de usuarios actualizada:", usersList);
-      registrarUsuario(email,password, firstName, lastName, username);
+      // Aquí puedes llamar a tu función registrarUsuario si es necesario
+      // registrarUsuario(email, password, firstName, lastName, username);
       window.location.href = `/Congrats?userId=${userId}`;
-    }*/
+    }
   };
 
   return (
@@ -133,15 +102,14 @@ const SignUp = () => {
         onChange={(event) => setUsername(event.target.value)}
       />
 
-<input
+      <input
         className="register-input"
         type="password"
         name="password"
         placeholder="Password"
         value={password}
         onChange={(event) => {
-           setPassword(event.target.value);
-          
+          setPassword(event.target.value);
         }}
       />
 
@@ -153,7 +121,6 @@ const SignUp = () => {
         value={confirmPassword}
         onChange={(event) => {
           setConfirmPassword(event.target.value);
-          
         }}
       />
       <button className="register-button" onClick={handleSubmit}>

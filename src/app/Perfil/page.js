@@ -1,7 +1,6 @@
 'use client'
 
 
-
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import "./perfil.css";
@@ -32,19 +31,21 @@ const Profile = () => {
   };
 
   const handleSave = () => {
-    // Guardar los cambios en el Local Storage
+    // Obtén el usuario autenticado del Local Storage
     const authenticatedUser = JSON.parse(localStorage.getItem("currentUser"));
 
     if (authenticatedUser) {
+      // Modifica las propiedades del objeto
       authenticatedUser.firstName = firstName;
       authenticatedUser.lastName = lastName;
       authenticatedUser.username = username;
       authenticatedUser.email = email;
 
+      // Guarda el objeto modificado de vuelta en el Local Storage
       localStorage.setItem("currentUser", JSON.stringify(authenticatedUser));
     }
 
-    // Deshabilitar la edición de campos
+    // Deshabilita la edición de campos
     setIsEditing(false);
   };
 
@@ -121,7 +122,7 @@ const Profile = () => {
             Edit
           </button>
         )}
-        <Link href="/Home">
+        <Link href="/">
           <button className="edit-button">Regresar</button>
         </Link>
       </div>

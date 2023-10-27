@@ -1,0 +1,186 @@
+/*!*********************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[2].oneOf[13].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[2].oneOf[13].use[3]!./src/Components/navbar.css ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************/
+/* styles.css */
+
+/* styles.css */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  z-index: 100; /* Asegura que esté por encima de otros contenidos */
+  height: 35px;
+}
+
+.left-button, .right-button {
+  background-color: rgb(252,157,157);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.left-button:hover, .right-button:hover {
+  background-color: rgb(252,157,157);
+}
+
+.Wisewallet{
+  font-size: 24px;
+  font-weight: bold;
+  background-color: #333;
+  text-decoration: none;
+  color: white;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  background-color: #333;
+  text-decoration: none;
+  color: white;
+  display: inline-block;
+  
+}
+.navbar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.right-button {
+  padding: 5px;
+}
+
+.right-button i {
+  font-size: 24px;
+}
+
+/* Añade relleno al cuerpo para empujar el contenido debajo de la barra de navegación */
+body {
+  padding-top: 70px; /* Ajusta según la altura de tu barra de navegación */
+  margin-left: 200px; /* Para dejar espacio a la barra lateral */
+}
+
+.right-button {
+  text-align: center;
+  list-style: none;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: rgb(252,157,157);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+
+
+/*!**********************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[2].oneOf[13].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[2].oneOf[13].use[3]!./src/Components/sidebar.css ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************/
+.sidebar {
+    margin-top: 28px;
+    list-style: none;
+    background-color: #333;
+    position: fixed;
+    left:-40px;
+    justify-content: center;
+    height: 100%;
+ 
+    
+  }
+  .sidebar li{
+    text-align: center;
+    list-style: none;
+    margin: 7px;
+    padding: 18px;
+    border-radius: 5px;
+    background-color: rgb(252,157,157);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .link-sidebar{
+    text-decoration: none;
+    color: white;
+  }
+ button{
+  border: none;
+  background: none;
+  padding: 0; 
+  outline: none;
+  color: white;
+  font-weight: bold;
+ }
+  
+  
+/*!************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[2].oneOf[13].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[2].oneOf[13].use[3]!./src/app/Add-card/addCard.css ***!
+  \************************************************************************************************************************************************************************************************************************************************************************/
+body {
+    background-color: rgb(239, 235, 235);
+  }
+
+.name-input{
+    height: 20px;
+    
+}
+.addCard-container{
+    position: fixed;
+    width: 500px;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid gray;
+    margin: 20px;
+    padding: 20px;
+    background-color: white;
+    top:50%;
+    left:50%;
+    border-radius: 5px;
+    transform: translate(-50%, -50%);
+}
+.add-button {
+    background-color: rgb(252,157,157);
+    color: #fff;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 180px;
+  }
+  hr {
+    border: none; /* Remove the default border */
+    border-top: 1px solid #ccc; /* Add a solid line with color */
+    
+    width: 180px;
+  }
+  .MM-input{
+    height: 20px;
+    width: 23px;
+    
+  }
+  .YYYY-input{
+    height: 20px;
+    width:50px;
+    
+  }
+  .cvv-input{
+    width: 50px;
+    height: 20px;
+  }
+  .number-input{
+    height: 20px;
+  }

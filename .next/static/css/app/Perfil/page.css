@@ -1,0 +1,71 @@
+/*!*********************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[2].oneOf[13].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[2].oneOf[13].use[3]!./src/app/Perfil/perfil.css ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************/
+/* perfil.css */
+
+body {
+  background-color: #84b6f4;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+h1{
+  text-align: center;
+}
+
+.profile-container {
+  width: 500px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.profile-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.profile-details input[type="text"],
+.profile-details input[type="password"],
+.profile-details span {
+  width: 60%;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none; /* Elimina el borde al hacer clic */
+}
+
+.profile-details span {
+  text-align: left;
+}
+
+.profile-actions {
+  margin-top: 20px;
+}
+
+.edit-button,
+.save-button {
+  background: rgb(252,157,157);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 5px;
+  transition: background-color 0.3s ease;
+}
+
+.edit-button:hover,
+.save-button:hover {
+  background: rgb(144,12,63);
+}
+

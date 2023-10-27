@@ -1,0 +1,163 @@
+/*!*********************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[2].oneOf[13].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[2].oneOf[13].use[3]!./src/Components/navbar.css ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************/
+/* styles.css */
+
+/* styles.css */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  z-index: 100; /* Asegura que esté por encima de otros contenidos */
+  height: 35px;
+}
+
+.left-button, .right-button {
+  background-color: rgb(252,157,157);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.left-button:hover, .right-button:hover {
+  background-color: rgb(252,157,157);
+}
+
+.Wisewallet{
+  font-size: 24px;
+  font-weight: bold;
+  background-color: #333;
+  text-decoration: none;
+  color: white;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  background-color: #333;
+  text-decoration: none;
+  color: white;
+  display: inline-block;
+  
+}
+.navbar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.right-button {
+  padding: 5px;
+}
+
+.right-button i {
+  font-size: 24px;
+}
+
+/* Añade relleno al cuerpo para empujar el contenido debajo de la barra de navegación */
+body {
+  padding-top: 70px; /* Ajusta según la altura de tu barra de navegación */
+  margin-left: 200px; /* Para dejar espacio a la barra lateral */
+}
+
+.right-button {
+  text-align: center;
+  list-style: none;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: rgb(252,157,157);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+
+
+/*!**********************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[2].oneOf[13].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[2].oneOf[13].use[3]!./src/Components/sidebar.css ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************/
+.sidebar {
+    margin-top: 28px;
+    list-style: none;
+    background-color: #333;
+    position: fixed;
+    left:-40px;
+    justify-content: center;
+    height: 100%;
+ 
+    
+  }
+  .sidebar li{
+    text-align: center;
+    list-style: none;
+    margin: 7px;
+    padding: 18px;
+    border-radius: 5px;
+    background-color: rgb(252,157,157);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .link-sidebar{
+    text-decoration: none;
+    color: white;
+  }
+ button{
+  border: none;
+  background: none;
+  padding: 0; 
+  outline: none;
+  color: white;
+  font-weight: bold;
+ }
+  
+  
+/*!*************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[2].oneOf[13].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[2].oneOf[13].use[3]!./src/app/Reportes/finances.css ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************/
+/* finances.css */
+
+/* Estilos para el contenedor principal */
+.finances-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Estilos para el título de la página */
+  h1 {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Estilos para el menú desplegable de selección de tarjeta */
+  select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 16px;
+  }
+  
+  /* Estilos para el gráfico de categorías */
+  .category-chart {
+    text-align: center;
+    margin: 20px 0;
+  }
+  
+  /* Estilos para otros gráficos */
+  .other-charts {
+    margin: 20px 0;
+  }
+  

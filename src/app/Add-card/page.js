@@ -4,8 +4,7 @@
 import React, { useState, useEffect } from "react";
 import NavBar from "@/Components/NavBar";
 import './addCard.css';
-import {auth} from '../../config/Backend'
-import {  onAuthStateChanged} from "firebase/auth";
+
 import axios from "axios";
 
 const AddCard = () => {

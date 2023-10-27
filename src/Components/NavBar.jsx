@@ -4,38 +4,58 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faUser } from '@fortawesome/free-solid-svg-icons';
 import Link from "next/link";
 import Sidebar from './SideBar'; 
+import { useRouter } from 'next/navigation';
 
 function NavBar(){
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const currentUser = localStorage.getItem("currentUser");
 
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
-  const perfil = () =>{
+    const toggleSidebar = () => {
+        setIsSidebarOpen(!isSidebarOpen);
+    };
+    const router = useRouter();
 
-  }
-  return (
-    <div className="navbar">
-      <button className="left-button" onClick={toggleSidebar}>
-        <FontAwesomeIcon icon={faBars} />
-      </button>
-      {isSidebarOpen && <Sidebar />}
+    const redirectToPerfil = () => {
+        router.push("/Perfil");
+    };
 
-      
-      <div className="title"><Link href='./Home' className='title'>WiseWallet</Link></div>
-      
-      <button className="right-button" onClick={perfil}>
-        
-        <Link href='/Perfil'><FontAwesomeIcon icon={faUser} /></Link>
-      </button>
-
-      
-      
-
-      
-
-    </div>
-  );
+    return (
+        <div className="navbar">
+            {currentUser ? (
+                <div className="navbar-content">
+                    <button className="left-button" onClick={toggleSidebar}>
+                        <FontAwesomeIcon icon={faBars} />
+                    </button>
+                    {isSidebarOpen && <Sidebar />}
+                    <div className="title">
+                        <Link href="/" className="Wisewallet">
+                            WiseWallet
+                        </Link>
+                    </div>
+                    <div className="right-buttons">
+                        <button className="right-button" onClick={redirectToPerfil}>
+                            <Link href="/Perfil">
+                                <FontAwesomeIcon icon={faUser} />
+                            </Link>
+                        </button>
+                    </div>
+                </div>
+            ) : (
+                <div className="navbar-content">
+                    <div> </div>
+                    <div className="title">
+                        <Link href='./' className='Wisewallet'>
+                            WiseWallet
+                        </Link>
+                    </div>
+                    <div className="right-buttons">
+                        <Link href='/Login' className="right-button">Inicia Sesión</Link>
+                        <Link href='/Signup' className="right-button">Regístrate</Link>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
 }
 
 export default NavBar;
