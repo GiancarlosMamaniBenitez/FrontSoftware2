@@ -6,8 +6,8 @@ import Link from "next/link";
 import Sidebar from './SideBar'; 
 import { useRouter } from 'next/navigation';
 
-function NavBar(){
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+function NavBar({ isSidebarOpen, setIsSidebarOpen }){
+   
     const currentUser = localStorage.getItem("currentUser");
 
     const toggleSidebar = () => {
@@ -20,29 +20,28 @@ function NavBar(){
     };
 
     return (
+        //        <div className={`navbar ${isSidebarOpen ? 'sidebar-open' : ''}`}>
+
         <div className="navbar">
-            {currentUser ? (
-               <>
-                <div className="navbar-barra">
+        {currentUser ? (
+                <div className="navbar-content">
                     <button className="left-button" onClick={toggleSidebar}>
                         <FontAwesomeIcon icon={faBars} />
                     </button>
-                    {isSidebarOpen && <Sidebar />}
-                    </div>
-
+                    
                     <div className="title">
-                        <Link href="/" className="Wisewallet1">
+                        <Link href="/" className="Wisewallet">
                             WiseWallet
                         </Link>
                     </div>
                     <div className="right-buttons">
                         <button className="right-button" onClick={redirectToPerfil}>
-                            
+                            <Link href="/Perfil">
                                 <FontAwesomeIcon icon={faUser} />
-                            
+                            </Link>
                         </button>
                     </div>
-              </> 
+                </div>
             ) : (
                 <div className="navbar-content">
                     <div> </div>
@@ -56,8 +55,9 @@ function NavBar(){
                         <Link href='/Signup' className="right-button">Regístrate</Link>
                     </div>
                 </div>
-            )}
+            )}{isSidebarOpen && <Sidebar />}
         </div>
+        
     );
 }
 
