@@ -1,22 +1,24 @@
 'use client'
 
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import './page.css';
+import { Navbar } from 'react-bootstrap';
 import NavBar from '@/Components/NavBar';
 
 export default function Home() {
-  
 // Obtén el nombre del usuario desde el Local Storage
 const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 const userName = currentUser ? currentUser.firstName : ""; // Obtén el firstName del usuario
+const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
     <div>
-      <div className='container'>
-        <div>
-          <NavBar />
+      <NavBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
+      <div className={`container${isSidebarOpen ? '-shifted' : ''}`}>
+      
+          
           {currentUser ? (
             <div className="about-us">
               <h1>{`Bienvenido, ${userName}`}</h1>
@@ -32,7 +34,7 @@ const userName = currentUser ? currentUser.firstName : ""; // Obtén el firstNam
             
             </div>
           )}
-        </div>
+        
         <div className="about-us">
           <div className="features">
             <div className="feature">
@@ -57,6 +59,8 @@ const userName = currentUser ? currentUser.firstName : ""; // Obtén el firstNam
           <p>En WiseWallet, nuestro objetivo es simplificar la gestión financiera y brindarte herramientas poderosas para controlar tus finanzas. Creemos en la simplicidad, la seguridad y la transparencia.</p>
         </div>
       </div>
+      
     </div>
   );
 }
+
