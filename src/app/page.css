@@ -1,26 +1,19 @@
-/*
-CSS de page.js
-*/
-
-
-
 /* Estilos generales */
 
 body{
-  padding-top: 40px;
   background-color: #84b6f4;
-  
 }
 .container {
   background: #f5f5f5;
   padding: 5px;
   text-align: center;
   background-color: #84b6f4;
-  margin-right: 100px;
-  margin-left: 200px;
+  width:100%; /* Adjust the width to give space for the sidebar */
+  position: absolute;
+  left: 100px; /* Adjust the value to match the sidebar width */
+  transition: width 0.3s ease;
   
 }
-
 
 /* Encabezado principal */
 h1 {
@@ -59,6 +52,10 @@ p {
   margin-top: 30px;
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  text-align: justify;
+  transform: translateX(-100px);
+
 }
 
 /* Estilos para los enlaces */
@@ -73,14 +70,7 @@ p {
 .return-link:hover {
   text-decoration: underline;
 }
-.about-us {
-  margin-top: 30px;
-  text-align: justify;
-  background-color: #f9f9f9;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+
 
 .about-us h2 {
   font-size: 24px;
@@ -92,4 +82,12 @@ p {
   font-size: 18px;
   color: #555;
   line-height: 1.5;
+}
+.container-shifted {
+ 
+  padding: 5px;
+  text-align: center;
+  background-color: #84b6f4;
+  transform: translateX(120px);
+  transition: width 0.3s ease;
 }
