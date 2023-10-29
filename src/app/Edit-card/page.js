@@ -1,32 +1,37 @@
 // Página para editar los detalles de la tarjeta
 'use client'
+
+
+
 import React, { useState, useEffect } from "react";
 import NavBar from "@/Components/NavBar";
-import './addCard.css'
+import './addCard.css';
+
 const EditCard = () => {
   const [number, setNumber] = useState("");
   const [mm, setMm] = useState("");
   const [yyyy, setYyyy] = useState("");
   const [cvv, setCvv] = useState("");
-  const [cardsname, setCardsname] = useState("");
-  const [selectedCard, setSelectedCard] = useState("");
   const [error, setError] = useState(null);
+
+  const [selectedCardId, setSelectedCardId] = useState(null); // Inicializa selectedCardId como null.
 
   useEffect(() => {
     // Obtener el usuario autenticado desde el Local Storage
     const authenticatedUser = JSON.parse(localStorage.getItem("currentUser"));
 
-    // Recuperar la tarjeta seleccionada (puedes implementar una lógica para seleccionar una específica)
-    // Aquí estamos seleccionando la primera tarjeta como ejemplo
-    const selectedCard = authenticatedUser && authenticatedUser.cards ? authenticatedUser.cards[0] : null;
+    if (authenticatedUser && authenticatedUser.cards) {
+      // Recuperar el ID de la tarjeta seleccionada (puedes implementar una lógica para seleccionar una específica)
+      // Aquí estamos seleccionando la primera tarjeta como ejemplo
+      const firstCard = authenticatedUser.cards[0];
 
-    if (selectedCard) {
-      setCardsname(selectedCard.cardsname);
-      setNumber(selectedCard.number);
-      setMm(selectedCard.mm);
-      setYyyy(selectedCard.yyyy);
-      setCvv(selectedCard.cvv);
-      setSelectedCard(selectedCard.selectedCard);
+      if (firstCard) {
+        setNumber(firstCard.number);
+        setMm(firstCard.mm);
+        setYyyy(firstCard.yyyy);
+        setCvv(firstCard.cvv);
+        setSelectedCardId(firstCard.id); // Actualiza selectedCardId con el ID de la tarjeta seleccionada
+      }
     }
   }, []);
 
@@ -52,7 +57,7 @@ const EditCard = () => {
   };
 
   const validateFields = () => {
-    if (!cardsname || !number || !mm || !yyyy || !cvv) {
+    if (!number || !mm || !yyyy || !cvv) {
       setError("Por favor, complete todos los campos.");
       return false;
     }
@@ -71,20 +76,20 @@ const EditCard = () => {
       const authenticatedUser = JSON.parse(localStorage.getItem("currentUser"));
 
       const cardData = {
+        id: selectedCardId, // Utiliza el ID de la tarjeta seleccionada
         number,
         mm,
         yyyy,
         cvv,
-        cardsname,
-        selectedCard,
       };
 
-      // Actualizar los datos de la tarjeta en el Local Storage
       if (authenticatedUser && authenticatedUser.cards) {
+        // Actualizar los datos de la tarjeta en el Local Storage
         authenticatedUser.cards = authenticatedUser.cards.map((card) =>
-          card.number === cardData.number ? cardData : card
+          card.id === selectedCardId ? cardData : card
         );
 
+        // Actualizar el usuario en el Local Storage
         localStorage.setItem("currentUser", JSON.stringify(authenticatedUser));
 
         redirectToHome();
@@ -99,15 +104,6 @@ const EditCard = () => {
       <div className="addCard-container">
         <h1>Edit your card.</h1>
         {error && <p className="error-message">{error}</p>}
-        <hr />
-        <input
-          className="name-input"
-          type="text"
-          name="name-card"
-          placeholder="Card's name"
-          value={cardsname}
-          onChange={(event) => setCardsname(event.target.value)}
-        />
         <hr />
         <input
           className="number-input"
@@ -161,4 +157,3 @@ const EditCard = () => {
 };
 
 export default EditCard;
-

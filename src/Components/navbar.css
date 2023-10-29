@@ -12,7 +12,7 @@
   background-color: #333;
   color: #fff;
   padding: 10px;
-  z-index: 100; /* Asegura que esté por encima de otros contenidos */
+
   height: 35px;
 }
 
@@ -35,8 +35,16 @@
   background-color: #333;
   text-decoration: none;
   color: white;
+  margin-left: 300px;
 }
-
+.Wisewallet1{
+  font-size: 24px;
+  font-weight: bold;
+  background-color: #333;
+  text-decoration: none;
+  color: white;
+  
+}
 .title {
   font-size: 24px;
   font-weight: bold;
@@ -46,10 +54,18 @@
   display: inline-block;
   
 }
-.navbar-content {
+.navbar-barra{
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
+  margin-left: 10px;
+  
+}
+.navbar-content{
+  display: flex;
+  justify-content:space-between;
+  align-items: center;
+  margin-left: 10px;
   width: 100%;
 }
 .right-button {
@@ -61,10 +77,7 @@
 }
 
 /* Añade relleno al cuerpo para empujar el contenido debajo de la barra de navegación */
-body {
-  padding-top: 70px; /* Ajusta según la altura de tu barra de navegación */
-  margin-left: 200px; /* Para dejar espacio a la barra lateral */
-}
+
 
 .right-button {
   text-align: center;

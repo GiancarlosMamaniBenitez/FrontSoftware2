@@ -1,77 +1,72 @@
 'use client'
 
 
+
+
+
 import React, { useState, useEffect } from "react";
 import NavBar from "@/Components/NavBar";
 import './addCard.css';
 
-import axios from "axios";
-
-const AddCard = () => {
+const AddCard = ({ selectedCard }) => {
   const [number, setNumber] = useState("");
   const [mm, setMm] = useState("");
   const [yyyy, setYyyy] = useState("");
   const [cvv, setCvv] = useState("");
-  const [reporte, setReporte] = useState([]); 
-  const [cardsname, setCardsname] = useState("");
-  const [selectedCard, setSelectedCard] = useState("");
   const [error, setError] = useState(null);
-  const [incomes, setIncomes] = useState([]);
-  const [expenses, setExpenses] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [spendingLimit, setSpendingLimit] = useState(0);
-  const [savingsGoal, setSavingsGoal] = useState(0);
+  const [cardCounter, setCardCounter] = useState(1); 
 
-  useEffect(() => {
-    const authenticatedUser = JSON.parse(localStorage.getItem("currentUser")) || { cards: [] };
-    const userCards = authenticatedUser.cards || [];
+  
+  // Obtén la URL actual
+const currentURL = window.location.href;
 
-    if (userCards.length > 0) {
-      const firstCard = userCards[0];
-      setCardsname(firstCard.cardsname);
-      setNumber(firstCard.number);
-      setMm(firstCard.mm);
-      setYyyy(firstCard.yyyy);
-      setCvv(firstCard.cvv);
-      setReporte(firstCard.reporte || []); 
-      setSelectedCard(firstCard.selectedCard);
-      setIncomes(firstCard.incomes || []);
-      setExpenses(firstCard.expenses || []);
-      setCategories(firstCard.categories || []);
-      setSpendingLimit(firstCard.spendingLimit || 0);
-      setSavingsGoal(firstCard.savingsGoal || 0);
-    }
-  }, []);
+// Analiza la URL para obtener sus componentes
+const url = new URL(currentURL);
+
+// Obtiene el valor del parámetro "cardType"
+const cardType = url.searchParams.get("cardType");
+
+console.log(cardType); // Esto mostrará "Mastercard" si la URL es "http://localhost:3000/Add-card?cardType=Mastercard"
+
 
   const handleNumberChange = (event) => {
-    const numericValue = event.target.value.replace(/\D/g, "").slice(0, 16);
-    const formattedValue = numericValue.replace(/(\d{4})/g, "$1 ");
-    setNumber(formattedValue);
+    const numericValue = event.target.value.replace(/\D/g, "");
+    
+    // Limita la longitud a 16 dígitos
+    if (numericValue.length <= 16) {
+      setNumber(numericValue);
+    }
   };
 
   const handleMmChange = (event) => {
-    const numericValue = event.target.value.replace(/\D/g, "").slice(0, 2);
-    setMm(numericValue);
+    const numericValue = event.target.value.replace(/\D/g, "");
+
+    // Limita la longitud a 2 dígitos
+    if (numericValue.length <= 2) {
+      setMm(numericValue);
+    }
   };
 
   const handleYyyyChange = (event) => {
-    const numericValue = event.target.value.replace(/\D/g, "").slice(0, 4);
-    setYyyy(numericValue);
+    const numericValue = event.target.value.replace(/\D/g, "");
+
+    // Limita la longitud a 4 dígitos
+    if (numericValue.length <= 4) {
+      setYyyy(numericValue);
+    }
   };
 
   const handleCvvChange = (event) => {
-    const numericValue = event.target.value.replace(/\D/g, "").slice(0, 3);
-    setCvv(numericValue);
-  };
+    const numericValue = event.target.value.replace(/\D/g, "");
 
-  const addCategory = (categoryName) => {
-    if (categoryName) {
-      setCategories([...categories, categoryName]);
+    // Limita la longitud a 3 dígitos
+    if (numericValue.length <= 3) {
+      setCvv(numericValue);
     }
   };
 
   const validateFields = () => {
-    if (!cardsname || !number || !mm || !yyyy || !cvv) {
+    if ( !number || !mm || !yyyy || !cvv) {
       setError("Por favor, complete todos los campos.");
       return false;
     }
@@ -82,102 +77,81 @@ const AddCard = () => {
     window.location.href = "/VerTarjeta";
   };
 
-  const checkIfCardExists = (cardData, authenticatedUser) => {
-    if (authenticatedUser.cards) {
-      if (authenticatedUser.cards.some((card) => card.number === cardData.number)) {
+  const findUserById = (userId) => {
+    const userList = JSON.parse(localStorage.getItem("users")) || [];
+    return userList.find(user => user.id === userId);
+  };
+
+  const checkIfCardExists = (cardData, user) => {
+    if (user.cards) {
+      if (user.cards.some((card) => card.number === cardData.number)) {
         setError("La tarjeta ya está asociada a tu cuenta.");
+        setCardCounter(cardCounter + 1);
         return true;
       }
     }
-
     return false;
   };
 
   const handleSubmit = () => {
     if (validateFields()) {
-      const authenticatedUser = JSON.parse(localStorage.getItem("currentUser")) || { cards: [] };
-
+      const storedUsers = JSON.parse(localStorage.getItem("users"));
+      const usersList = Array.isArray(storedUsers) ? storedUsers : [];
+  
+      const authenticatedUser = JSON.parse(localStorage.getItem("currentUser")) || {};
+      const userId = authenticatedUser.id;
+  
+      // Buscamos al usuario actual en el arreglo de usuarios
+      const user = usersList.find((user) => user.id === userId);
+  
+      if (!user) {
+        setError("Usuario no encontrado.");
+        return;
+      }
+  
+      // Encontramos el ID más alto entre las tarjetas del usuario actual
+      const highestCardId = (user.cards || []).reduce((maxId, card) => {
+        return card.id > maxId ? card.id : maxId;
+      }, 0);
+  
       const cardData = {
+        id: highestCardId + 1, // Aumentamos el ID en 1
+        cardType: cardType,
         number,
         mm,
         yyyy,
         cvv,
-        cardsname,
-        selectedCard,
-        incomes,
-        expenses,
-        categories,
-        spendingLimit,
-        savingsGoal,
-        reporte, 
+        incomes: [],
+        expenses: [],
+        spendingLimit: 0,
+        savingsGoal: 0,
+        reporte: [],
       };
-      onAuthStateChanged(auth, async (user) => {
-        if (user) {
-          const uid = user.uid;
-          console.log(uid)
-          // User is signed in, see docs for a list of available properties
-          // https://firebase.google.com/docs/reference/js/auth.user
-          await axios.post(`https://us-central1-software-backend-43062.cloudfunctions.net/app/usuarios/${uid}/crear-tarjeta` ,{
-            number,
-            mm,
-            yyyy,
-            cvv,
-            cardsname,
-            selectedCard,
-            incomes,
-            expenses,
-            categories,
-            spendingLimit,
-            savingsGoal
-          });
-          
-          
-          // ...
-        } else {
-          // User is signed out
-          // ...
-          console.log("Usuario sin logear")
-        }
-      });
-      if (checkIfCardExists(cardData, authenticatedUser)) {
+  
+      if (checkIfCardExists(cardData, user)) {
         return;
       }
-
-      const existingCard = authenticatedUser.cards.find((card) => card.number === cardData.number);
-      if (existingCard) {
-        existingCard.incomes = cardData.incomes;
-        existingCard.expenses = cardData.expenses;
-        existingCard.categories = cardData.categories;
-        existingCard.spendingLimit = cardData.spendingLimit;
-        existingCard.savingsGoal = cardData.savingsGoal;
-        existingCard.reporte = cardData.reporte; 
-      } else {
-        authenticatedUser.cards.push(cardData);
-      }
-
-      localStorage.setItem("currentUser", JSON.stringify(authenticatedUser));
-
+  
+      user.cards = [...(user.cards || []), cardData];
+  
+      // Actualizamos el usuario en la lista de usuarios
+      const updatedUserList = usersList.map((u) => (u.id === userId ? user : u));
+      localStorage.setItem("users", JSON.stringify(updatedUserList));
+      setCardCounter(highestCardId + 2); // Aumentamos el contador
       redirectToHome();
-      console.log("Registering new card:", cardData);
+      console.log("Nueva tarjeta registrada:", cardData);
     }
   };
+  
 
   return (
     <div>
       <NavBar />
       <div className="addCard-container">
-        <h1>Add your card.</h1>
+        <h1>Agregar tu tarjeta.</h1>
         {error && <p className="error-message">{error}</p>}
         <hr />
-        <input
-          className="name-input"
-          type="text"
-          name="name-card"
-          placeholder="Card's name"
-          value={cardsname}
-          onChange={(event) => setCardsname(event.target.value)}
-        />
-        <hr />
+        <p>Tipo de Tarjeta: {cardType}</p> {/* Agrega esta línea para mostrar el tipo de tarjeta */}
         <input
           className="number-input"
           type="text"
@@ -221,10 +195,9 @@ const AddCard = () => {
           onChange={handleCvvChange}
         />
         <hr />
-        
         <hr />
         <button className="add-button" onClick={handleSubmit}>
-          Confirm
+          Confirmar
         </button>
       </div>
     </div>

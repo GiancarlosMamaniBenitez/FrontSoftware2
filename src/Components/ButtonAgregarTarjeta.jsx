@@ -3,17 +3,18 @@ import './AgregarTarjeta.css';
 import Link from 'next/link';
 
 function ButtonAgregarTarjeta() {
-  const [selectedCard, setSelectedCard] = useState('');
+  const [selectedCard, setSelectedCard] = useState(""); // Estado para almacenar el tipo de tarjeta seleccionado
 
   const handleCardSelection = (cardType) => {
-    setSelectedCard(cardType);
+    setSelectedCard(cardType); // Almacena el tipo de tarjeta seleccionado en el estado
   };
+
+  const cardTypes = ['TarjetaVisa', 'Mastercard', 'AmericanExpress', 'DinersClub'];
 
   return (
     <div>
       <div className="card-container">
-        {['TarjetaVisa', 'Mastercard', 'AmericanExpress', 'DinersClub'].map((cardType) => (
-          
+        {cardTypes.map((cardType) => (
           <div key={cardType} className="card-option">
             <div className="card-image-container">
               <img src={`/${cardType}.png`} alt={cardType} className="card-image" />
@@ -28,10 +29,8 @@ function ButtonAgregarTarjeta() {
         ))}
       </div>
       <div className='button-addcard'>
-        <Link href={`/Add-card?cardType=${selectedCard}`} className='button-addcard'>
-          
-            ASOCIAR TARJETA
-          
+        <Link href={`/Add-card?cardType=${selectedCard}`}>
+          ASOCIAR TARJETA
         </Link>
       </div>
     </div>

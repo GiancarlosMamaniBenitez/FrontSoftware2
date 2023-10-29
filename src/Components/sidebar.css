@@ -6,9 +6,11 @@
     left:-40px;
     justify-content: center;
     height: 100%;
+    
  
     
   }
+  
   .sidebar li{
     text-align: center;
     list-style: none;

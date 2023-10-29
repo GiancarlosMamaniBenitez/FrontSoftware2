@@ -14,14 +14,19 @@ const SignUp = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [email, setEmail] = useState("");
 
-  const nameRegex = /^[A-Za-z\s]+$/; // Permite espacios
+  const nameRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/;
   const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{5,}$/;
+ 
 
-  const usersList = JSON.parse(localStorage.getItem("users")) || [];
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
+  
+    // Recupera la lista de usuarios del Local Storage y asegúrate de que sea un arreglo
+    const storedUsers = JSON.parse(localStorage.getItem("users"));
+    const usersList = Array.isArray(storedUsers) ? storedUsers : [];
+  
     if (firstName === "" || lastName === "" || username === "" || password === "" || confirmPassword === "" || email === "") {
       alert("Por favor, complete todos los campos.");
     } else if (!nameRegex.test(firstName) || !nameRegex.test(lastName)) {
@@ -40,11 +45,14 @@ const SignUp = () => {
         lastName,
         username,
         password,
+        categories: [],
         email,
         cards: []
       };
-
-      usersList.push(user);
+  
+      usersList.push(user); // Agrega el nuevo usuario a la lista existente
+  
+      // Vuelve a almacenar la lista de usuarios en el Local Storage
       localStorage.setItem("users", JSON.stringify(usersList));
       console.log("Lista de usuarios actualizada:", usersList);
       // Aquí puedes llamar a tu función registrarUsuario si es necesario
@@ -52,7 +60,10 @@ const SignUp = () => {
       window.location.href = `/Congrats?userId=${userId}`;
     }
   };
+  
+  
 
+  
   return (
     <div className="register-container">
       <h1>Sign Up for</h1>

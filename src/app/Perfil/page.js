@@ -12,7 +12,10 @@ const Profile = () => {
   const [password, setPassword] = useState("*******");
   const [email, setEmail] = useState("");
   const [isEditing, setIsEditing] = useState(false);
-
+const currentUser = localStorage.getItem("currentUser");
+if (!currentUser) {
+  window.location.href = "/";
+}
   // Obtén la información del usuario desde el Local Storage
   useEffect(() => {
     const authenticatedUser = JSON.parse(localStorage.getItem("currentUser"));

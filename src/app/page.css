@@ -9,6 +9,7 @@ CSS de page.js
 body{
   padding-top: 40px;
   background-color: #84b6f4;
+  
 }
 .container {
   background: #f5f5f5;
@@ -16,8 +17,10 @@ body{
   text-align: center;
   background-color: #84b6f4;
   margin-right: 100px;
+  margin-left: 200px;
   
 }
+
 
 /* Encabezado principal */
 h1 {

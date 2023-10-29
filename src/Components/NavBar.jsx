@@ -22,24 +22,27 @@ function NavBar(){
     return (
         <div className="navbar">
             {currentUser ? (
-                <div className="navbar-content">
+               <>
+                <div className="navbar-barra">
                     <button className="left-button" onClick={toggleSidebar}>
                         <FontAwesomeIcon icon={faBars} />
                     </button>
                     {isSidebarOpen && <Sidebar />}
+                    </div>
+
                     <div className="title">
-                        <Link href="/" className="Wisewallet">
+                        <Link href="/" className="Wisewallet1">
                             WiseWallet
                         </Link>
                     </div>
                     <div className="right-buttons">
                         <button className="right-button" onClick={redirectToPerfil}>
-                            <Link href="/Perfil">
+                            
                                 <FontAwesomeIcon icon={faUser} />
-                            </Link>
+                            
                         </button>
                     </div>
-                </div>
+              </> 
             ) : (
                 <div className="navbar-content">
                     <div> </div>

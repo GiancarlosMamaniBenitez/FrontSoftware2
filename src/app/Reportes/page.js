@@ -12,8 +12,12 @@ const Reports = () => {
   const [selectedReportType, setSelectedReportType] = useState("daily");
   const [selectedReportCategory, setSelectedReportCategory] = useState("");
   const [reportData, setReportData] = useState(null);
-
+  const currentUser = localStorage.getItem("currentUser");
+  if (!currentUser) {
+    window.location.href = "/";
+  }
   useEffect(() => {
+  
     // Realizar la lógica de carga de informes desde el almacenamiento local
     // y establecerlos en el estado "reporte" cuando la página se monta
     const loadedReporte = JSON.parse(localStorage.getItem("reporte")) || [];

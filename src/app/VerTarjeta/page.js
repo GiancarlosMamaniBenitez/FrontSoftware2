@@ -1,62 +1,46 @@
 'use client'
 
 
-import React, { useEffect } from 'react';
-import ButtonAgregarTarjeta from '@/Components/ButtonAgregarTarjeta';
-import ButtonEliminarTarjeta from '@/Components/ButtonEliminarTarjeta';
+
+
+import React, { useState, useEffect } from 'react';
 import MenuNuevo from '@/Components/MenuNuevo';
-import { useState } from 'react';
-import './tarjeta.css'
+import ButtonAgregarTarjeta from '@/Components/ButtonAgregarTarjeta';
+import './tarjeta.css';
+import EliminarTarjeta from '@/Components/EliminarTarjeta.jsx';
+import EditarTarjeta from '@/Components/EditarTarjeta.jsx'; 
+
 function VerTarjeta() {
   const [userCards, setUserCards] = useState([]);
+  const [selectedCard, setSelectedCard] = useState(''); 
   const maxCardLimit = 5;
-  //const { tarjetas } = useFetchTarjetas
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
   useEffect(() => {
-    const userIsLoggedIn = localStorage.getItem("userLoggedIn") === "true";
-
-    if (userIsLoggedIn) {
-      const authenticatedUser = JSON.parse(localStorage.getItem("currentUser"));
-
-      if (authenticatedUser && authenticatedUser.cards) {
-        setUserCards(authenticatedUser.cards);
-      }
+    // Cargar las tarjetas del usuario desde currentUser
+    if (currentUser && currentUser.cards) {
+      setUserCards(currentUser.cards);
     }
-  }, []);
+  }, [currentUser]);
+  const handleCardSelection = (cardType) => {
+    setSelectedCard(cardType); // Actualiza selectedCard al seleccionar una tarjeta
+  };
 
-  const handleCardDeletion = (cardType) => {
-    const updatedUserCards = userCards.filter((card) => card.type !== cardType);
-    const authenticatedUser = JSON.parse(localStorage.getItem("currentUser"));
+  const deleteCard = (cardType) => {
+    if (currentUser && currentUser.cards) {
+      // Filtra las tarjetas para eliminar la que coincida con cardType
+      const updatedCards = currentUser.cards.filter((card) => card.type !== cardType);
 
-    if (authenticatedUser) {
-      authenticatedUser.cards = updatedUserCards;
-      localStorage.setItem("currentUser", JSON.stringify(authenticatedUser));
-      setUserCards(updatedUserCards);
+      currentUser.cards = updatedCards;
+      localStorage.setItem("currentUser", JSON.stringify(currentUser));
+
+      // Actualiza el estado de userCards para reflejar el cambio
+      setUserCards(updatedCards);
     }
   };
 
-  const handleCardDetails = (cardType) => {
-    window.location.href = `/Edit-card?cardType=${cardType}`;
-  };
-
-  const handleCardAddition = (cardType) => {
-    if (userCards.length >= maxCardLimit) {
-      alert('No puedes agregar más de 5 tarjetas.');
-      return;
-    }
-
-    const authenticatedUser = JSON.parse(localStorage.getItem("currentUser"));
-
-    if (authenticatedUser) {
-      if (Array.isArray(authenticatedUser.cards)) {
-        authenticatedUser.cards.push({ type: cardType, data: {} });
-      } else {
-        authenticatedUser.cards = [{ type: cardType, data: {} }];
-      }
-
-      localStorage.setItem("currentUser", JSON.stringify(authenticatedUser));
-      setUserCards([...userCards, { type: cardType, data: {} }]);
-    }
+  const editCard = (cardId) => {
+    window.location.href = `/Edit-card?id=${cardId}`;
   };
 
   return (
@@ -69,39 +53,33 @@ function VerTarjeta() {
             <div>
               <h2>¿Desea eliminar alguna tarjeta o ver más detalles?</h2>
               <div className="card-container">
-              {userCards.map((card, index) => (
-
-                <div key={index} className="card-option">
-                  <div className="card-image-container">
-                    <img src={`/${card.type}.png`} alt={card.type} className="card-image" />
-                    <button
-                      onClick={() => handleCardDeletion(card.type)}
-                      className="card-button"
-                    >
-                      Eliminar
-                    </button>
-                    <button
-                      onClick={() => handleCardDetails(card.type)}
-                      className="card-button"
-                    >
-                      Ver más
-                    </button>
+                {userCards.map((card, index) => (
+                  <div key={index} className="card-option">
+                    <div className="card-image-container">
+                      <img src={`/${card.type}.png`} alt={card.type} className="card-image" />
+                      <EliminarTarjeta cardType={card.type} onDeleteCard={deleteCard} />
+                      <EditarTarjeta cardId={card.id} onEditCard={editCard} />
+                      
+                    </div>
                   </div>
-                </div>
-                
-              ))}
+                ))}
               </div>
               {userCards.length < maxCardLimit && (
                 <div>
-                <h2>¿Qué tipo de tarjeta desea registrar?</h2>
-                <ButtonAgregarTarjeta handleCardAddition={handleCardAddition} />
-              </div>
+                  <h2>¿Qué tipo de tarjeta desea registrar?</h2>
+                  <ButtonAgregarTarjeta selectedCard={selectedCard} handleCardSelection={handleCardSelection} />
+
+                </div>
+              )}
+              {userCards.length >= maxCardLimit && (
+                <p>No puedes agregar más de 5 tarjetas.</p>
               )}
             </div>
           ) : (
             <div>
               <h2>¿Qué tipo de tarjeta desea registrar?</h2>
-              <ButtonAgregarTarjeta handleCardAddition={handleCardAddition} />
+              <ButtonAgregarTarjeta selectedCard={selectedCard} handleCardSelection={handleCardSelection} />
+
             </div>
           )}
         </div>
