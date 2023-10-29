@@ -1,17 +1,17 @@
 'use client'
 
-
-
-
 import React, { useState } from "react";
 import './login.css';
 import Link from "next/link";
+import UsuarioApi from '../api_fronted/usuarios.js'
+import { useRouter } from 'next/navigation';
 
 const Login = () => {
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const ingresarUsuario = (email, password) => {
+  /*const ingresarUsuario = (email, password) => {
     // Obtiene la lista de usuarios desde el Local Storage
     const userList = JSON.parse(localStorage.getItem("users")) || [];
 
@@ -26,11 +26,36 @@ const Login = () => {
       // Credenciales incorrectas: muestra una notificación
       window.alert("Credenciales incorrectas. Por favor, inténtalo de nuevo.");
     }
+  }*/
+
+
+  /*const handleSubmit = (event) => {
+    event.preventDefault();
+    ingresarUsuario(email, password);
+  };*/
+
+  const router = useRouter();
+  const handleOnLoad = async () => {
+    const result = await UsuariosApi.findAll();
+    setUsuarios(result.data);
+    console.log(usuarios);
   }
+
+  useEffect(() => {
+      handleOnLoad();
+  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    ingresarUsuario(email, password);
+    const sesionU = usuarios.find((e) => e.username == username && e.contrasenia == password );
+    if(sesionU){
+        localStorage.setItem("userLoggedIn", "true");
+        router.push('/Home');
+        
+    }else{
+        alert("Credenciales incorrectas. Por favor, inténtalo de nuevo.")
+    }
+    
   };
 
   return (

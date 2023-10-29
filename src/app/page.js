@@ -9,9 +9,29 @@ import NavBar from '@/Components/NavBar';
 
 export default function Home() {
 // Obtén el nombre del usuario desde el Local Storage
-const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-const userName = currentUser ? currentUser.firstName : ""; // Obtén el firstName del usuario
-const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+//const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+//const userName = currentUser ? currentUser.firstName : ""; // Obtén el firstName del usuario
+//const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+
+  useEffect(() => {
+    // Verifica si el usuario ha iniciado sesión
+    const userIsLoggedIn = localStorage.getItem("userLoggedIn") === "true";
+
+    if (!userIsLoggedIn) {
+      // Si el usuario no ha iniciado sesión, redirige a la página de inicio de sesión (Login)
+      window.location.href = "/Login";
+    }
+  }, []);
+
+  const handleLogout = () => {
+    // Elimina la marca o token de autenticación del Local Storage
+    localStorage.removeItem("userLoggedIn");
+    localStorage.removeItem("currentUser"); // Elimina los datos del usuario actual
+
+    // Redirige al usuario a la página de inicio de sesión
+    window.location.href = "/Login";
+  };
 
   return (
     <div>
