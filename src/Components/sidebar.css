@@ -1,16 +1,19 @@
 .sidebar {
-    margin-top: 28px;
+    margin-top: 60px;
     list-style: none;
     background-color: #333;
     position: fixed;
-    left:-40px;
+    left:-30px;
     justify-content: center;
     height: 100%;
-    
  
     
   }
-  
+  .sidebar li:hover{
+    background-color: #333;
+    color: white;
+    cursor: pointer;
+  }
   .sidebar li{
     text-align: center;
     list-style: none;
@@ -21,10 +24,13 @@
     color: white;
     font-weight: bold;
     cursor: pointer;
+    
+
   }
   .link-sidebar{
     text-decoration: none;
     color: white;
+    
   }
  button{
   border: none;
@@ -34,5 +40,22 @@
   color: white;
   font-weight: bold;
  }
+  
+ .sidebar-open .sidebar {
+  /* Add styles for open sidebar */
+  /* For example, you can set the width and add a background color */
+  width: 250px; /* Adjust the width as needed */
+  background-color: #333; /* Adjust the background color as needed */
+}
+
+/* Add the transition for smooth sidebar animation */
+.sidebar-open .sidebar {
+  transition: width 0.3s ease, background-color 0.3s ease; /* Add this line */
+}
+
+/* Add styles for the content to push it to the right when sidebar is open */
+.sidebar-open .content {
+  margin-left: 250px; /* Adjust the value to match the sidebar width */
+}
   
   
