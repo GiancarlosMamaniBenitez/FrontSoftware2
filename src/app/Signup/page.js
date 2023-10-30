@@ -18,18 +18,18 @@ const SignUp = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [email, setEmail] = useState("");
 
-  //const nameRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/;
+  const nameRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/;
   //const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{5,}$/;
  
 
 
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
   
     // Recupera la lista de usuarios del Local Storage y asegúrate de que sea un arreglo
-    //const storedUsers = JSON.parse(localStorage.getItem("users"));
-    //const usersList = Array.isArray(storedUsers) ? storedUsers : [];
+    const storedUsers = JSON.parse(localStorage.getItem("users"));
+    const usersList = Array.isArray(storedUsers) ? storedUsers : [];
   
     if (firstName === "" || lastName === "" || username === "" || password === "" || confirmPassword === "" || email === "") {
       alert("Por favor, complete todos los campos.");
@@ -42,16 +42,17 @@ const SignUp = () => {
       setPassword("");
       setConfirmPassword("");
     } else {
-      //const userId = usersList.length + 1;
+      const userId = usersList.length + 1;
+      // Crea un nuevo usuario
       const user = {
-        id: userId,
-        firstName,
-        lastName,
-        username,
-        password,
-        categories: [],
-        email,
-        cards: []
+        
+        nombres: firstName,
+        apellidos: lastName,
+
+        username: username,
+        contrasenia: password,
+        email: email,
+         // Agregar un array para almacenar las tarjetas asociadas al usuario
       };
       
       try {
@@ -73,10 +74,10 @@ const SignUp = () => {
       }
         
 
-      //usersList.push(user); // Agrega el nuevo usuario a la lista existente
+      usersList.push(user); // Agrega el nuevo usuario a la lista existente
   
       // Vuelve a almacenar la lista de usuarios en el Local Storage
-      //localStorage.setItem("users", JSON.stringify(usersList));
+      localStorage.setItem("users", JSON.stringify(usersList));
       //console.log("Lista de usuarios actualizada:", usersList);
       // Aquí puedes llamar a tu función registrarUsuario si es necesario
       // registrarUsuario(email, password, firstName, lastName, username);

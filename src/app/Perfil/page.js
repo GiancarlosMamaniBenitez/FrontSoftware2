@@ -1,9 +1,10 @@
 'use client'
 
-
+import { useRouter } from 'next/navigation';
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import "./perfil.css";
+import UsuariosApi from '../api_fronted/usuarios';
 
 const Profile = () => {
   const [firstName, setFirstName] = useState("");
@@ -12,42 +13,69 @@ const Profile = () => {
   const [password, setPassword] = useState("*******");
   const [email, setEmail] = useState("");
   const [isEditing, setIsEditing] = useState(false);
-const currentUser = localStorage.getItem("currentUser");
-if (!currentUser) {
-  window.location.href = "/";
-}
-  // Obtén la información del usuario desde el Local Storage
-  useEffect(() => {
-    const authenticatedUser = JSON.parse(localStorage.getItem("currentUser"));
+  const [sesion , setSesion] = useState({});
+  const [usuarios, setUsuarios ] = useState([]);
+  const router = useRouter();
 
-    if (authenticatedUser) {
-      setFirstName(authenticatedUser.firstName);
-      setLastName(authenticatedUser.lastName);
-      setUsername(authenticatedUser.username);
-      setEmail(authenticatedUser.email);
+
+  
+
+  
+  useEffect(() => {
+
+    const handleOnLoad = async () => {
+      const result = await UsuariosApi.findAll()
+      setUsuarios(result.data)
+
+      const authenticatedUser = localStorage.getItem("sesion");
+      if(authenticatedUser == undefined){
+        router.push('/')
+      }
+      setSesion(JSON.parse(authenticatedUser))
+      
+    
     }
+    handleOnLoad()
   }, []);
 
   const handleEdit = () => {
     // Habilitar la edición de campos
     setIsEditing(true);
   };
+  
+  const handleSave = async (event) => {
+    event.preventDefault();
+    console.log(usuarios)
+    const usuarioCambio = usuarios.find(e => e.id === sesion.id)
+    console.log(sesion.id)
+    const userCambio = {
+        
+      nombres: firstName,
+      apellidos: lastName,
 
-  const handleSave = () => {
-    // Obtén el usuario autenticado del Local Storage
-    const authenticatedUser = JSON.parse(localStorage.getItem("currentUser"));
+      username: username,
+      contrasenia: password,
+      email: email,
+       // Agregar un array para almacenar las tarjetas asociadas al usuario
+    };
 
-    if (authenticatedUser) {
-      // Modifica las propiedades del objeto
-      authenticatedUser.firstName = firstName;
-      authenticatedUser.lastName = lastName;
-      authenticatedUser.username = username;
-      authenticatedUser.email = email;
-
-      // Guarda el objeto modificado de vuelta en el Local Storage
-      localStorage.setItem("currentUser", JSON.stringify(authenticatedUser));
+    try {
+      // Realiza la solicitud POST al backend para registrar el nuevo usuario utilizando la función personasApi
+      const response = await UsuariosApi.update(sesion.id, userCambio)
+  
+      // Comprueba el resultado de la solicitud
+        if (response && response.status === 200) {
+            // Registro exitoso, redirige a la página de inicio de sesión
+            alert('Registro exitoso!');
+            
+        } else {
+            // Manejo de errores en caso de que algo salga mal en el backend
+            alert('Error al registrar usuario2');
+        }
+    } catch (error) {
+      // Manejo de errores en caso de problemas de conexión o errores en el backend
+      alert('Error al registrar usuario');
     }
-
     // Deshabilita la edición de campos
     setIsEditing(false);
   };
@@ -64,7 +92,7 @@ if (!currentUser) {
             onChange={(e) => setFirstName(e.target.value)}
           />
         ) : (
-          <span>{firstName}</span>
+          <span>{sesion.nombres}</span>
         )}
       </div>
       <div className="profile-details">
@@ -76,7 +104,7 @@ if (!currentUser) {
             onChange={(e) => setLastName(e.target.value)}
           />
         ) : (
-          <span>{lastName}</span>
+          <span>{sesion.apellidos}</span>
         )}
       </div>
       <div className="profile-details">
@@ -88,7 +116,7 @@ if (!currentUser) {
             onChange={(e) => setUsername(e.target.value)}
           />
         ) : (
-          <span>{username}</span>
+          <span>{sesion.username}</span>
         )}
       </div>
       <div className="profile-details">
@@ -100,7 +128,7 @@ if (!currentUser) {
             onChange={(e) => setPassword(e.target.value)}
           />
         ) : (
-          <span>{password}</span>
+          <span>{sesion.contrasenia}</span>
         )}
       </div>
       <div className="profile-details">
@@ -112,7 +140,7 @@ if (!currentUser) {
             onChange={(e) => setEmail(e.target.value)}
           />
         ) : (
-          <span>{email}</span>
+          <span>{sesion.email}</span>
         )}
       </div>
       <div className="profile-actions">

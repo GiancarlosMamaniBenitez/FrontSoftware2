@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 
 function NavBar({ isSidebarOpen, setIsSidebarOpen }){
    
-    const currentUser = localStorage.getItem("currentUser");
+    const currentUser = localStorage.getItem("userLoggedIn")
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);

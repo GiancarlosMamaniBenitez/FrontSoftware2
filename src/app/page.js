@@ -1,20 +1,39 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import './page.css';
 import { Navbar } from 'react-bootstrap';
 import NavBar from '@/Components/NavBar';
+import UsuariosApi from './api_fronted/usuarios';
+
 
 export default function Home() {
 // Obtén el nombre del usuario desde el Local Storage
-//const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+const currentUser = localStorage.getItem("userLoggedIn")
+const [usuarios, setUsuarios ] = useState([]);
+const [sesion , setSesion] = useState({});
 //const userName = currentUser ? currentUser.firstName : ""; // Obtén el firstName del usuario
-//const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
+const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
+
+    const handleOnLoad = async () => {
+      const result = await UsuariosApi.findAll()
+      setUsuarios(result.data)
+
+      const authenticatedUser = localStorage.getItem("sesion");
+      if(authenticatedUser == undefined){
+        router.push('/')
+      }
+      setSesion(JSON.parse(authenticatedUser))
+      
+    
+    }
+    handleOnLoad()
+  }, []);
+  /*useEffect(() => {
     // Verifica si el usuario ha iniciado sesión
     const userIsLoggedIn = localStorage.getItem("userLoggedIn") === "true";
 
@@ -22,7 +41,7 @@ export default function Home() {
       // Si el usuario no ha iniciado sesión, redirige a la página de inicio de sesión (Login)
       window.location.href = "/Login";
     }
-  }, []);
+  }, []);*/
 
   const handleLogout = () => {
     // Elimina la marca o token de autenticación del Local Storage
@@ -41,7 +60,7 @@ export default function Home() {
           
           {currentUser ? (
             <div className="about-us">
-              <h1>{`Bienvenido, ${userName}`}</h1>
+              <h1>{`Bienvenido, ${sesion.nombres} ${sesion.apellidos}`}</h1>
               <p>Ahora puedes mejorar la gestión de tus controles de gastos de tu tarjeta de crédito o débito con WiseWallet. Nuestra plataforma te brinda métodos financieros para simplificar la gestión de tus finanzas.</p>
             </div>
           ) : (
