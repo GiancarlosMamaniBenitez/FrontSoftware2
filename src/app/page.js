@@ -7,29 +7,29 @@ import './page.css';
 import { Navbar } from 'react-bootstrap';
 import NavBar from '@/Components/NavBar';
 import UsuariosApi from './api_fronted/usuarios';
-
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
 // Obtén el nombre del usuario desde el Local Storage
 const currentUser = localStorage.getItem("userLoggedIn")
-const [usuarios, setUsuarios ] = useState([]);
+const [usuario, setUsuario ] = useState({});
 const [sesion , setSesion] = useState({});
+const router = useRouter(); 
 //const userName = currentUser ? currentUser.firstName : ""; // Obtén el firstName del usuario
 const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
 
     const handleOnLoad = async () => {
-      const result = await UsuariosApi.findAll()
-      setUsuarios(result.data)
-
+      
       const authenticatedUser = localStorage.getItem("sesion");
+      
       if(authenticatedUser == undefined){
         router.push('/')
       }
       setSesion(JSON.parse(authenticatedUser))
+
       
-    
     }
     handleOnLoad()
   }, []);

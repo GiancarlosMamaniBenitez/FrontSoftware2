@@ -10,7 +10,7 @@ const Profile = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("*******");
+  const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [sesion , setSesion] = useState({});
@@ -18,23 +18,29 @@ const Profile = () => {
   const router = useRouter();
 
 
-  
-
-  
-  useEffect(() => {
-
-    const handleOnLoad = async () => {
-      const result = await UsuariosApi.findAll()
-      setUsuarios(result.data)
-
-      const authenticatedUser = localStorage.getItem("sesion");
-      if(authenticatedUser == undefined){
-        router.push('/')
-      }
-      setSesion(JSON.parse(authenticatedUser))
-      
+  const handleOnLoad = async () => {
+    const result = await UsuariosApi.findAll()
+    setUsuarios(result.data)
     
+    const authenticatedUser = localStorage.getItem("sesion");
+    console.log(JSON.parse(authenticatedUser))
+    if(authenticatedUser == undefined){
+      router.push('/')
     }
+    setSesion(JSON.parse(authenticatedUser))
+    
+  
+  }
+
+  const handleOnLoadAct = async () =>{
+    const result = await UsuariosApi.findAll()
+    const resultData = await UsuariosApi.findOne(sesion.id)
+    setUsuarios(result.data)
+    setSesion(resultData.data)
+    localStorage.setItem('sesion', JSON.stringify(resultData.data))
+
+  }
+  useEffect(() => {
     handleOnLoad()
   }, []);
 
@@ -45,9 +51,6 @@ const Profile = () => {
   
   const handleSave = async (event) => {
     event.preventDefault();
-    console.log(usuarios)
-    const usuarioCambio = usuarios.find(e => e.id === sesion.id)
-    console.log(sesion.id)
     const userCambio = {
         
       nombres: firstName,
@@ -62,13 +65,15 @@ const Profile = () => {
     try {
       // Realiza la solicitud POST al backend para registrar el nuevo usuario utilizando la función personasApi
       const response = await UsuariosApi.update(sesion.id, userCambio)
-  
+      handleOnLoadAct()
       // Comprueba el resultado de la solicitud
         if (response && response.status === 200) {
             // Registro exitoso, redirige a la página de inicio de sesión
-            alert('Registro exitoso!');
+            alert('Actualización exitosa!');
             
-        } else {
+        
+        } 
+        else {
             // Manejo de errores en caso de que algo salga mal en el backend
             alert('Error al registrar usuario2');
         }
