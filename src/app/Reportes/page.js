@@ -13,9 +13,7 @@ const Reports = () => {
   const [selectedReportCategory, setSelectedReportCategory] = useState("");
   const [reportData, setReportData] = useState(null);
   const currentUser = localStorage.getItem("currentUser");
-  if (!currentUser) {
-    window.location.href = "/";
-  }
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   useEffect(() => {
   
     // Realizar la lógica de carga de informes desde el almacenamiento local
@@ -141,7 +139,7 @@ const Reports = () => {
 
   return (
     <div>
-      <NavBar />
+      <NavBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
       <div className="reports-container">
         <h1>Reports</h1>
 
