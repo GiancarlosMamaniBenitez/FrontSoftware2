@@ -6,9 +6,9 @@ import Link from "next/link";
 import Sidebar from './SideBar'; 
 import { useRouter } from 'next/navigation';
 
-function NavBar({ isSidebarOpen, setIsSidebarOpen }){
+function NavBar({ isSidebarOpen, setIsSidebarOpen, sesion }){
+    
    
-    const currentUser = localStorage.getItem("userLoggedIn")
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
@@ -23,7 +23,7 @@ function NavBar({ isSidebarOpen, setIsSidebarOpen }){
         //        <div className={`navbar ${isSidebarOpen ? 'sidebar-open' : ''}`}>
 
         <div className="navbar">
-        {currentUser ? (
+        {sesion ? (
                 <div className="navbar-content">
                     <button className="left-button" onClick={toggleSidebar}>
                         <FontAwesomeIcon icon={faBars} />

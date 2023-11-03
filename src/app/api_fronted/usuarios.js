@@ -13,11 +13,7 @@ const findOne = async(id) => {
     return await Base.get(newEndpoint);
 }
 
-const update = async(id,request) => 
-{
-    const newEndpoint = endpoint.concat('/',id);
-    return await Base.put(newEndpoint, request)
-}
+const update = async(request) => await Base.put(endpoint,request);
 
 const remove = async(id) => {
     const newEndpoint = endpoint.concat('/',id);

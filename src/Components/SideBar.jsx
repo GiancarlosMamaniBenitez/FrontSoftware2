@@ -8,7 +8,7 @@ function SideBar() {
   const handleLogout = () => {
     // Elimina la marca o token de autenticación del Local Storage
     localStorage.removeItem("userLoggedIn");
-    localStorage.removeItem("currentUser");
+    localStorage.removeItem("sesion");
     
     // Actualiza la variable de estado para reflejar que el usuario ha cerrado sesión
     setIsLoggedOut(true);

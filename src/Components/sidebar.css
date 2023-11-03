@@ -1,5 +1,5 @@
 .sidebar {
-    margin-top: 60px;
+    margin-top: 39px;
     list-style: none;
     background-color: #333;
     position: fixed;
@@ -18,6 +18,8 @@
     text-align: center;
     list-style: none;
     margin: 7px;
+    margin-top: 20px;
+    margin-right: 15px;
     padding: 18px;
     border-radius: 5px;
     background-color: rgb(252,157,157);

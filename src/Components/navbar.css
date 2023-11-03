@@ -38,6 +38,7 @@ body{
   background-color: #333;
   text-decoration: none;
   color: white;
+  margin-left: 200px;
 }
 
 .title {
@@ -54,7 +55,7 @@ body{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  width: 99%;
   background-color: #333;
   position: fixed;
   top: 0;
@@ -94,6 +95,7 @@ body {
 
 .sidebar-open .navbar-content {
   transform: translateX(250px); /* Adjust the value as needed */
+  margin-right: 10px;
 }
 
 

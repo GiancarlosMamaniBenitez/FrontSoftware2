@@ -1,7 +1,7 @@
 
 import axios from 'axios';
 
-const URI = 'http://localhost:8080/api/v1';
+const URI = 'http://localhost:8080/';
 
 const get = async (endpoint) => {
     try {

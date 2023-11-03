@@ -1,86 +1,83 @@
 'use client'
 
-import { useRouter } from 'next/navigation';
+
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import "./perfil.css";
-import UsuariosApi from '../api_fronted/usuarios';
-
+import UsuariosApi from "../api_fronted/usuarios";
 const Profile = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [nombres, setFirstName] = useState("");
+  const [apellidos, setLastName] = useState("");
   const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [contrasenia, setPassword] = useState("*******");
   const [email, setEmail] = useState("");
   const [isEditing, setIsEditing] = useState(false);
+
   const [sesion , setSesion] = useState({});
-  const [usuarios, setUsuarios ] = useState([]);
-  const router = useRouter();
-
-
-  const handleOnLoad = async () => {
-    const result = await UsuariosApi.findAll()
-    setUsuarios(result.data)
-    
-    const authenticatedUser = localStorage.getItem("sesion");
-    console.log(JSON.parse(authenticatedUser))
-    if(authenticatedUser == undefined){
-      router.push('/')
-    }
-    setSesion(JSON.parse(authenticatedUser))
-    
-  
-  }
-
-  const handleOnLoadAct = async () =>{
-    const result = await UsuariosApi.findAll()
-    const resultData = await UsuariosApi.findOne(sesion.id)
-    setUsuarios(result.data)
-    setSesion(resultData.data)
-    localStorage.setItem('sesion', JSON.stringify(resultData.data))
-
-  }
   useEffect(() => {
-    handleOnLoad()
+    // Verifica si el usuario ha iniciado sesión
+    let sesionGuardada = localStorage.getItem("sesion");
+        if(sesionGuardada == undefined){
+          alert("No hya sesion guardada")
+            router.push('/Login')
+        }
+        setSesion(JSON.parse(sesionGuardada))
+        console.log(sesion)
+  }, []);
+  // Obtén la información del usuario desde el Local Storage
+  useEffect(() => {
+    const authenticatedUser = JSON.parse(localStorage.getItem("sesion"));
+
+    if (authenticatedUser) {
+      setFirstName(authenticatedUser.nombres);
+      setLastName(authenticatedUser.apellidos);
+      setUsername(authenticatedUser.username);
+      setPassword(authenticatedUser.contrasenia)
+      setEmail(authenticatedUser.email);
+    }
+    console.log(authenticatedUser.nombres)
   }, []);
 
   const handleEdit = () => {
     // Habilitar la edición de campos
     setIsEditing(true);
   };
-  
-  const handleSave = async (event) => {
-    event.preventDefault();
-    const userCambio = {
-        
-      nombres: firstName,
-      apellidos: lastName,
 
-      username: username,
-      contrasenia: password,
-      email: email,
-       // Agregar un array para almacenar las tarjetas asociadas al usuario
-    };
+  const handleSave = async () => {
+    // Obtén el usuario autenticado del Local Storage
+    const authenticatedUser = JSON.parse(localStorage.getItem("sesion"));
 
-    try {
-      // Realiza la solicitud POST al backend para registrar el nuevo usuario utilizando la función personasApi
-      const response = await UsuariosApi.update(sesion.id, userCambio)
-      handleOnLoadAct()
-      // Comprueba el resultado de la solicitud
-        if (response && response.status === 200) {
-            // Registro exitoso, redirige a la página de inicio de sesión
-            alert('Actualización exitosa!');
-            
-        
-        } 
-        else {
-            // Manejo de errores en caso de que algo salga mal en el backend
-            alert('Error al registrar usuario2');
-        }
-    } catch (error) {
-      // Manejo de errores en caso de problemas de conexión o errores en el backend
-      alert('Error al registrar usuario');
+    if (authenticatedUser) {
+      // Modifica las propiedades del objeto
+      authenticatedUser.nombres = nombres;
+      authenticatedUser.apellidos = apellidos;
+      authenticatedUser.username = username;
+      authenticatedUser.contrasenia = contrasenia;
+      authenticatedUser.email = email;
+
+      // Guarda el objeto modificado de vuelta en el Local Storage
+      console.log(authenticatedUser)
+      
+      try {
+        // Realiza la solicitud POST al backend para registrar el nuevo usuario utilizando la función personasApi
+        const response = await UsuariosApi.update(authenticatedUser);
+    
+        // Comprueba el resultado de la solicitud
+          if (response && response.status === 200) {
+              // Registro exitoso, redirige a la página de inicio de sesión
+              alert('Actualización exitosa!');
+              router.push('/Congrats');
+          } else {
+              // Manejo de errores en caso de que algo salga mal en el backend
+              alert('Error al actualizar usuario');
+          }
+      } catch (error) {
+        console.error("Error en la solicitud: ", error);
+    alert("Error al actualizar usuario. Consulta la consola para más detalles.");
+      }
+    
     }
+    
     // Deshabilita la edición de campos
     setIsEditing(false);
   };
@@ -93,11 +90,11 @@ const Profile = () => {
         {isEditing ? (
           <input
             type="text"
-            value={firstName}
+            value={nombres}
             onChange={(e) => setFirstName(e.target.value)}
           />
         ) : (
-          <span>{sesion.nombres}</span>
+          <span>{nombres}</span>
         )}
       </div>
       <div className="profile-details">
@@ -105,11 +102,11 @@ const Profile = () => {
         {isEditing ? (
           <input
             type="text"
-            value={lastName}
+            value={apellidos}
             onChange={(e) => setLastName(e.target.value)}
           />
         ) : (
-          <span>{sesion.apellidos}</span>
+          <span>{apellidos}</span>
         )}
       </div>
       <div className="profile-details">
@@ -121,7 +118,7 @@ const Profile = () => {
             onChange={(e) => setUsername(e.target.value)}
           />
         ) : (
-          <span>{sesion.username}</span>
+          <span>{username}</span>
         )}
       </div>
       <div className="profile-details">
@@ -129,11 +126,15 @@ const Profile = () => {
         {isEditing ? (
           <input
             type="text"
-            value={password}
+            value={contrasenia}
             onChange={(e) => setPassword(e.target.value)}
           />
         ) : (
-          <span>{sesion.contrasenia}</span>
+          <input
+          type="password"
+          value={contrasenia}
+          onChange={(e) => setPassword(e.target.value)}
+        />
         )}
       </div>
       <div className="profile-details">
@@ -145,7 +146,7 @@ const Profile = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
         ) : (
-          <span>{sesion.email}</span>
+          <span>{email}</span>
         )}
       </div>
       <div className="profile-actions">
