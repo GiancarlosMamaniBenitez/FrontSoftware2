@@ -9,13 +9,24 @@ import ButtonAgregarTarjeta from '@/Components/ButtonAgregarTarjeta';
 import './tarjeta.css';
 import EliminarTarjeta from '@/Components/EliminarTarjeta.jsx';
 import EditarTarjeta from '@/Components/EditarTarjeta.jsx'; 
-
+import NavBar from '@/Components/NavBar';
 function VerTarjeta() {
   const [userCards, setUserCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState(''); 
   const maxCardLimit = 5;
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [sesion , setSesion] = useState({});
+  useEffect(() => {
+    // Verifica si el usuario ha iniciado sesión
+    let sesionGuardada = localStorage.getItem("sesion");
+        if(sesionGuardada == undefined){
+          
+            router.push('/')
+        }
+        setSesion(JSON.parse(sesionGuardada))
+        console.log(sesion)
+  }, []);
   useEffect(() => {
     // Cargar las tarjetas del usuario desde currentUser
     if (currentUser && currentUser.cards) {
@@ -45,7 +56,8 @@ function VerTarjeta() {
 
   return (
     <div>
-      <MenuNuevo />
+       <NavBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} sesion={sesion}/>
+      <div className={`container${isSidebarOpen ? '-shifted' : ''}`}>
       <div className="Agregar">
         <h1>TARJETAS REGISTRADAS</h1>
         <div>
@@ -84,6 +96,7 @@ function VerTarjeta() {
           )}
         </div>
       </div>
+    </div>
     </div>
   );
 }

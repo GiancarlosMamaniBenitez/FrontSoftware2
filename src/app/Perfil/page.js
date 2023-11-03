@@ -14,6 +14,8 @@ const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
 
   const [sesion , setSesion] = useState({});
+  const [usuarios, setUsuarios ] = useState([]);
+  
   useEffect(() => {
     // Verifica si el usuario ha iniciado sesión
     let sesionGuardada = localStorage.getItem("sesion");
@@ -60,8 +62,9 @@ const Profile = () => {
       
       try {
         // Realiza la solicitud POST al backend para registrar el nuevo usuario utilizando la función personasApi
-        const response = await UsuariosApi.update(authenticatedUser);
-    
+        const response = await UsuariosApi.update(authenticatedUser.id,authenticatedUser);
+        handleOnLoadAct();
+        
         // Comprueba el resultado de la solicitud
           if (response && response.status === 200) {
               // Registro exitoso, redirige a la página de inicio de sesión
@@ -81,7 +84,13 @@ const Profile = () => {
     // Deshabilita la edición de campos
     setIsEditing(false);
   };
-
+  const handleOnLoadAct = async () =>{
+    const result = await UsuariosApi.findAll()
+    const resultData = await UsuariosApi.findOne(sesion.id)
+    setUsuarios(result.data)
+    setSesion(resultData.data)
+    localStorage.setItem('sesion', JSON.stringify(resultData.data))
+  }
   return (
     <div className="profile-container">
       <h1>Your Profile</h1>
