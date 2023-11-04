@@ -26,7 +26,6 @@ const router = useRouter();
         }
         setSesion(JSON.parse(sesionGuardada))
         console.log(sesion)
-        console.log(sesion.nombres)
   }, []);
 
   const handleLogout = () => {

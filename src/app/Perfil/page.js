@@ -4,6 +4,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import "./perfil.css";
+import NavBar from "@/Components/NavBar";
 import UsuariosApi from "../api_fronted/usuarios";
 const Profile = () => {
   const [nombres, setFirstName] = useState("");
@@ -12,6 +13,7 @@ const Profile = () => {
   const [contrasenia, setPassword] = useState("*******");
   const [email, setEmail] = useState("");
   const [isEditing, setIsEditing] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const [sesion , setSesion] = useState({});
   const [usuarios, setUsuarios ] = useState([]);
@@ -75,9 +77,7 @@ const Profile = () => {
               alert('Error al actualizar usuario');
           }
       } catch (error) {
-        console.error("Error en la solicitud: ", error);
-    alert("Error al actualizar usuario. Consulta la consola para más detalles.");
-      }
+         }
     
     }
     
@@ -92,7 +92,10 @@ const Profile = () => {
     localStorage.setItem('sesion', JSON.stringify(resultData.data))
   }
   return (
-    <div className="profile-container">
+    <div>
+            <NavBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} sesion={sesion}/>
+
+      <div className={`profile-container${isSidebarOpen ? '-shifted' : ''}`}>
       <h1>Your Profile</h1>
       <div className="profile-details">
         <label>First Name:</label>
@@ -172,6 +175,7 @@ const Profile = () => {
           <button className="edit-button">Regresar</button>
         </Link>
       </div>
+    </div>
     </div>
   );
 };

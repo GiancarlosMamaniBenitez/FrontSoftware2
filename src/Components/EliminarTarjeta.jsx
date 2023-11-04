@@ -1,9 +1,9 @@
 // EliminarTarjeta.js
 import React from 'react';
 
-function EliminarTarjeta({ cardType, onDeleteCard }) {
+function EliminarTarjeta({id, onDeleteCard }) {
   const handleDeleteClick = () => {
-    onDeleteCard(cardType);
+    onDeleteCard(id);
   }
 
   return (

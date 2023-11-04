@@ -10,7 +10,7 @@
     
   }
   .sidebar li:hover{
-    background-color: #333;
+    background-color: rgb(183, 114, 114);
     color: white;
     cursor: pointer;
   }

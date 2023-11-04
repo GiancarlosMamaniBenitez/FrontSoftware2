@@ -38,7 +38,6 @@ body{
   background-color: #333;
   text-decoration: none;
   color: white;
-  margin-left: 200px;
 }
 
 .title {
@@ -47,7 +46,7 @@ body{
   background-color: #333;
   text-decoration: none;
   color: white;
-  display: inline-block;
+  
   
   
 }

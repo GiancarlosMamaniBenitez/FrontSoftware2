@@ -17,7 +17,14 @@ function ButtonAgregarTarjeta() {
         {cardTypes.map((cardType) => (
           <div key={cardType} className="card-option">
             <div className="card-image-container">
+            <h1>Tarjeta</h1>
+            <hr />
               <img src={`/${cardType}.png`} alt={cardType} className="card-image" />
+              
+              <hr />
+              
+              <h3>{cardType}</h3>
+              <hr />
               <button
                 onClick={() => handleCardSelection(cardType)}
                 className={`card-button ${selectedCard === cardType ? 'selected' : ''}`}
@@ -29,7 +36,7 @@ function ButtonAgregarTarjeta() {
         ))}
       </div>
       <div className='button-addcard'>
-        <Link href={`/Add-card?cardType=${selectedCard}`}>
+        <Link className='button-addcard' href={`/Add-card?cardType=${selectedCard}`}>
           ASOCIAR TARJETA
         </Link>
       </div>

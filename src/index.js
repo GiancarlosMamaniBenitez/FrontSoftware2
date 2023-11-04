@@ -11,8 +11,6 @@ import Congratulations from './congrats';
 import AddCard from './app/Add-card/page';
 import NavBar from './Components/NavBar';
 
-
-//hola
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
