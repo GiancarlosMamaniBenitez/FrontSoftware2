@@ -40,7 +40,9 @@ function VerTarjeta() {
         const  filtrarTarjeta = async (listcards, sesion) =>{
           let TarjetasFiltradas = []
           TarjetasFiltradas = listcards.filter((e) => e.id == sesion.id)
+          console.log(TarjetasFiltradas) 
           return TarjetasFiltradas;
+          
       } 
           const TarjetasFiltradas = await filtrarTarjeta(listcards, JSON.parse(sesionGuardada));
                   setCards(TarjetasFiltradas);
@@ -50,10 +52,10 @@ function VerTarjeta() {
     } 
     
     handleOnLoad();
-    tarjetaLocal();
+    //tarjetaLocal();
         
   }, []);
-  
+  /*
   const tarjetaLocal = async () =>{
     console.log(cards)
     sesion.Cards = [cards];
@@ -70,28 +72,20 @@ function VerTarjeta() {
       setCards(sesion.cards);
     }
   }, [sesion]);
-  console.log(sesion.card)
+  console.log(sesion.card)*/
 
   const handleCardSelection = (cardType) => {
     setSelectedCard(cardType); // Actualiza selectedCard al seleccionar una tarjeta
   };
 
-  const deleteCard = (id) => {
+  const deleteCard = async(id) => {
     // Filtra las tarjetas para eliminar la que coincida con el 'id'
-    const updatedCards = cards.filter((card) => card.id !== id);
-  
+    const updatedCards = cards.filter((elem) => elem.id !== id);
+    const eliminada = cards.find((elem) => elem.id == id);
+    const result = await TarjetasApi.remove(eliminada.id);
     // Actualiza el estado de 'cards' para reflejar el cambio
     setCards(updatedCards);
-  
-    // Actualiza también el estado de 'sesion.cards' si es necesario
-    if (sesion && sesion.cards) {
-      sesion.cards = [...sesion.cards, cards.find((card) => card.id === id)];
     }
-  
-    // Actualiza el almacenamiento local con las tarjetas actualizadas
-    const sesionActualizada = { ...sesion, cards: updatedCards };
-    //localStorage.setItem("sesion", JSON.stringify(sesionActualizada));
-  }
   
 
   const editCard = (cardId) => {
@@ -109,16 +103,16 @@ function VerTarjeta() {
             <div>
               <h2>¿Desea eliminar alguna tarjeta o ver más detalles?</h2>
               <div className="card-container">
-                {cards.map((card, index) => (
+                {cards.map((elem, index) => (
                   <div key={index} className="card-option">
                     <div className="card-image-container">
                     <h1>Tarjeta</h1>
                     <hr />
-                      <img src={`/${card.cardType}.png`} alt={card.type} className="card-image" />
+                      <img src={`/${elem.cardType}.png`} alt={elem.type} className="card-image" />
                       <hr />
-                      <EliminarTarjeta id={card.id} onDeleteCard={deleteCard} />
+                      <EliminarTarjeta id={elem.id} onDeleteCard={deleteCard} />
                       <hr />
-                      <EditarTarjeta cardId={card.id} onEditCard={editCard} />
+                      <EditarTarjeta cardId={elem.id} onEditCard={editCard} />
                       
                     </div>
                   </div>

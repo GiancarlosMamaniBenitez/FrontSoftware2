@@ -19,6 +19,8 @@ const AddCard = ({ selectedCard }) => {
   const{card, setCard} = useState([])
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [sesion , setSesion] = useState({});
+  const [Cards , setCards] = useState({});
+
   useEffect(() => {
     // Verifica si el usuario ha iniciado sesión
     let sesionGuardada = localStorage.getItem("sesion");
@@ -35,7 +37,7 @@ const AddCard = ({ selectedCard }) => {
     const handleOnLoad = async () => {
       try{
           const result = await TarjetasApi.findAll();
-          setUsuarios(result.data);
+          setCards(result.data);
           console.log(usuarios)
       } catch (error) {
           console.error('Error al obtener usuarios:', error);
@@ -174,10 +176,10 @@ const redirectToHome = () => {
     alert("Error al registrar usuario. Consulta la consola para más detalles.");
       }
       
-      localStorage.setItem("sesion", JSON.stringify(card));
+      //localStorage.setItem("sesion", JSON.stringify(card));
       console.log(sesion)
       setCardCounter(highestCardId + 2); // Aumentamos el contador
-      redirectToHome();
+      
      
     }
   };

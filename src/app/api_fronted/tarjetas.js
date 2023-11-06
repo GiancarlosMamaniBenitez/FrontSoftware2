@@ -1,7 +1,7 @@
 
 import Base from './base'
 
-const endpoint = '/tarjetas';
+const endpoint = 'tarjetas';
 
 const create = async (request) => await Base.post(endpoint,request);
 
