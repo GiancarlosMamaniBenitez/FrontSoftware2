@@ -91,6 +91,15 @@ const Profile = () => {
     setSesion(resultData.data)
     localStorage.setItem('sesion', JSON.stringify(resultData.data))
   }
+
+  const handleDelete = () => {
+    const confirmDelete = window.confirm("¿Estás seguro que desea eliminar su usuario?")
+
+    if (confirmDelete){
+      localStorage.removeItem("currentUser");
+      router.push('/Login');
+    }
+  }
   return (
     <div>
             <NavBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} sesion={sesion}/>
@@ -174,6 +183,7 @@ const Profile = () => {
         <Link href="/">
           <button className="edit-button">Regresar</button>
         </Link>
+          <button className ="eliminar-button" onClick ={handleDelete}>Eliminar Usuario</button>
       </div>
     </div>
     </div>
