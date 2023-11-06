@@ -20,39 +20,22 @@ function VerTarjeta() {
   const [cards,setCards]=useState([])
   
   
-  useEffect(() => {
-      const handleOnLoad = async () => {
+  
+  const LoadData = async() =>{
+    const result = await TarjetasApi.findAll();
+    setListCards(result.data)
+  }
+  const handleOnLoad = () => {
 
-        let sesionGuardada = localStorage.getItem("sesion");
-        // Verifica si el usuario ha iniciado sesión
-         
-          if(sesionGuardada == undefined){
-          
-            router.push('/')
-        }
-        setSesion(JSON.parse(sesionGuardada))
-        console.log(sesion)
-          const result = await TarjetasApi.findAll();
-          setListCards(result.data);
-          console.log(listcards);
-        
-          
-        const  filtrarTarjeta = async (listcards, sesion) =>{
-          let TarjetasFiltradas = []
-          TarjetasFiltradas = listcards.filter((e) => e.id_usuario == sesion.id)
-          console.log(TarjetasFiltradas) 
-          return TarjetasFiltradas;
-         setCards(TarjetasFiltradas)
-          
-      } 
-         /* const TarjetasFiltradas = await filtrarTarjeta(listcards, JSON.parse(sesionGuardada));
-                  setCards(TarjetasFiltradas);*/
-                  
-                 
-                   
-    } 
-    
+    let sesionGuardada = localStorage.getItem("sesion");
+    setSesion(JSON.parse(sesionGuardada))
+    console.log(sesion.id)
+               
+} 
+  useEffect(() => {
+
     handleOnLoad();
+    LoadData()
     //tarjetaLocal();
         
   }, []);
@@ -81,11 +64,12 @@ function VerTarjeta() {
 
   const deleteCard = async(id) => {
     // Filtra las tarjetas para eliminar la que coincida con el 'id'
-    const updatedCards = cards.filter((elem) => elem.id !== id);
-    const eliminada = cards.find((elem) => elem.id == id);
-    const result = await TarjetasApi.remove(eliminada.id);
+    const updatedCards = listcards.filter((elem) => elem.id !== id);
+    const eliminada = listcards.find((elem) => elem.id == id);
+    console.log(eliminada.id)
+    //const result = await TarjetasApi.remove(eliminada.id);
     // Actualiza el estado de 'cards' para reflejar el cambio
-    setCards(updatedCards);
+    //setCards(updatedCards);
     }
   
 
@@ -100,14 +84,14 @@ function VerTarjeta() {
         <div className="Agregar">
         <h1 className='title'>TARJETAS </h1>
         <div> 
-          {cards && cards.length > 0 ? (
+          {listcards && listcards.length > 0 ? (
             <div>
               <h2>¿Desea eliminar alguna tarjeta o ver más detalles?</h2>
               <div className="card-container">
-                {cards.map((elem, index) => (
+                {listcards.filter((e) => e.id_usuario == sesion.id).map((elem, index) => (
                   <div key={index} className="card-option">
                     <div className="card-image-container">
-                    <h1>Tarjeta</h1>
+                    <h1>{elem.cardType}</h1>
                     <hr />
                       <img src={`/${elem.cardType}.png`} alt={elem.type} className="card-image" />
                       <hr />
