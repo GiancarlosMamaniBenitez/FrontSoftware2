@@ -42,10 +42,11 @@ function VerTarjeta() {
           TarjetasFiltradas = listcards.filter((e) => e.id_usuario == sesion.id)
           console.log(TarjetasFiltradas) 
           return TarjetasFiltradas;
+         setCards(TarjetasFiltradas)
           
       } 
-          const TarjetasFiltradas = await filtrarTarjeta(listcards, JSON.parse(sesionGuardada));
-                  setCards(TarjetasFiltradas);
+         /* const TarjetasFiltradas = await filtrarTarjeta(listcards, JSON.parse(sesionGuardada));
+                  setCards(TarjetasFiltradas);*/
                   
                  
                    
