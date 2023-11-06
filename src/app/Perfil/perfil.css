@@ -74,7 +74,20 @@ h1{
   transition: background-color 0.3s ease;
 }
 
+.eliminar-button{
+  background: rgb(252,157,157);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 5px;
+  transition: background-color 0.3s ease;
+}
+
+
 .edit-button:hover,
-.save-button:hover {
+.save-button:hover,
+.eliminar-button:hover{
   background: rgb(144,12,63);
 }
