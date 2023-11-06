@@ -86,7 +86,7 @@ function VerTarjeta() {
         <div> 
           {listcards && listcards.length > 0 ? (
             <div>
-              <h2>¿Desea eliminar alguna tarjeta o ver más detalles?</h2>
+             
               <div className="card-container">
                 {listcards.filter((e) => e.id_usuario == sesion.id).map((elem, index) => (
                   <div key={index} className="card-option">
@@ -103,14 +103,14 @@ function VerTarjeta() {
                   </div>
                 ))}
               </div>
-              {cards.length < maxCardLimit && (
+              {listcards.filter((e) => e.id_usuario == sesion.id).length < maxCardLimit && (
                 <div>
                   <h2>¿Qué tipo de tarjeta desea registrar?</h2>
                   <ButtonAgregarTarjeta selectedCard={selectedCard} handleCardSelection={handleCardSelection} />
 
                 </div>
               )}
-              {cards.length >= maxCardLimit && (
+              {listcards.filter((e) => e.id_usuario == sesion.id).length >= maxCardLimit && (
                 <p>No puedes agregar más de 5 tarjetas.</p>
               )}
             </div>
