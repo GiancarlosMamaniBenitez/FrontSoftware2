@@ -137,15 +137,15 @@ const redirectToHome = () => {
       }, 0);
       const idUser = usuario.id;
       const card = {
-        id: highestCardId + 1, // Aumentamos el ID en 1
+         // Aumentamos el ID en 1
         cardType: cardType,
-        cvv,  
-        number,
-        mm,
-        yyyy,
+        cvv: cvv,  
+        number: number,
+        mm: mm,
+        yyyy: yyyy,
         spendingLimit: 0,
         savingsGoal: 0,
-        id_usuario:idUser
+        id_usuario:sesion.id
         
         
       };
