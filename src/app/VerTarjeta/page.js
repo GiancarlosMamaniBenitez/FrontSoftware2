@@ -39,7 +39,7 @@ function VerTarjeta() {
           
         const  filtrarTarjeta = async (listcards, sesion) =>{
           let TarjetasFiltradas = []
-          TarjetasFiltradas = listcards.filter((e) => e.id == sesion.id)
+          TarjetasFiltradas = listcards.filter((e) => e.id_usuario == sesion.id)
           console.log(TarjetasFiltradas) 
           return TarjetasFiltradas;
           
