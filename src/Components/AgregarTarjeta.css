@@ -30,7 +30,7 @@
   cursor: pointer;
 }
 
-.card-button.selected {
+.card-buttonselected {
   background-color: rgb(252,157,157);
 }
 

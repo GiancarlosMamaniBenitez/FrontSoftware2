@@ -105,9 +105,9 @@ const Profile = () => {
             <NavBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} sesion={sesion}/>
 
       <div className={`profile-container${isSidebarOpen ? '-shifted' : ''}`}>
-      <h1>Your Profile</h1>
+      <h1>Perfil</h1>
       <div className="profile-details">
-        <label>First Name:</label>
+        <label>Nombre:</label>
         {isEditing ? (
           <input
             type="text"
@@ -119,7 +119,7 @@ const Profile = () => {
         )}
       </div>
       <div className="profile-details">
-        <label>Last Name:</label>
+        <label>Apellido:</label>
         {isEditing ? (
           <input
             type="text"
@@ -131,7 +131,7 @@ const Profile = () => {
         )}
       </div>
       <div className="profile-details">
-        <label>Username:</label>
+        <label>Usuario:</label>
         {isEditing ? (
           <input
             type="text"
@@ -143,7 +143,7 @@ const Profile = () => {
         )}
       </div>
       <div className="profile-details">
-        <label>Password:</label>
+        <label>Contraseña:</label>
         {isEditing ? (
           <input
             type="text"
@@ -159,7 +159,7 @@ const Profile = () => {
         )}
       </div>
       <div className="profile-details">
-        <label>Email:</label>
+        <label>Correo:</label>
         {isEditing ? (
           <input
             type="text"
@@ -173,11 +173,11 @@ const Profile = () => {
       <div className="profile-actions">
         {isEditing ? (
           <button className="save-button" onClick={handleSave}>
-            Save
+            Guardar
           </button>
         ) : (
           <button className="edit-button" onClick={handleEdit}>
-            Edit
+            Editar
           </button>
         )}
         <Link href="/">

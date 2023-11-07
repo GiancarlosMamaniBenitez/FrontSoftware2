@@ -9,7 +9,7 @@ function ButtonAgregarTarjeta() {
     setSelectedCard(cardType); // Almacena el tipo de tarjeta seleccionado en el estado
   };
 
-  const cardTypes = ['TarjetaVisa', 'Mastercard', 'AmericanExpress', 'DinersClub'];
+  const cardTypes = ['Visa', 'Mastercard', 'AmericanExpress', 'DinersClub'];
 
   return (
     <div>

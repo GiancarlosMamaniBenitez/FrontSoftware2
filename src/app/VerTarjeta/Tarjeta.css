@@ -86,7 +86,19 @@ body{
     display: block;
     width: 100%;
     padding: 10px;
-    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    align-items: center;
+  }
+  .card-button.selected {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: rgb(252,157,157);
+
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -96,16 +108,14 @@ body{
   }
   
   .card-button:hover {
-    background-color: #0056b3;
+    background-color: rgb(252,157,157);
   }
-  
   /* Botón de agregar tarjeta */
   .mb-2 {
     margin-bottom: 20px;
   }
   
   .variant-primary {
-    background-color: #007bff;
     color: #fff;
     border: none;
     border-radius: 5px;
