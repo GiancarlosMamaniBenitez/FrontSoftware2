@@ -30,7 +30,7 @@ function SideBar() {
         
           <li>
             <div className="logout-container">
-              <button onClick={handleLogout}>Cerrar sesión</button>
+              <button className="link-sidebar" onClick={handleLogout}>Cerrar sesión</button>
             </div>
           </li>
         

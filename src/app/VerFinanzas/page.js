@@ -1,6 +1,6 @@
 'use client'
 'use client';
-
+import TarjetasApi from "../api_fronted/tarjetas";
 import React, { useState, useEffect } from "react";
 import NavBar from "@/Components/NavBar";
 import "./finances.css"; // Importar el archivo CSS
@@ -32,7 +32,26 @@ const Finances = () => {
     incomes: [],
     expenses: [],
   });
+  const [listcards, setListCards] = useState([]);
+  const [sesion , setSesion] = useState({});
+  const LoadData = async() =>{
+    const result = await TarjetasApi.findAll();
+    setListCards(result.data)
+  }
+  const handleOnLoad = () => {
 
+    let sesionGuardada = localStorage.getItem("sesion");
+    setSesion(JSON.parse(sesionGuardada))
+    console.log(sesion.id)
+               
+} 
+  useEffect(() => {
+
+    handleOnLoad();
+    LoadData()
+    //tarjetaLocal();
+        
+  }, []);
   const getCurrentDate = () => {
     const now = new Date();
     const year = now.getFullYear();
@@ -273,52 +292,69 @@ const Finances = () => {
 
     localStorage.setItem("monthlyData", JSON.stringify(monthlyData));
   };
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
-    <div>
-      <NavBar />
-      <div className="finances-container">
-        <h1>View Finances</h1>
-
-        <CardSelect
+    <div className="centra">
+      <NavBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} sesion={sesion}/>
+      <div className={`finances-container${isSidebarOpen ? '-shifted' : ''}`}>
+        <div className="horizonta">
+          <div ><h1>Tarjetas:</h1></div>
+        <div className="card"><CardSelect
           selectedCard={selectedCard}
-          userCards={user.cards}
+          userCards={listcards.filter((e) => e.id_usuario == sesion.id)}
           handleSelectedCardChange={handleSelectedCardChange}
           setSpendingLimit={setSpendingLimit}
           setSavingsGoal={setSavingsGoal}
-        />
+        /></div>
+         
+          
+          </div>
+
+        
 
         {selectedCard && (
           <div>
+            <h1>Finanzas</h1>
+            <div className="horizonta2"> 
+            
+           <div className="finanza"> 
             <IncomeForm
               newIncome={newIncome}
               onNewIncomeChange={(e) => setNewIncome(parseFloat(e.target.value))}
               addNewIncome={addNewIncome}
-            />
+            /></div> 
+            <div className="finanza"> 
             <ExpenseForm
               newExpense={newExpense}
               onNewExpenseChange={(e) => setNewExpense(parseFloat(e.target.value))}
               expenseCategory={expenseCategory}
               hasExceededSpendingLimit={warning !== ""}
               warning={warning}
-              onNewCategoryChange={(e) => setExpenseCategory(e.target.value)}
+              onNewCategoryChange={(e) => setNewCategory(e.target.value)}
               addNewExpense={addNewExpense}
-            />
+            /></div>
+             <div className="finanza"> 
             <CategoryForm
               newCategory={newCategory}
               onNewCategoryChange={(e) => setNewCategory(e.target.value)}
               addNewCategory={addNewCategory}
-            />
-            <TotalIncomes totalIncomes={totalIncomes} />
-            <TotalExpensesByCategory totalExpensesByCategory={totalExpensesByCategory} />
-            <RecentExpensesList recentExpenses={recentExpenses} />
-            <RecentIncomesList recentIncomes={recentIncomes} />
-            <SpendingAndSavings
+            /></div>
+             <div className="finanza"> 
+             <SpendingAndSavings
               spendingLimit={spendingLimit}
               savingsGoal={savingsGoal}
               onSpendingLimitChange={(e) => handleSpendingLimitChange(e)}
               onSavingsGoalChange={(e) => handleSavingsGoalChange(e)}
             />
+             </div>
+             </div>
+           
+            <TotalIncomes totalIncomes={totalIncomes} />
+            <TotalExpensesByCategory totalExpensesByCategory={totalExpensesByCategory} />
+            <RecentExpensesList recentExpenses={recentExpenses} />
+            <RecentIncomesList recentIncomes={recentIncomes} />
+            
           </div>
         )}
       </div>

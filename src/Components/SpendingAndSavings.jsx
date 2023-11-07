@@ -1,6 +1,6 @@
 const SpendingAndSavings = ({ spendingLimit, savingsGoal, handleSpendingLimitChange, handleSavingsGoalChange }) => (
     <div>
-      <h3>Spending Limit:</h3>
+      <h3>Limite de gastos:</h3>
       <input
         type="number"
         value={spendingLimit}
@@ -8,7 +8,7 @@ const SpendingAndSavings = ({ spendingLimit, savingsGoal, handleSpendingLimitCha
         placeholder="Enter Spending Limit"
       />
   
-      <h3>Savings Goal:</h3>
+      <h3>Meta de Ahorro:</h3>
       <input
         type="number"
         value={savingsGoal}

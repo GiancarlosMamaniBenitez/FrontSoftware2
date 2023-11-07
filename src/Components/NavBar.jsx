@@ -29,7 +29,7 @@ function NavBar({ isSidebarOpen, setIsSidebarOpen, sesion }){
                         <FontAwesomeIcon icon={faBars} />
                     </button>
                     
-                    <div className="title">
+                    <div className={`title${isSidebarOpen ? '-shifted' : ''}`}>
                         <Link href="/" className="Wisewallet">
                             WiseWallet
                         </Link>
