@@ -13,10 +13,10 @@ import SpendingAndSavings from "@/Components/SpendingAndSavings.jsx";
 import ExpenseForm from "@/Components/ExpenseForm.jsx";
 import IncomeForm from "@/Components/IncomeForm.jsx";
 import CategoryForm from "@/Components/CategoryForm.jsx";
-
+import IngresosApi from "../api_fronted/ingresos";
 const Finances = () => {
   const [selectedCard, setSelectedCard] = useState("");
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("currentUser")) || { cards: [] });
+  
   const [totalIncomes, setTotalIncomes] = useState(0);
   const [totalExpensesByCategory, setTotalExpensesByCategory] = useState({});
   const [recentIncomes, setRecentIncomes] = useState([]);
@@ -33,18 +33,24 @@ const Finances = () => {
     expenses: [],
   });
   const [listcards, setListCards] = useState([]);
-  const [sesion , setSesion] = useState({});
+  const [sesion , setSesion] = useState([]);
+  const [ListaIngresos,setListaIngresos] = useState([]);
+  //importar la data de la api
   const LoadData = async() =>{
     const result = await TarjetasApi.findAll();
+    const result1  = await IngresosApi.findAll();
     setListCards(result.data)
+    setListaIngresos(result1.data)
   }
+
+  //almacenar la sesion en la variable sesion
   const handleOnLoad = () => {
 
     let sesionGuardada = localStorage.getItem("sesion");
     setSesion(JSON.parse(sesionGuardada))
-    console.log(sesion.id)
+    console.log(sesion)
                
-} 
+} // para que lo renderice apenas carga la pagina 
   useEffect(() => {
 
     handleOnLoad();
@@ -52,6 +58,7 @@ const Finances = () => {
     //tarjetaLocal();
         
   }, []);
+  //  obtener fecha
   const getCurrentDate = () => {
     const now = new Date();
     const year = now.getFullYear();
@@ -60,9 +67,11 @@ const Finances = () => {
     return `${year}-${month}-${day}`;
   };
 
+  //obtener  sus ingresos y gastos actuales
+
   const getCurrentIncomesAndExpenses = () => {
     if (selectedCard) {
-      const card = user.cards.find((card) => card.number === selectedCard);
+      const card = listcards.find((e) => e.id === selectedCard);
       if (card) {
         return {
           incomes: card.incomes || [],
@@ -76,7 +85,8 @@ const Finances = () => {
 
   useEffect(() => {
     setCurrentIncomesAndExpenses(getCurrentIncomesAndExpenses());
-  }, [selectedCard, user]);
+    getCurrentDate();
+  }, [selectedCard, listcards]);
 
   useEffect(() => {
     calculateTotals();
@@ -101,13 +111,15 @@ const Finances = () => {
     }
   };
 
-  const handleSelectedCardChange = (event) => {
-    setSelectedCard(event.target.value);
-    const selectedCardData = user.cards.find((card) => card.number === event.target.value);
+  const handleSelectedCardChange = (event) => {  
+    setSelectedCard(event.target.value); 
+    const selectedCardData = listcards.find((e) => e.number === event.target.value);
     if (selectedCardData) {
       setSpendingLimit(selectedCardData.spendingLimit || 0);
       setSavingsGoal(selectedCardData.savingsGoal || 0);
     }
+   
+    console.log(selectedCardData)
   };
 
   const addNewExpense = () => {
@@ -147,39 +159,61 @@ const Finances = () => {
       }
     }
   };
-
-  const addNewIncome = () => {
+//ya manda ingresos a la base de datos
+  const addNewIncome = async() => {
     if (newIncome > 0 && selectedCard) {
-      const updatedUser = { ...user };
+      /*const updatedUser = { ...user };
       const updatedUserCards = updatedUser.cards;
       const cardIndex = updatedUserCards.findIndex((card) => card.number === selectedCard);
+*/    const idSelectedCard=selectedCard.id;
+        console.log(idSelectedCard)
+        const card = listcards.find((e) => e.id === idSelectedCard);
+        let incomes= []
+        incomes = ListaIngresos.filter((e) => e.id_tarjeta == idSelectedCard);
+        const incomeId= ListaIngresos.length + 1;
+        const currentDate = getCurrentDate();
+        console.log(incomeId)
+        const income={ id_ingresos: incomeId, monto: newIncome ,fecha_ingresos:currentDate, id_tarjeta: idSelectedCard}
+        ;
+        console.log(income)
+        try {
+          // Realiza la solicitud POST al backend para registrar el nuevo usuario utilizando la función personasApi
+          const response = await IngresosApi.create(income);
+      
+          // Comprueba el resultado de la solicitud
+            if (response && response.status === 200) {
+                // Registro exitoso, redirige a la página de inicio de sesión
+                alert('Registro exitoso!');
+                router.push('/VerTarjeta');
+            } else {
+                // Manejo de errores en caso de que algo salga mal en el backend
+                alert('Error al registrar usuario( no manda la data)');
+            }
+        } catch (error) {
+         
+        }
 
-      if (cardIndex !== -1) {
-        const card = updatedUserCards[cardIndex];
-        const incomeId = card.incomes.length + 1;
-        card.incomes = [
-          ...card.incomes,
-          { id: incomeId, amount: newIncome },
-        ];
 
         // Guardar la tarjeta actualizada en la lista de tarjetas del usuario
-        updatedUserCards[cardIndex] = card;
+        //updatedUserCards[cardIndex] = card;
 
         // Actualizar el objeto de usuario actual
-        setUser(updatedUser);
+        //setUser(updatedUser);
 
         // Guardar el usuario actualizado en el almacenamiento local
-        localStorage.setItem("currentUser", JSON.stringify(updatedUser));
+        //localStorage.setItem("currentUser", JSON.stringify(updatedUser));
 
         setCurrentIncomesAndExpenses(getCurrentIncomesAndExpenses());
         setNewIncome(0);
-      }
+      
     }
   };
-  const addNewCategory = () => {
-    if (newCategory && user) {
+
+  //esto estaba cambiando (falta que mande a base de datos)
+  const addNewCategory = async() => {
+    if (newCategory && sesion) {
       // Clona el objeto de usuario para realizar modificaciones
-      const updatedUser = { ...user };
+      const updatedUser = { ...sesion };
   
       // Verifica si el usuario ya tiene una propiedad "categories" en su objeto
       if (!updatedUser.categories) {
@@ -187,10 +221,27 @@ const Finances = () => {
       } else {
         updatedUser.categories = [...updatedUser.categories, newCategory];
       }
-  
+      console.log(updatedUser)
+      const id_usuario = updatedUser.id
+      const categories = updatedUser.categories
       // Actualiza la información del usuario en el estado
-      setUser(updatedUser);
-  
+      setSesion(updatedUser);
+      try {
+        // Realiza la solicitud POST al backend para registrar el nuevo usuario utilizando la función personasApi
+        const response = await UsuariosApi.update(id_usuario,categories);
+    
+        // Comprueba el resultado de la solicitud
+          if (response && response.status === 200) {
+              // Registro exitoso, redirige a la página de inicio de sesión
+              alert('Registro exitoso!');
+             
+          } else {
+              // Manejo de errores en caso de que algo salga mal en el backend
+              alert('Error al registrar usuario( no manda la data)');
+          }
+      } catch (error) {
+       
+      }
       // Actualiza el usuario en el almacenamiento local
       localStorage.setItem("currentUser", JSON.stringify(updatedUser));
   
@@ -331,7 +382,7 @@ const Finances = () => {
               expenseCategory={expenseCategory}
               hasExceededSpendingLimit={warning !== ""}
               warning={warning}
-              onNewCategoryChange={(e) => setNewCategory(e.target.value)}
+              onNewCategoryChange={(e) => setExpenseCategory(e.target.value)}
               addNewExpense={addNewExpense}
             /></div>
              <div className="finanza"> 
@@ -341,7 +392,7 @@ const Finances = () => {
               addNewCategory={addNewCategory}
             /></div>
              <div className="finanza"> 
-             <SpendingAndSavings
+              <SpendingAndSavings
               spendingLimit={spendingLimit}
               savingsGoal={savingsGoal}
               onSpendingLimitChange={(e) => handleSpendingLimitChange(e)}
