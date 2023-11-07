@@ -6,6 +6,7 @@
 import React, { useState, useEffect } from "react";
 import NavBar from "@/Components/NavBar";
 import './addCard.css';
+import TarjetasApi from "../api_fronted/tarjetas";
 
 const EditCard = () => {
   const [number, setNumber] = useState("");
@@ -13,26 +14,33 @@ const EditCard = () => {
   const [yyyy, setYyyy] = useState("");
   const [cvv, setCvv] = useState("");
   const [error, setError] = useState(null);
-
+  const queryString = window.location.search
+  const urlParams = new URLSearchParams(queryString)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const idParam = urlParams.get("id")
+  const [tarjeta, setTarjeta] = useState({})
+  const [sesion , setSesion] = useState({});
   const [selectedCardId, setSelectedCardId] = useState(null); // Inicializa selectedCardId como null.
 
+  const verificarSesion = () =>{
+    let sesionGuardada = localStorage.getItem("sesion");
+    setSesion(JSON.parse(sesionGuardada))
+    console.log(sesion.id)
+  }
+
+
+  const recogerDataTarjetaId = async () =>{
+    const result = await TarjetasApi.findOne(idParam)
+    setTarjeta(result.data)
+    setNumber(result.data.number)
+    setMm(result.data.mm)
+    setYyyy(result.data.yyyy)
+    setCvv(result.data.cvv)
+  }
   useEffect(() => {
-    // Obtener el usuario autenticado desde el Local Storage
-    const authenticatedUser = JSON.parse(localStorage.getItem("currentUser"));
-
-    if (authenticatedUser && authenticatedUser.cards) {
-      // Recuperar el ID de la tarjeta seleccionada (puedes implementar una lógica para seleccionar una específica)
-      // Aquí estamos seleccionando la primera tarjeta como ejemplo
-      const firstCard = authenticatedUser.cards[0];
-
-      if (firstCard) {
-        setNumber(firstCard.number);
-        setMm(firstCard.mm);
-        setYyyy(firstCard.yyyy);
-        setCvv(firstCard.cvv);
-        setSelectedCardId(firstCard.id); // Actualiza selectedCardId con el ID de la tarjeta seleccionada
-      }
-    }
+    verificarSesion()
+    recogerDataTarjetaId()
+    
   }, []);
 
   const handleNumberChange = (event) => {
@@ -68,7 +76,7 @@ const EditCard = () => {
     window.location.href = "/VerTarjeta";
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (validateFields()) {
@@ -76,31 +84,34 @@ const EditCard = () => {
       const authenticatedUser = JSON.parse(localStorage.getItem("currentUser"));
 
       const cardData = {
-        id: selectedCardId, // Utiliza el ID de la tarjeta seleccionada
-        number,
-        mm,
-        yyyy,
-        cvv,
+         // Utiliza el ID de la tarjeta seleccionada
+        number: number,
+        mm: mm,
+        yyyy: mm,
+        cvv: cvv,
       };
-
-      if (authenticatedUser && authenticatedUser.cards) {
-        // Actualizar los datos de la tarjeta en el Local Storage
-        authenticatedUser.cards = authenticatedUser.cards.map((card) =>
-          card.id === selectedCardId ? cardData : card
-        );
-
-        // Actualizar el usuario en el Local Storage
-        localStorage.setItem("currentUser", JSON.stringify(authenticatedUser));
-
-        redirectToHome();
-        console.log("Updating card:", cardData);
-      }
+      try {
+        // Realiza la solicitud POST al backend para registrar el nuevo usuario utilizando la función personasApi
+        const response = await TarjetasApi.update(idParam,cardData);
+        recogerDataTarjetaId()
+        
+        // Comprueba el resultado de la solicitud
+          if (response && response.status === 200) {
+              // Registro exitoso, redirige a la página de inicio de sesión
+              alert('Actualización exitosa!');
+              router.push('/Congrats');
+          } else {
+              // Manejo de errores en caso de que algo salga mal en el backend
+              alert('Error al actualizar usuario');
+          }
+      } catch (error) {
+         }
     }
   };
 
   return (
     <div>
-      <NavBar />
+      <NavBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} sesion={sesion}/>
       <div className="addCard-container">
         <h1>Edit your card.</h1>
         {error && <p className="error-message">{error}</p>}
