@@ -67,9 +67,9 @@ function VerTarjeta() {
     const updatedCards = listcards.filter((elem) => elem.id !== id);
     const eliminada = listcards.find((elem) => elem.id == id);
     console.log(eliminada.id)
-    //const result = await TarjetasApi.remove(eliminada.id);
+    const result = await TarjetasApi.remove(eliminada.id);
     // Actualiza el estado de 'cards' para reflejar el cambio
-    //setCards(updatedCards);
+    setListCards(updatedCards);
     }
   
 
