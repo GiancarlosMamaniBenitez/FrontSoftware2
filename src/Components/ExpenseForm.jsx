@@ -21,7 +21,15 @@ const ExpenseForm = ({
       />
       <h3>Categoria:</h3>
       <select value={expenseCategory} onChange={onExpenseCategoryChange}>
-        {/* Render options for categories */}
+  {expenseCategory.map((elem, index) => (
+    <option key={index} value={expenseCategory}>
+      {elem}
+      
+    </option>
+  ))}
+
+
+
       </select>
       {hasExceededSpendingLimit && <p className="warning">Has superado tu límite de gasto.</p>}
       {warning && <p className="warning">{warning}</p>}
