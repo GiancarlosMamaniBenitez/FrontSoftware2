@@ -11,7 +11,7 @@ const IncomeForm = ({ newIncome, onNewIncomeChange, addNewIncome }) => {
         onChange={onNewIncomeChange}
         placeholder="Enter New Income"
       />
-      <button onClick={addNewIncome}>Agregar ingreso</button>
+      <button className="button-container" onClick={addNewIncome}>Agregar ingreso</button>
     </div>
   );
 };
