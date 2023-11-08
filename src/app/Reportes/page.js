@@ -1,4 +1,4 @@
-'use client'
+on'use client'
 
 import React, { useState, useEffect } from "react";
 import NavBar from "@/Components/NavBar";
@@ -139,7 +139,7 @@ const Reports = () => {
 
   return (
     <div>
-      <NavBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
+      <NavBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} sesion = {sesion}/>
       <div className="reports-container">
         <h1>Reports</h1>
 
