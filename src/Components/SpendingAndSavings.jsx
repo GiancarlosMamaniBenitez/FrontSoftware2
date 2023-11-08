@@ -25,7 +25,7 @@ const SpendingAndSavings = ({
         placeholder="Enter Savings Goal"
       />
 
-      <button onClick={onSaveClick}>Guardar</button>
+      <button className="button-container" onClick={onSaveClick}>Guardar</button>
     </div>
   );
 };
