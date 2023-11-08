@@ -1,4 +1,13 @@
-const SpendingAndSavings = ({ spendingLimit, savingsGoal, handleSpendingLimitChange, handleSavingsGoalChange }) => (
+import React from "react";
+
+const SpendingAndSavings = ({
+  spendingLimit,
+  savingsGoal,
+  handleSpendingLimitChange,
+  handleSavingsGoalChange,
+  onSaveClick,
+}) => {
+  return (
     <div>
       <h3>Limite de gastos:</h3>
       <input
@@ -7,7 +16,7 @@ const SpendingAndSavings = ({ spendingLimit, savingsGoal, handleSpendingLimitCha
         onChange={handleSpendingLimitChange}
         placeholder="Enter Spending Limit"
       />
-  
+
       <h3>Meta de Ahorro:</h3>
       <input
         type="number"
@@ -15,6 +24,10 @@ const SpendingAndSavings = ({ spendingLimit, savingsGoal, handleSpendingLimitCha
         onChange={handleSavingsGoalChange}
         placeholder="Enter Savings Goal"
       />
+
+      <button onClick={onSaveClick}>Guardar</button>
     </div>
-  )
-  export default SpendingAndSavings;
+  );
+};
+
+export default SpendingAndSavings;

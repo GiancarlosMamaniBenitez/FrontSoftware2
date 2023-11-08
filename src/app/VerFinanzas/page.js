@@ -112,8 +112,9 @@ const Finances = () => {
   };
 
   const handleSelectedCardChange = (event) => {  
-    setSelectedCard(event.target.value); 
     const selectedCardData = listcards.find((e) => e.number === event.target.value);
+    setSelectedCard(selectedCardData); 
+    
     if (selectedCardData) {
       setSpendingLimit(selectedCardData.spendingLimit || 0);
       setSavingsGoal(selectedCardData.savingsGoal || 0);
@@ -166,14 +167,14 @@ const Finances = () => {
       const updatedUserCards = updatedUser.cards;
       const cardIndex = updatedUserCards.findIndex((card) => card.number === selectedCard);
 */    const idSelectedCard=selectedCard.id;
-        console.log(idSelectedCard)
-        const card = listcards.find((e) => e.id === idSelectedCard);
+        console.log(selectedCard.id)
+        const card = listcards.find((e) => e.id === selectedCard.id);
         let incomes= []
-        incomes = ListaIngresos.filter((e) => e.id_tarjeta == idSelectedCard);
+        incomes = ListaIngresos.filter((e) => e.id_tarjeta == selectedCard.id);
         const incomeId= ListaIngresos.length + 1;
         const currentDate = getCurrentDate();
         console.log(incomeId)
-        const income={ id_ingresos: incomeId, monto: newIncome ,fecha_ingresos:currentDate, id_tarjeta: idSelectedCard}
+        const income={ id_ingresos: incomeId, monto: newIncome ,fecha_ingresos:currentDate, id_tarjeta: selectedCard.id}
         ;
         console.log(income)
         try {
@@ -242,9 +243,6 @@ const Finances = () => {
       } catch (error) {
        
       }
-      // Actualiza el usuario en el almacenamiento local
-      localStorage.setItem("currentUser", JSON.stringify(updatedUser));
-  
       // Limpia el campo de nueva categoría
       setNewCategory("");
     }
@@ -278,19 +276,53 @@ const Finances = () => {
     setRecentExpenses(sortedExpenses.slice(0, 3));
   };
 
-  const handleSpendingLimitChange = (event) => {
+  const handleSpendingLimitChange =  (event) => {
+    
     const newLimit = parseFloat(event.target.value);
     setSpendingLimit(newLimit);
-    updateCardData({ spendingLimit: newLimit });
+    
+    console.log(spendingLimit)
+   // const response = await TarjetasApi.update()
   };
 
   const handleSavingsGoalChange = (event) => {
     const newGoal = parseFloat(event.target.value);
     setSavingsGoal(newGoal);
-    updateCardData({ savingsGoal: newGoal });
+    console.log(savingsGoal)
   };
+  const handleSaveClick = async () => {
+    console.log(selectedCard)
+    if (selectedCard) {
+      try {
+        // Actualizar los límites de gasto y metas en el objeto de tarjeta seleccionada
+        const updatedCard = { ...selectedCard };
 
-  const updateCardData = (updatedData) => {
+        updatedCard.spendingLimit = spendingLimit;
+        updatedCard.savingsGoal = savingsGoal;
+        
+        // Realizar la solicitud para guardar los cambios en el servidor
+        const response = await TarjetasApi.update(selectedCard.id, updatedCard);
+  
+        /*if (response.status === 200) {
+          // Actualizar los datos en la lista de tarjetas
+          const updatedListCards = listcards.map((card) =>
+            card.id === selectedCard.id ? updatedCard : card
+          );
+  
+          // Actualizar el estado de las tarjetas
+          setListCards(updatedListCards);
+  
+          // También puedes guardar los cambios en el objeto de usuario local, si es necesario
+          // ...
+        */
+      } catch (error) {
+        console.error("Error en la solicitud de actualización:", error);
+      }
+    }
+  };
+  
+
+ /* const updateCardData = (updatedData) => {
     if (selectedCard) {
       const updatedUser = { ...user };
       const updatedUserCards = updatedUser.cards;
@@ -310,7 +342,7 @@ const Finances = () => {
         localStorage.setItem("currentUser", JSON.stringify(updatedUser));
       }
     }
-  };
+  };*/
 
   const saveExpenseToLocalStorage = (amount, category) => {
     const currentDate = getCurrentDate();
@@ -392,12 +424,14 @@ const Finances = () => {
               addNewCategory={addNewCategory}
             /></div>
              <div className="finanza"> 
-              <SpendingAndSavings
-              spendingLimit={spendingLimit}
-              savingsGoal={savingsGoal}
-              onSpendingLimitChange={(e) => handleSpendingLimitChange(e)}
-              onSavingsGoalChange={(e) => handleSavingsGoalChange(e)}
-            />
+             <SpendingAndSavings
+                spendingLimit={spendingLimit}
+                savingsGoal={savingsGoal}
+                handleSpendingLimitChange={(e) => handleSpendingLimitChange(e)}
+                handleSavingsGoalChange={(e) => handleSavingsGoalChange(e)}
+                onSaveClick={handleSaveClick}
+             />
+
              </div>
              </div>
            

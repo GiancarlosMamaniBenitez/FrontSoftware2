@@ -111,9 +111,12 @@ const redirectToHome = () => {
 
   
 
-  const checkIfCardExists = (cardData, user) => {
-    if (user.cards) {
-      if (user.cards.some((card) => card.number === cardData.number)) {
+  const checkIfCardExists = (card, usuario) => {
+    if (Cards) {
+    
+     let Tarjetas = Cards.filter((e) => e.id_usuario == usuario.id)
+
+      if (Tarjetas.some((e) => e.number == card.number)) {
         setError("La tarjeta ya está asociada a tu cuenta.");
         setCardCounter(cardCounter + 1);
         return true;
@@ -130,7 +133,7 @@ const redirectToHome = () => {
         setError("Usuario no encontrado.");
         return;
       }
-  
+      
       // Encontramos el ID más alto entre las tarjetas del usuario actual
       const highestCardId = (usuario.cards || []).reduce((maxId, card) => {
         return card.id > maxId ? card.id : maxId;
@@ -152,6 +155,7 @@ const redirectToHome = () => {
       console.log(card)
   
       if (checkIfCardExists(card, usuario)) {
+        setError("La tarjeta ya está asociada a tu cuenta.");
         return;
       }
   
