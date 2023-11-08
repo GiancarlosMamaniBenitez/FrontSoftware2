@@ -11,7 +11,7 @@
           onChange={onNewCategoryChange}
           placeholder="Enter New Category"
         />
-        <button onClick={addNewCategory}>Add Category</button>
+        <button className="button-container" onClick={addNewCategory}>Añadir Categoria</button>
       </div>
     );
   };
