@@ -81,8 +81,8 @@ function VerTarjeta() {
     <div>
        <NavBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} sesion={sesion}/>
       <div className={`container1${isSidebarOpen ? '-shifted' : ''}`}>
-        <div className="Agregar">
-        <h1 className='title'>TARJETAS </h1>
+        
+        <h1 className='titulo'>TARJETAS </h1>
         <div> 
           {listcards && listcards.length > 0 ? (
             <div>
@@ -105,7 +105,7 @@ function VerTarjeta() {
               </div>
               {listcards.filter((e) => e.id_usuario == sesion.id).length < maxCardLimit && (
                 <div>
-                  <h2>¿Qué tipo de tarjeta desea registrar?</h2>
+                  <h2 className='subtitulo'>¿Qué tipo de tarjeta desea registrar?</h2>
                   <ButtonAgregarTarjeta selectedCard={selectedCard} handleCardSelection={handleCardSelection} />
 
                 </div>
@@ -124,7 +124,7 @@ function VerTarjeta() {
         </div>
       </div>
     </div>
-    </div>
+    
   );
 }
 

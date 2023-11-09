@@ -1,4 +1,4 @@
-on'use client'
+'use client'
 
 import React, { useState, useEffect } from "react";
 import NavBar from "@/Components/NavBar";
@@ -14,13 +14,26 @@ const Reports = () => {
   const [reportData, setReportData] = useState(null);
   const currentUser = localStorage.getItem("currentUser");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [sesion , setSesion] = useState({});
+  const [nombres, setFirstName] = useState("");
+  const [apellidos, setLastName] = useState("");
+  const [username, setUsername] = useState("");
+  const [contrasenia, setPassword] = useState("*******");
+  const [email, setEmail] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
+ 
   useEffect(() => {
-  
-    // Realizar la lógica de carga de informes desde el almacenamiento local
-    // y establecerlos en el estado "reporte" cuando la página se monta
-    const loadedReporte = JSON.parse(localStorage.getItem("reporte")) || [];
-    // No es necesario establecer el estado "reporte" aquí, ya que lo obtendremos del informe seleccionado.
+   // Verifica si el usuario ha iniciado sesión
+   const loadedReporte = JSON.parse(localStorage.getItem("reporte")) || [];
+    let sesionGuardada = localStorage.getItem("sesion");
+        if(sesionGuardada == undefined){
+          alert("No hya sesion guardada")
+            router.push('/Login')
+        }
+        setSesion(JSON.parse(sesionGuardada))
+        console.log(sesion)
   }, []);
+  
 
   const handleSelectedCardChange = (event) => {
     setSelectedCard(event.target.value);
@@ -139,8 +152,8 @@ const Reports = () => {
 
   return (
     <div>
-      <NavBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} sesion = {sesion}/>
-      <div className="reports-container">
+      <NavBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} sesion={sesion}/>
+      <div className={`reports-container${isSidebarOpen ? '-shifted' : ''}`}>
         <h1>Reports</h1>
 
         <select value={selectedCard} onChange={handleSelectedCardChange}>

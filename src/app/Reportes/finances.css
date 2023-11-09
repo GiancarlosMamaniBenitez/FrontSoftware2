@@ -6,6 +6,19 @@
     margin: 0 auto;
     padding: 20px;
   }
+  .reports-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    margin-left: 200px;
+  }
+  .reports-container-shifted {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    margin-left: 200px;
+  }
+
   
   /* Estilos para el título de la página */
   h1 {
@@ -33,7 +46,7 @@
     margin: 20px 0;
   }
    .button-report{
-    background: rgb(94, 169, 238);
+    background-color: rgb(144,12,63);
     color: white;
     border: none;
     padding: 10px 20px;
@@ -44,5 +57,5 @@
   }
 
   .button-report:hover{
-    background: rgb(8, 23, 226);
+    background-color: rgb(252,157,157);
   }
