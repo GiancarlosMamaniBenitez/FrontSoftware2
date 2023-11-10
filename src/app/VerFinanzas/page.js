@@ -335,7 +335,7 @@ const Finances = () => {
 
     const expensesByCategory = {};
     expenses.forEach((expense) => {
-      const category = expense.category;
+      const category = expense.id_categoria;
       if (category in expensesByCategory) {
         expensesByCategory[category] += expense.amount;
       } else {
