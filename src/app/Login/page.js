@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import './login.css';
 import Link from "next/link";
 import UsuariosApi from '@/app/api_fronted/usuarios.js'
+import CategoriasApi from "../api_fronted/categorias";
 import { useRouter } from 'next/navigation';
 
 
@@ -14,6 +15,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [usuarios, setUsuarios] = useState([]);
   const [sesion , setSesion] = useState({});
+  const [listCategorias, setListCategorias] = useState([]);
   /*const ingresarUsuario = (email, password) => {
     // Obtiene la lista de usuarios desde el Local Storage
     const userList = JSON.parse(localStorage.getItem("users")) || [];
@@ -41,7 +43,9 @@ const Login = () => {
   const handleOnLoad = async () => {
     const result = await UsuariosApi.findAll();
     setUsuarios(result.data);
-    console.log(usuarios);
+    const result5 = await CategoriasApi.findAll()
+    setListCategorias(result5.data)
+    console.log(listCategorias);
   }
 
   useEffect(() => {

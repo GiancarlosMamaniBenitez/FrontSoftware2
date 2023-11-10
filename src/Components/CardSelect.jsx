@@ -3,7 +3,7 @@ const CardSelect = ({ selectedCard, userCards, handleSelectedCardChange, setSpen
       <option value="">Select a Card</option>
       {userCards.map((card) => (
         <option key={card.number} value={card.number}>
-          {card.cardsname} - {card.number}
+          {card.cardType} - {card.number}
         </option>
       ))}
     </select>

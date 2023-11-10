@@ -1,7 +1,9 @@
 // ExpenseForm.jsx
 import React from "react";
+import CategorySelect from "./CategorySelect";
 
 const ExpenseForm = ({
+  selectedCat,
   newExpense,
   expenseCategory,
   hasExceededSpendingLimit,
@@ -20,17 +22,13 @@ const ExpenseForm = ({
         placeholder="Enter New Expense"
       />
       <h3>Categoria:</h3>
-      <select value={expenseCategory} onChange={onExpenseCategoryChange}>
-  {expenseCategory.map((elem, index) => (
-    <option key={index} value={expenseCategory}>
-      {elem}
+      <CategorySelect
+          selectedCat={selectedCat}
+          userCat={expenseCategory}
+          handleSelectedCatChange={onExpenseCategoryChange}
+          
+        />
       
-    </option>
-  ))}
-
-
-
-      </select>
       {hasExceededSpendingLimit && <p className="warning">Has superado tu límite de gasto.</p>}
       {warning && <p className="warning">{warning}</p>}
       <button className="button-container" onClick={addNewExpense}>Añadir Gasto</button>

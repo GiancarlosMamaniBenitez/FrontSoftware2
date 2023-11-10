@@ -17,9 +17,20 @@ import IngresosApi from "../api_fronted/ingresos";
 import UsuariosApi from "../api_fronted/usuarios";
 import GastosApi from "../api_fronted/gastos";
 import { List } from "@mui/material";
+import Gastos from "../IngresosGastos/Ing_Gas/Gastos";
+import CatSelect from "@/Components/CategorySelect";
+import CategorySelect from "@/Components/CategorySelect";
+import CategoriasApi from "../api_fronted/categorias";
 const Finances = () => {
+  
+
   const [selectedCard, setSelectedCard] = useState("");
-  const [usuariocategoria,setUsuariocategoria] = useState([])
+  
+  const [usuariotarjeta,setUsuariotarjeta] = useState([])
+  const [usuarioingresos,setUsuarioingresos] = useState([])
+  const [usuariogastos,setUsuariogastos] = useState([])
+  const [selectedCategorie, setSelectedCategorie] = useState("")
+  const [selectedCategorieId, setSelectedCategorieId] = useState(0)
   const [totalIncomes, setTotalIncomes] = useState(0);
   const [totalExpensesByCategory, setTotalExpensesByCategory] = useState({});
   const [recentIncomes, setRecentIncomes] = useState([]);
@@ -36,22 +47,35 @@ const Finances = () => {
     expenses: [],
   });
   const [SelectedCard2, setSelectedCard2] = useState("")
+  const [usuariocategoria,setUsuariocategoria] = useState([])
   const [listcards, setListCards] = useState([]);
   const [sesion , setSesion] = useState([]);
   const [ListaIngresos,setListaIngresos] = useState([]);
   const [listGastos, setListGastos] = useState([]);
   const [listUsuarios, setListUsuarios] = useState([]);
+  const [listCategorias, setListCategorias] = useState([]);
   //importar la data de la api
   const LoadData = async() =>{
     const result = await TarjetasApi.findAll();
     const result1  = await IngresosApi.findAll();
     const result2 = await GastosApi.findAll();
     const result3 = await UsuariosApi.findAll();
+    const result5 = await CategoriasApi.findAll()
+    setListCategorias(result5.data)
+    
     setListCards(result.data)
     setListaIngresos(result1.data)
     setListGastos(result2.data)
     setListUsuarios(result3.data)
     
+    
+  }
+
+  const LoadDataId  = async () =>{
+    
+    const result3 = await UsuariosApi.findOne(sesion.id)
+    setUsuariocategoria(result3.data.categories)
+    console.log(result3.data.categories)
   }
 /*
   const AlmacenarCategorias = () => {
@@ -65,9 +89,9 @@ const Finances = () => {
   //almacenar la sesion en la variable sesion
   const handleOnLoad = () => {
 
-    let sesionGuardada = localStorage.getItem("sesion");
+    var sesionGuardada = localStorage.getItem("sesion");
     setSesion(JSON.parse(sesionGuardada))
-    console.log(sesion)
+    console.log(sesionGuardada.id)
                
 }
 
@@ -76,6 +100,7 @@ const Finances = () => {
     
     handleOnLoad();
     LoadData()
+  
     
     
     
@@ -153,10 +178,16 @@ const Finances = () => {
     console.log(selectedCardData)
   };
 
-
-  const addNewExpense = () => {
+  const handleSelectedCategorieChange = (event) => {
+    const selectedCat = listCategorias.find((e) => e.nombre === event.target.value);
+    setSelectedCategorie(selectedCat.nombre); 
+    setSelectedCategorieId(selectedCat.id);
+    
+    console.log(selectedCat)
+  }
+  const addNewExpense = async () => {
     const Usuario = listUsuarios.find((e) => e.id === sesion.id);
-    const expenseCategory = Usuario.categories 
+    const expenseCategory = selectedCategorieId
     if (newExpense > 0 && selectedCard && expenseCategory) {
       const card = listcards.find((e) => e.id === selectedCard.id);
         let expenses= []
@@ -182,7 +213,23 @@ const Finances = () => {
         }
       
 
-        const expense={ id_gastos: expenseID, monto: newExpense ,fecha_gastos:currentDate,categories:expenseCategory , id_tarjeta: selectedCard.id}
+        const expense={ id_gastos: expenseID, monto: newExpense ,fecha_gastos:currentDate,id_categoria:expenseCategory , id_tarjeta: selectedCard.id}
+        try {
+          // Realiza la solicitud POST al backend para registrar el nuevo usuario utilizando la función personasApi
+          const response = await GastosApi.create(expense)
+          LoadData()
+          // Comprueba el resultado de la solicitud
+            if (response && response.status === 200) {
+                // Registro exitoso, redirige a la página de inicio de sesión
+                alert('Registro exitoso!');
+               
+            } else {
+                // Manejo de errores en caso de que algo salga mal en el backend
+                alert('Error al registrar usuario( no manda la data)');
+            }
+        } catch (error) {
+         
+        }
         console.log(expense)
         setCurrentIncomesAndExpenses(getCurrentIncomesAndExpenses());
         setNewExpense(0);
@@ -242,51 +289,25 @@ const Finances = () => {
   };
 
   //esto estaba cambiando (falta que mande a base de datos)
-  const addNewCategory = async() => {
-    const usuario1 = listUsuarios.find((e) => e.id === sesion.id)
+  const addNewCategory = async(event) => {
+    event.preventDefault();
+    const categoriasUsuario = listCategorias.find((e) => e.id === sesion.id)
     
   
     
-   console.log(usuario1)
+   console.log(categoriasUsuario)
     
-    if (newCategory && usuario1) {
-      // Clona el objeto de usuario para realizar modificaciones
-      
-      const updatedUser = { ...usuario1 };
-      console.log(updatedUser.categories)
-      // Verifica si el usuario ya tiene una propiedad "categories" en su objeto
-      if (!updatedUser.categories) {
-        updatedUser.categories = [newCategory];
-      } else {
-        
-        updatedUser.categories.push(newCategory)}
-      let categoria =[]
-      categoria = updatedUser.categories
-
-      const usuario = {
+      const categoriaNewData = {
         // Aumentamos el ID en 1
-      id:updatedUser.id,
-      nombres: updatedUser.nombres,
-      apellidos: updatedUser.apellidos,
-      email: updatedUser.email,
-      contrasenia: updatedUser.contrasenia,
-      username: updatedUser.username,
-       categories: categoria,
-       
-       
-       
+      nombre: newCategory,
+      id_usuario: sesion.id,
      };
       
  
-      console.log(usuario)
-     
-      console.log(categoria)
-      setExpenseCategory(categoria);
-      setSesion(usuario)
       try {
         // Realiza la solicitud POST al backend para registrar el nuevo usuario utilizando la función personasApi
-        const response = await UsuariosApi.update(updatedUser.id,usuario);
-        
+        const response = await CategoriasApi.create(categoriaNewData)
+        LoadData()
         // Comprueba el resultado de la solicitud
           if (response && response.status === 200) {
               // Registro exitoso, redirige a la página de inicio de sesión
@@ -301,7 +322,7 @@ const Finances = () => {
       }
       // Limpia el campo de nueva categoría
       setNewCategory("");
-    }
+    
   };
   
 
@@ -439,7 +460,8 @@ const Finances = () => {
       <div className={`finances-container${isSidebarOpen ? '-shifted' : ''}`}>
         <div className="horizonta">
           <div ><h1>Tarjetas:</h1></div>
-        <div className="card"><CardSelect
+        <div className="card">
+        <CardSelect
           selectedCard={SelectedCard2}
           userCards={listcards.filter((e) => e.id_usuario == sesion.id)}
           handleSelectedCardChange={handleSelectedCardChange}
@@ -466,13 +488,13 @@ const Finances = () => {
             <div className="finanza"> 
             <ExpenseForm
               newExpense={newExpense}
+              selectedCat = {selectedCategorie}
               onNewExpenseChange={(e) => setNewExpense(parseFloat(e.target.value))}
-              expenseCategory={expenseCategory}
+              expenseCategory={listCategorias.filter((e) => e.id_usuario == sesion.id)}
               hasExceededSpendingLimit={warning !== ""}
               warning={warning}
-              onExpenseCategoryChange={(e) => setExpenseCategory(e.target.value)}
-              addNewExpense={addNewExpense}
-            /></div>
+              onExpenseCategoryChange={handleSelectedCategorieChange}
+              addNewExpense={addNewExpense}/></div>
              <div className="finanza"> 
             <CategoryForm
               newCategory={newCategory}
