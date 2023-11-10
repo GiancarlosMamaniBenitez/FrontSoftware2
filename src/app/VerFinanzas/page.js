@@ -375,7 +375,7 @@ const Finances = () => {
         const updatedCard = { ...selectedCard };
 
         updatedCard.spendingLimit = spendingLimit;
-        updatedCard.savingsGoal = savingsGoal;
+        updatedCard.savingGoal = savingsGoal;
         
         // Realizar la solicitud para guardar los cambios en el servidor
         const response = await TarjetasApi.update(selectedCard.id, updatedCard);
