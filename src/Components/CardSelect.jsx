@@ -1,6 +1,6 @@
 const CardSelect = ({ selectedCard, userCards, handleSelectedCardChange, setSpendingLimit, setSavingsGoal  }) => (
     <select value={selectedCard} onChange={handleSelectedCardChange}>
-      <option value="">Select a Card</option>
+      <option value="">Selecciona tu tarjeta</option>
       {userCards.map((card) => (
         <option key={card.number} value={card.number}>
           {card.cardType} - {card.number}

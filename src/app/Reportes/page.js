@@ -3,7 +3,11 @@
 import React, { useState, useEffect } from "react";
 import NavBar from "@/Components/NavBar";
 import "./finances.css";
-
+import CardSelect from "@/Components/CardSelect";
+import TarjetasApi from "../api_fronted/tarjetas";
+import IngresosApi from "../api_fronted/ingresos";
+import GastosApi from "../api_fronted/gastos";
+import UsuariosApi from "../api_fronted/usuarios";
 const Reports = () => {
   const [selectedCard, setSelectedCard] = useState("");
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("currentUser")));
@@ -15,13 +19,50 @@ const Reports = () => {
   const currentUser = localStorage.getItem("currentUser");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [sesion , setSesion] = useState({});
-  const [nombres, setFirstName] = useState("");
-  const [apellidos, setLastName] = useState("");
-  const [username, setUsername] = useState("");
-  const [contrasenia, setPassword] = useState("*******");
-  const [email, setEmail] = useState("");
-  const [isEditing, setIsEditing] = useState(false);
- 
+  const [SelectedCard2, setSelectedCard2] = useState("")
+
+  const [listcards, setListCards] = useState([]);
+  const [currentIncomesAndExpenses, setCurrentIncomesAndExpenses] = useState({
+    incomes: [],
+    expenses: [],
+  });
+  const [ListaIngresos,setListaIngresos] = useState([]);
+  const [listGastos, setListGastos] = useState([]);
+  const [listUsuarios, setListUsuarios] = useState([]);
+  //const [nombres, setFirstName] = useState("");
+  //const [apellidos, setLastName] = useState("");
+  //const [username, setUsername] = useState("");
+ // const [contrasenia, setPassword] = useState("*******");
+  //const [email, setEmail] = useState("");
+  //const [isEditing, setIsEditing] = useState(false);
+  const LoadData = async() =>{
+    const result = await TarjetasApi.findAll();
+    const result1  = await IngresosApi.findAll();
+    const result2 = await GastosApi.findAll();
+    const result3 = await UsuariosApi.findAll();
+    setListCards(result.data)
+    setListaIngresos(result1.data)
+    setListGastos(result2.data)
+    setListUsuarios(result3.data)
+    
+  }
+  const handleOnLoad = () => {
+
+    let sesionGuardada = localStorage.getItem("sesion");
+    setSesion(JSON.parse(sesionGuardada))
+    console.log(sesion)
+               
+}
+useEffect(() => {
+    
+  handleOnLoad();
+  LoadData()
+  
+  
+  
+  //tarjetaLocal();
+      
+}, []);
   useEffect(() => {
    // Verifica si el usuario ha iniciado sesión
    const loadedReporte = JSON.parse(localStorage.getItem("reporte")) || [];
@@ -35,8 +76,11 @@ const Reports = () => {
   }, []);
   
 
-  const handleSelectedCardChange = (event) => {
-    setSelectedCard(event.target.value);
+  const handleSelectedCardChange = (event) => {  
+    const selectedCardData = listcards.find((e) => e.number === event.target.value);
+    setSelectedCard(selectedCardData); 
+    setSelectedCard2(selectedCardData.number); 
+    console.log(selectedCardData)
   };
 
   const handleSelectedReportTypeChange = (event) => {
@@ -156,14 +200,11 @@ const Reports = () => {
       <div className={`reports-container${isSidebarOpen ? '-shifted' : ''}`}>
         <h1>Reports</h1>
 
-        <select value={selectedCard} onChange={handleSelectedCardChange}>
-          <option value="">Select a Card</option>
-          {userCards.map((card) => (
-            <option key={card.number} value={card.number}>
-              {card.cardsname} - {card.number}
-            </option>
-          ))}
-        </select>
+        <div className="card"><CardSelect
+          selectedCard={SelectedCard2}
+          userCards={listcards.filter((e) => e.id_usuario == sesion.id)}
+          handleSelectedCardChange={handleSelectedCardChange}
+        /></div>
 
         <div>
           <label>Report Type:</label>
