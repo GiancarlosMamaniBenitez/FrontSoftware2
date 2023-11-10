@@ -5,7 +5,7 @@ const SpendingAndSavings = ({
   savingsGoal,
   handleSpendingLimitChange,
   handleSavingsGoalChange,
-  onSaveClick,
+ 
 }) => {
   return (
     <div>
@@ -25,7 +25,7 @@ const SpendingAndSavings = ({
         placeholder="Enter Savings Goal"
       />
 
-      <button className="button-container" onClick={onSaveClick}>Guardar</button>
+      <button className="button-container" onClick={handleSavingsGoalChange}>Guardar</button>
     </div>
   );
 };

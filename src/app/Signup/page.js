@@ -69,7 +69,7 @@ const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{5
               router.push('/Congrats');
           } else {
               // Manejo de errores en caso de que algo salga mal en el backend
-              alert('Error al registrar usuario( no manda la data)');
+              alert('Error al registrar usuario');
           }
       } catch (error) {
         console.error("Error en la solicitud: ", error);
@@ -180,13 +180,12 @@ const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{5
         Create your new Account
       </button>
       <hr></hr>
-
-      <Link href="/Login" className="already-button">
-        Already have an account?
-      </Link>
+      <span onClick={() => router.push('/Login')} className="already-button">Tienes una cuenta?, Ingresa aquí</span>
+           
 
       <hr></hr>
       <a className="terms">By selecting Create your new Account, you agree to our <a> </a>
+        
         <Link href="./Terms">
           Terms and Conditions
         </Link>

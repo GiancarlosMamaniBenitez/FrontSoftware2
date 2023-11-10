@@ -1,5 +1,8 @@
 
-
+.horizo{
+  display: flex;
+ 
+}
 .login-container {
      position: fixed;
     width: 500px;
@@ -58,6 +61,7 @@
     border-radius: 5px;
     width: 180px;
     font-weight: bold;
+    margin:5px
   }
   hr {
     border: none; /* Remove the default border */

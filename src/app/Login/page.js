@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation';
 
 
 const Login = () => {
-  
+ 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -77,11 +77,18 @@ const Login = () => {
       </form>
       
       <hr></hr>
-      <Link href="/ForgotPassword" className="forgotpassword">Forgot password?</Link>
-      <hr></hr>
+      <div className="horizo">
+      <div>
+      <button className="create-button">
+      <span onClick={() => router.push('/ForgotPassword')} className="create-link">Olvidaste tu contraseña?</span>
+      </button>
+      </div><div>
+    
       <button className="create-button">
         <Link href="/Signup" className="create-link">Create a new account</Link>
       </button>
+      </div>
+      </div>
     </div>
   );
 };

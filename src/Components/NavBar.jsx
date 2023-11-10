@@ -30,15 +30,13 @@ function NavBar({ isSidebarOpen, setIsSidebarOpen, sesion }){
                     </button>
                     
                     <div className={`title${isSidebarOpen ? '-shifted' : ''}`}>
-                        <Link href="/" className="Wisewallet">
-                            WiseWallet
-                        </Link>
+                    <span onClick={() => router.push('/')} className="Wisewallet">WiseWallet</span>
+                        
                     </div>
                     <div className="right-buttons">
                         <button className="right-button" onClick={redirectToPerfil}>
-                            <Link href="/Perfil">
-                                <FontAwesomeIcon icon={faUser} />
-                            </Link>
+                        <span onClick={() => router.push('/Perfil')} className="Wisewallet"><FontAwesomeIcon icon={faUser} /></span>
+                            
                         </button>
                     </div>
                 </div>
@@ -46,13 +44,12 @@ function NavBar({ isSidebarOpen, setIsSidebarOpen, sesion }){
                 <div className="navbar-content">
                     <div> </div>
                     <div className="title">
-                        <Link href='./' className='Wisewallet'>
-                            WiseWallet
-                        </Link>
+                    <span onClick={() => router.push('/')} className="Wisewallet">WiseWallet</span>
                     </div>
                     <div className="right-buttons">
-                        <Link href='/Login' className="right-button">Inicia Sesión</Link>
-                        <Link href='/Signup' className="right-button">Regístrate</Link>
+                    <span onClick={() => router.push('/Login')} className="right-button">Inicia Sesión</span>
+                    <span onClick={() => router.push('/Signup')} className="right-button">Regístrate</span>
+                  
                     </div>
                 </div>
             )}{isSidebarOpen && <Sidebar />}

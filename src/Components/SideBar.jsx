@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import './sidebar.css'
-
+import { useNavigate } from 'react-router-dom';
+import { useRouter } from "next/navigation";
 function SideBar() {
   const [isLoggedOut, setIsLoggedOut] = useState(false);
-
+  
+  const router = useRouter();
   const handleLogout = () => {
     // Elimina la marca o token de autenticación del Local Storage
     localStorage.removeItem("userLoggedIn");
@@ -23,10 +25,10 @@ function SideBar() {
   return (
     <div>
       <ul className="sidebar">
-        <li><Link href='/Perfil' className="link-sidebar">Datos de Perfil</Link></li>
-        <li><Link href='/VerTarjeta' className="link-sidebar">Ver Tarjetas</Link></li>
-        <li><Link href='/Reportes' className= "link-sidebar">Reportes</Link></li>
-        <li><Link href='/VerFinanzas' className="link-sidebar">Ver Ingresos y Gastos</Link></li>
+      <li><span onClick={() => router.push('/Perfil')} className="link-sidebar">Datos de Perfil</span></li>
+      <li><span onClick={() => router.push('/VerTarjeta')} className="link-sidebar">Ver Tarjetas</span></li>
+      <li><span onClick={() => router.push('/Reportes')} className="link-sidebar">Reportes</span></li>
+      <li><span onClick={() => router.push('/VerFinanzas')} className="link-sidebar">Ver Ingresos y Gastos</span></li>
         
           <li>
             <div className="logout-container">

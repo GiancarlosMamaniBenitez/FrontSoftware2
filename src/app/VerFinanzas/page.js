@@ -369,6 +369,7 @@ const Finances = () => {
   };
   const handleSaveClick = async () => {
     console.log(selectedCard)
+    console.log(spendingLimit)
     if (selectedCard) {
       try {
         // Actualizar los límites de gasto y metas en el objeto de tarjeta seleccionada
@@ -485,6 +486,12 @@ const Finances = () => {
               onNewIncomeChange={(e) => setNewIncome(parseFloat(e.target.value))}
               addNewIncome={addNewIncome}
             /></div> 
+             <div className="finanza"> 
+            <CategoryForm
+              newCategory={newCategory}
+              onNewCategoryChange={(e) => setNewCategory(e.target.value)}
+              addNewCategory={addNewCategory}
+            /></div>
             <div className="finanza"> 
             <ExpenseForm
               newExpense={newExpense}
@@ -495,12 +502,7 @@ const Finances = () => {
               warning={warning}
               onExpenseCategoryChange={handleSelectedCategorieChange}
               addNewExpense={addNewExpense}/></div>
-             <div className="finanza"> 
-            <CategoryForm
-              newCategory={newCategory}
-              onNewCategoryChange={(e) => setNewCategory(e.target.value)}
-              addNewCategory={addNewCategory}
-            /></div>
+            
              <div className="finanza"> 
              <SpendingAndSavings
                 spendingLimit={spendingLimit}
