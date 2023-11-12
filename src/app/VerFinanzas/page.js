@@ -1,4 +1,4 @@
-'use client'
+
 'use client';
 import TarjetasApi from "../api_fronted/tarjetas";
 import React, { useState, useEffect } from "react";
@@ -23,7 +23,8 @@ import CategorySelect from "@/Components/CategorySelect";
 import CategoriasApi from "../api_fronted/categorias";
 import MetaApi from "../api_fronted/meta";
 import LimitgastoApi from "../api_fronted/Limitgasto";
-
+import MetaForm from "@/Components/Meta";
+import LimiteForm from "@/Components/LimiteForm";
 
 const Finances = () => {
   
@@ -158,7 +159,7 @@ const Finances = () => {
   }, [selectedCard, listcards]);
 
   useEffect(() => {
-    //calculateTotals();
+    calculateTotals();
     checkSpendingLimit();
   
   }, [currentIncomesAndExpenses]);
@@ -304,6 +305,7 @@ const Finances = () => {
       
     }
   };
+
   const addNewLimit = async() =>{
     if (newLimit > 0 && selectedCard) {
       console.log(selectedCard.id)
@@ -312,12 +314,12 @@ const Finances = () => {
        // const card = listcards.find((e) => e.id === selectedCard.id);
    //const limitegasto = listLimit.find((e) => e.id_tarjeta === selectedCard.id)
    const limite = {id:limiteid, monto:newLimit,id_tarjeta:selectedCard.id  };
-   console.log(limite)
+   console.log(antiguolimite)
    if(!antiguolimite){
    try {
     // Realiza la solicitud POST al backend para registrar el nuevo usuario utilizando la función personasApi
     const response = await LimitgastoApi.create(limite);
-
+    LoadData()
     // Comprueba el resultado de la solicitud
       if (response && response.status === 200) {
           // Registro exitoso, redirige a la página de inicio de sesión
@@ -350,6 +352,7 @@ const Finances = () => {
    }
   
   }
+}
   const addNewMeta = async() =>{
     if (newMeta > 0 && selectedCard) {
       console.log(selectedCard.id)
@@ -363,7 +366,7 @@ const Finances = () => {
    try {
     // Realiza la solicitud POST al backend para registrar el nuevo usuario utilizando la función personasApi
     const response = await MetaApi.create(Meta);
-
+    LoadData()
     // Comprueba el resultado de la solicitud
       if (response && response.status === 200) {
           // Registro exitoso, redirige a la página de inicio de sesión
@@ -530,6 +533,21 @@ const Finances = () => {
     }
   };*/
 
+
+  /*
+  <div className="finanza"> 
+             <SpendingAndSavings
+                spendingLimit={spendingLimit}
+                savingsGoal={savingsGoal}
+                handleSpendingLimitChange={(e) => handleSpendingLimitChange(e)}
+                handleSavingsGoalChange={(e) => handleSavingsGoalChange(e)}
+                onSaveClick={handleSaveClick}
+             />
+             
+
+             </div>
+  */
+
   const saveExpenseToLocalStorage = (amount, category) => {
     const currentDate = getCurrentDate();
     const currentMonth = currentDate.slice(0, 7);
@@ -564,8 +582,9 @@ const Finances = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
+    
     <div className="centra">
-      <p>a</p>
+    
       <NavBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} sesion={sesion}/>
       <div className={`finances-container${isSidebarOpen ? '-shifted' : ''}`}>
         <div className="horizonta">
@@ -594,12 +613,12 @@ const Finances = () => {
               newIncome={newIncome}
               onNewIncomeChange={(e) => setNewIncome(parseFloat(e.target.value))}
               addNewIncome={addNewIncome}
-            /></div><div>
+            /></div><div className="finanza">
             <LimiteForm
              newIncome={newLimit}
              onNewLimitChange={(e) => setNewLimit(parseFloat(e.target.value))}
              addNewLimit={addNewLimit}
-           /></div> <div>
+           /></div> <div className="finanza">
              <MetaForm
               newIncome={newMeta}
               onNewMetaChange={(e) => setNewMeta(parseFloat(e.target.value))}
@@ -621,17 +640,8 @@ const Finances = () => {
               warning={warning}
               onExpenseCategoryChange={handleSelectedCategorieChange}
               addNewExpense={addNewExpense}/></div>
-            
-             <div className="finanza"> 
-             <SpendingAndSavings
-                spendingLimit={spendingLimit}
-                savingsGoal={savingsGoal}
-                handleSpendingLimitChange={(e) => handleSpendingLimitChange(e)}
-                handleSavingsGoalChange={(e) => handleSavingsGoalChange(e)}
-                onSaveClick={handleSaveClick}
-             />
-
-             </div>
+              
+             
              </div>
            
             <TotalIncomes totalIncomes={totalIncomes} />
@@ -645,5 +655,5 @@ const Finances = () => {
     </div>
   );
 };
-}
+
 export default Finances;
