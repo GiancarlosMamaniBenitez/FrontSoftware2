@@ -21,6 +21,10 @@ import Gastos from "../IngresosGastos/Ing_Gas/Gastos";
 import CatSelect from "@/Components/CategorySelect";
 import CategorySelect from "@/Components/CategorySelect";
 import CategoriasApi from "../api_fronted/categorias";
+import MetaApi from "../api_fronted/meta";
+import LimitgastoApi from "../api_fronted/Limitgasto";
+
+
 const Finances = () => {
   
 
@@ -38,6 +42,10 @@ const Finances = () => {
   const [expenseCategory, setExpenseCategory] = useState([]);
   const [newIncome, setNewIncome] = useState(0);
   const [newCategory, setNewCategory] = useState("");
+  const [newLimit,setNewLimit] = useState(0)
+  const [newMeta,setNewMeta] = useState(0)
+
+  
   const [spendingLimit, setSpendingLimit] = useState(0);
   const [savingsGoal, setSavingsGoal] = useState(0);
   const [warning, setWarning] = useState("");
@@ -54,19 +62,28 @@ const Finances = () => {
   const [listGastos, setListGastos] = useState([]);
   const [listUsuarios, setListUsuarios] = useState([]);
   const [listCategorias, setListCategorias] = useState([]);
+  const[listLimit, setListLimit] = useState([]);
+  const[listMeta, setlistMeta] = useState([]);
   //importar la data de la api
   const LoadData = async() =>{
     const result = await TarjetasApi.findAll();
     const result1  = await IngresosApi.findAll();
     const result2 = await GastosApi.findAll();
     const result3 = await UsuariosApi.findAll();
-    const result5 = await CategoriasApi.findAll()
-    setListCategorias(result5.data)
+    const result5 = await CategoriasApi.findAll();
+    const result6 = await MetaApi.findAll();
+    const result7 = await LimitgastoApi.findAll();
     
     setListCards(result.data)
     setListaIngresos(result1.data)
     setListGastos(result2.data)
     setListUsuarios(result3.data)
+    setListCategorias(result5.data)
+    setlistMeta(result6.data)
+    setListLimit(result7.data)
+    
+  
+   
     
     
   }
@@ -91,7 +108,7 @@ const Finances = () => {
 
     var sesionGuardada = localStorage.getItem("sesion");
     setSesion(JSON.parse(sesionGuardada))
-    console.log(sesionGuardada.id)
+    console.log(sesionGuardada)
                
 }
 
@@ -141,7 +158,7 @@ const Finances = () => {
   }, [selectedCard, listcards]);
 
   useEffect(() => {
-    calculateTotals();
+    //calculateTotals();
     checkSpendingLimit();
   
   }, [currentIncomesAndExpenses]);
@@ -287,7 +304,98 @@ const Finances = () => {
       
     }
   };
+  const addNewLimit = async() =>{
+    if (newLimit > 0 && selectedCard) {
+      console.log(selectedCard.id)
+      const antiguolimite = listLimit.find((e) => e.id_tarjeta === selectedCard.id);
+      const limiteid = listLimit.length + 1;
+       // const card = listcards.find((e) => e.id === selectedCard.id);
+   //const limitegasto = listLimit.find((e) => e.id_tarjeta === selectedCard.id)
+   const limite = {id:limiteid, monto:newLimit,id_tarjeta:selectedCard.id  };
+   console.log(limite)
+   if(!antiguolimite){
+   try {
+    // Realiza la solicitud POST al backend para registrar el nuevo usuario utilizando la función personasApi
+    const response = await LimitgastoApi.create(limite);
 
+    // Comprueba el resultado de la solicitud
+      if (response && response.status === 200) {
+          // Registro exitoso, redirige a la página de inicio de sesión
+          alert('Registro exitoso!');
+          
+      } else {
+          // Manejo de errores en caso de que algo salga mal en el backend
+          alert('Error al registrar usuario( no manda la data)');
+      }
+  } catch (error) {
+   
+  }
+   }else{
+    try {
+      // Realiza la solicitud POST al backend para registrar el nuevo usuario utilizando la función personasApi
+      const response = await LimitgastoApi.update(antiguolimite.id,limite);
+    
+      
+      // Comprueba el resultado de la solicitud
+        if (response && response.status === 200) {
+            // Registro exitoso, redirige a la página de inicio de sesión
+            alert('Actualización exitosa!');
+           
+        } else {
+            // Manejo de errores en caso de que algo salga mal en el backend
+            alert('Error al actualizar Limite de gastos');
+        }
+    } catch (error) {
+       }
+   }
+  
+  }
+  const addNewMeta = async() =>{
+    if (newMeta > 0 && selectedCard) {
+      console.log(selectedCard.id)
+      const antiguaMeta = listMeta.find((e) => e.id_tarjeta === selectedCard.id);
+      const Metaid = listMeta.length + 1;
+       // const card = listcards.find((e) => e.id === selectedCard.id);
+   //const limitegasto = listLimit.find((e) => e.id_tarjeta === selectedCard.id)
+   const Meta = {id:Metaid, monto:newMeta,id_tarjeta:selectedCard.id  };
+   console.log(Meta)
+   if(!antiguaMeta){
+   try {
+    // Realiza la solicitud POST al backend para registrar el nuevo usuario utilizando la función personasApi
+    const response = await MetaApi.create(Meta);
+
+    // Comprueba el resultado de la solicitud
+      if (response && response.status === 200) {
+          // Registro exitoso, redirige a la página de inicio de sesión
+          alert('Registro exitoso!');
+          
+      } else {
+          // Manejo de errores en caso de que algo salga mal en el backend
+          alert('Error al registrar usuario( no manda la data)');
+      }
+  } catch (error) {
+   
+  }
+   }else{
+    try {
+      // Realiza la solicitud POST al backend para registrar el nuevo usuario utilizando la función personasApi
+      const response = await MetaApi.update(antiguaMeta.id,Meta);
+    
+      
+      // Comprueba el resultado de la solicitud
+        if (response && response.status === 200) {
+            // Registro exitoso, redirige a la página de inicio de sesión
+            alert('Actualización exitosa!');
+           
+        } else {
+            // Manejo de errores en caso de que algo salga mal en el backend
+            alert('Error al actualizar Limite de gastos');
+        }
+    } catch (error) {
+       }
+   }
+  
+  }}
   //esto estaba cambiando (falta que mande a base de datos)
   const addNewCategory = async(event) => {
     event.preventDefault();
@@ -457,6 +565,7 @@ const Finances = () => {
 
   return (
     <div className="centra">
+      <p>a</p>
       <NavBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} sesion={sesion}/>
       <div className={`finances-container${isSidebarOpen ? '-shifted' : ''}`}>
         <div className="horizonta">
@@ -485,6 +594,16 @@ const Finances = () => {
               newIncome={newIncome}
               onNewIncomeChange={(e) => setNewIncome(parseFloat(e.target.value))}
               addNewIncome={addNewIncome}
+            /></div><div>
+            <LimiteForm
+             newIncome={newLimit}
+             onNewLimitChange={(e) => setNewLimit(parseFloat(e.target.value))}
+             addNewLimit={addNewLimit}
+           /></div> <div>
+             <MetaForm
+              newIncome={newMeta}
+              onNewMetaChange={(e) => setNewMeta(parseFloat(e.target.value))}
+              addNewMeta={addNewMeta}
             /></div> 
              <div className="finanza"> 
             <CategoryForm
@@ -526,5 +645,5 @@ const Finances = () => {
     </div>
   );
 };
-
+}
 export default Finances;
