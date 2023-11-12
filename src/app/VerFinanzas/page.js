@@ -25,7 +25,6 @@ import MetaApi from "../api_fronted/meta";
 import LimitgastoApi from "../api_fronted/Limitgasto";
 import MetaForm from "@/Components/Meta";
 import LimiteForm from "@/Components/LimiteForm";
-
 const Finances = () => {
   
 
