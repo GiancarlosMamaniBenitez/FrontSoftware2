@@ -8,6 +8,8 @@ import TarjetasApi from "../api_fronted/tarjetas";
 import IngresosApi from "../api_fronted/ingresos";
 import GastosApi from "../api_fronted/gastos";
 import UsuariosApi from "../api_fronted/usuarios";
+import ExpenseFormReport from "@/Components/ExpenseFormReport";
+
 const Reports = () => {
   const [selectedCard, setSelectedCard] = useState("");
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("currentUser")));
@@ -20,6 +22,7 @@ const Reports = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [sesion , setSesion] = useState({});
   const [SelectedCard2, setSelectedCard2] = useState("")
+  const [listCategorias, setListCategorias] = useState([]);
 
   const [listcards, setListCards] = useState([]);
   const [currentIncomesAndExpenses, setCurrentIncomesAndExpenses] = useState({
@@ -44,6 +47,7 @@ const Reports = () => {
     setListaIngresos(result1.data)
     setListGastos(result2.data)
     setListUsuarios(result3.data)
+    setListCategorias(result5.data)
     
   }
   const handleOnLoad = () => {
@@ -90,6 +94,14 @@ useEffect(() => {
   const handleSelectedReportCategoryChange = (event) => {
     setSelectedReportCategory(event.target.value);
   };
+
+  const handleSelectedCategorieChange = (event) => {
+    const selectedCat = listCategorias.find((e) => e.nombre === event.target.value);
+    setSelectedCategorie(selectedCat.nombre); 
+    setSelectedCategorieId(selectedCat.id);
+    
+    console.log(selectedCat)
+  }
 
   const generateReport = () => {
     // Realizar la generación de informes y guardarlos en el almacenamiento local
@@ -213,9 +225,17 @@ useEffect(() => {
             <option value="monthly">Monthly</option>
           </select>
         </div>
-
+        <label>Report Category:</label>
         <div>
-          <label>Report Category:</label>
+        <ExpenseFormReport
+              
+              selectedCat = {selectedCategorie}
+              
+              expenseCategory={listCategorias.filter((e) => e.id_usuario == sesion.id)}
+             
+              onExpenseCategoryChange={handleSelectedCategorieChange}
+             />
+          
           <select value={selectedReportCategory} onChange={handleSelectedReportCategoryChange}>
             <option value="">Select Category</option>
             {userCards.find((card) => card.number === selectedCard)?.categories?.map((category) => (
