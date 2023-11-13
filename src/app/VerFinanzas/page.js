@@ -25,10 +25,15 @@ import MetaApi from "../api_fronted/meta";
 import LimitgastoApi from "../api_fronted/Limitgasto";
 import MetaForm from "@/Components/Meta";
 import LimiteForm from "@/Components/LimiteForm";
+
+import EliminarIngreso from "@/Components/EliminarIngreso.jsx"
+import EliminarGasto from "@/Components/EliminarGasto.jsx"
 const Finances = () => {
   
 
   const [selectedCard, setSelectedCard] = useState("");
+  const [totalIncomeAmount, setTotalIncomeAmount] = useState(0);
+  const [totalExpenseAmount, setTotalExpenseAmount] = useState(0);
   
   const [usuariotarjeta,setUsuariotarjeta] = useState([])
   const [usuarioingresos,setUsuarioingresos] = useState([])
@@ -231,7 +236,7 @@ const Finances = () => {
       
 
         const expense={ id_gastos: expenseID, monto: newExpense ,fecha_gastos:currentDate,id_categoria:expenseCategory , id_tarjeta: selectedCard.id}
-        try {
+        /*try {
           // Realiza la solicitud POST al backend para registrar el nuevo usuario utilizando la función personasApi
           const response = await GastosApi.create(expense)
           LoadData()
@@ -246,64 +251,69 @@ const Finances = () => {
             }
         } catch (error) {
          
+        }*/
+
+        try {
+          const response = await GastosApi.create(expense);
+          await LoadData(); // Esperar a que LoadData termine antes de continuar
+          setCurrentIncomesAndExpenses(getCurrentIncomesAndExpenses());
+          setNewExpense(0);
+          setExpenseCategory();
+          setWarning("");
+          //calculateTotals(); // Calcular totales después de actualizar los datos
+        } catch (error) {
+          console.error("Error al agregar gasto:", error);
         }
+
         console.log(expense)
         setCurrentIncomesAndExpenses(getCurrentIncomesAndExpenses());
         setNewExpense(0);
         setExpenseCategory();
         setWarning("");
+        calculateTotalsExpenses
+        LoadData();
       }
     
   };
 //ya manda ingresos a la base de datos
-  const addNewIncome = async() => {
-    if (newIncome > 0 && selectedCard) {
-      /*const updatedUser = { ...user };
-      const updatedUserCards = updatedUser.cards;
-      const cardIndex = updatedUserCards.findIndex((card) => card.number === selectedCard);
-*/   
-        console.log(selectedCard.id)
-        const card = listcards.find((e) => e.id === selectedCard.id);
-        let incomes= []
-        incomes = ListaIngresos.filter((e) => e.id_tarjeta == selectedCard.id);
-        const incomeId= ListaIngresos.length + 1;
-        const currentDate = getCurrentDate();
-        console.log(incomeId)
-        const income={ id_ingresos: incomeId, monto: newIncome ,fecha_ingresos:currentDate, id_tarjeta: selectedCard.id}
-        ;
-        console.log(income)
-        try {
-          // Realiza la solicitud POST al backend para registrar el nuevo usuario utilizando la función personasApi
-          const response = await IngresosApi.create(income);
+const addNewIncome = async() => {
+  if (newIncome > 0 && selectedCard) {
+      console.log(selectedCard.id)
+      const card = listcards.find((e) => e.id === selectedCard.id);
+      let incomes= []
+      incomes = ListaIngresos.filter((e) => e.id_tarjeta == selectedCard.id);
+      const incomeId= ListaIngresos.length + 1;
+      const currentDate = getCurrentDate();
+      console.log(incomeId)
+      const income={ id_ingresos: incomeId, monto: newIncome ,fecha_ingresos:currentDate, id_tarjeta: selectedCard.id}
+      ;
+      console.log("ingreso prueba",income.monto)
+      try {
+        // Realiza la solicitud POST al backend para registrar el nuevo usuario utilizando la función personasApi
+        const response = await IngresosApi.create(income);
+        // Comprueba el resultado de la solicitud
+          if (response && response.status === 200) {
+              // Registro exitoso, redirige a la página de inicio de sesión
+              alert('Registro exitoso!');
+              router.push('/VerTarjeta');
+          } else {
+              // Manejo de errores en caso de que algo salga mal en el backend
+              alert('Error al registrar usuario( no manda la data)');
+          }
+      } catch (error) {
+       
+      }
+
+      setCurrentIncomesAndExpenses(getCurrentIncomesAndExpenses());
+      setNewIncome(0);
       
-          // Comprueba el resultado de la solicitud
-            if (response && response.status === 200) {
-                // Registro exitoso, redirige a la página de inicio de sesión
-                alert('Registro exitoso!');
-                router.push('/VerTarjeta');
-            } else {
-                // Manejo de errores en caso de que algo salga mal en el backend
-                alert('Error al registrar usuario( no manda la data)');
-            }
-        } catch (error) {
-         
-        }
+      calculateTotalsIncomes();
 
+      LoadData();
+    
+  }
+};
 
-        // Guardar la tarjeta actualizada en la lista de tarjetas del usuario
-        //updatedUserCards[cardIndex] = card;
-
-        // Actualizar el objeto de usuario actual
-        //setUser(updatedUser);
-
-        // Guardar el usuario actualizado en el almacenamiento local
-        //localStorage.setItem("currentUser", JSON.stringify(updatedUser));
-
-        setCurrentIncomesAndExpenses(getCurrentIncomesAndExpenses());
-        setNewIncome(0);
-      
-    }
-  };
 
   const addNewLimit = async() =>{
     if (newLimit > 0 && selectedCard) {
@@ -434,9 +444,45 @@ const Finances = () => {
       setNewCategory("");
     
   };
+  const calculateTotalsIncomes = () => {
+
+    if (selectedCard && ListaIngresos.length > 0) {
+      // Filtra los ingresos por id_tarjeta
+      //console.log("ID de tarjeta seleccionada:", selectedCard.id);
+      //const cardIncomes = ListaIngresos.filter((income) => income.id_tarjeta === selectedCard.id);
+      //console.log("Ingresos filtrados:", cardIncomes);
+      if (selectedCard && ListaIngresos.length > 0) {
+        // Filtra los ingresos por id_tarjeta
+        const cardIncomes = ListaIngresos.filter((income) => income.id_tarjeta === selectedCard.id);
+        console.log("Ingresos filtrados:", cardIncomes);
+        // Suma los montos de todos los ingresos
+        const totalIncomeAmount1 = cardIncomes.reduce((total, income) => total + parseFloat(income.monto), 0);
+        setTotalIncomeAmount(totalIncomeAmount1)
+    
+        console.log("Suma de todos los montos de ingresos:", totalIncomeAmount);
+      }
+  
+    }
+  };
+    const calculateTotalsExpenses=()=>{
+      
+  
+      if (selectedCard && listGastos.length > 0) {
+        
+        const cardExpenses = listGastos.filter((expense) => expense.id_tarjeta === selectedCard.id);
+        console.log("Gastos filtrados:",cardExpenses);
+        
+        
+        const totalExpenseAmount1 = cardExpenses.reduce((total, expense) => total + parseFloat(expense.monto), 0);
+        setTotalExpenseAmount(totalExpenseAmount1)
+  
+        console.log("Suma de todos los montos de gastos:", totalExpenseAmount);
+      }
+  
+    };
   
 
-  const calculateTotals = () => {
+  /*const calculateTotals = () => {
     const incomes = currentIncomesAndExpenses.incomes;
     const expenses = currentIncomesAndExpenses.expenses;
 
@@ -461,7 +507,7 @@ const Finances = () => {
 
     setRecentIncomes(sortedIncomes.slice(0, 3));
     setRecentExpenses(sortedExpenses.slice(0, 3));
-  };
+  };*/
 
   const handleSpendingLimitChange =  (event) => {
     
@@ -643,10 +689,11 @@ const Finances = () => {
              
              </div>
            
-            <TotalIncomes totalIncomes={totalIncomes} />
-            <TotalExpensesByCategory totalExpensesByCategory={totalExpensesByCategory} />
-            <RecentExpensesList recentExpenses={recentExpenses} />
-            <RecentIncomesList recentIncomes={recentIncomes} />
+             <TotalIncomes totalIncomeAmount={totalIncomeAmount} />
+            <TotalExpenses totalExpenseAmount={totalExpenseAmount} />
+            <EliminarIngreso ListaIngresos={[ListaIngresos]} selectedCardId={selectedCard.id} totalIncomeAmount={totalIncomeAmount}/>
+            <EliminarGasto ListaGastos={[listGastos]} selectedCardId={selectedCard.id} listcards={listcards} listCategorias={listCategorias}
+             totalExpenseAmount={totalExpenseAmount}/>
             
           </div>
         )}
