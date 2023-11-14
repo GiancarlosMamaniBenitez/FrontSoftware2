@@ -167,6 +167,41 @@ useEffect(() => {
       console.error("Error al generar el informe:", error);
     }
   };
+
+  const renderReportList = () =>{
+    return(
+      <div>
+        <ul>{reporte.map((report, index) => (
+
+          <li key={index} onClick={() => handleReportClick(report)}>
+          {report.type} Report - {report.date}
+          </li>
+        ))}
+        </ul>
+      </div>
+
+    );
+  }
+
+  const renderReportDetails= () => {
+    return (
+      <div>
+        {reportData && (
+          <div>
+            <h2>Report Details</h2>
+            <p>Tipo: {reportData.tipo}</p>
+            <p>Date: {reportData.date}</p>
+            <p>Categoria: {reportData.categoria}</p>
+            <p>Total de gastos: ${reportData.total_gastos}</p>
+            <p>Total de ingresos: ${reportData.total_ingresos}</p>
+            <p>Ahorro: ${reportData.ahorro}</p>
+            {/* Agregar más detalles según el contenido del informe */}
+          </div>
+        )}
+      </div>
+    );
+  
+  }
   
   const handleReportClick = (report) => {
     setReportData(report);
@@ -213,28 +248,10 @@ useEffect(() => {
 
         <div>
           <h2>Reports List</h2>
-          <ul>
-            {reporte.map((report, index) => (
-              <li key={index} onClick={() => handleReportClick(report)}>
-                {report.type} Report - {report.date}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div>
-          {reportData && (
-            <div>
-              <h2>Report Details</h2>
-              <p>Tipo: {reportData.tipo}</p>
-              <p>Date: {reportData.date}</p>
-              <p>Categoria: {reportData.categoria}</p>
-              <p>Total de gastos: ${reportData.total_gastos}</p>
-              <p>Total de ingresos: ${reportData.total_ingresos}</p>
-              <p>Ahorro: ${reportData.ahorro}</p>
-              {/* Agregar más detalles según el contenido del informe */}
+          <div>
+            {renderReportList()}
+            {renderReportDetails()}
             </div>
-          )}
         </div>
       </div>
     </div>
