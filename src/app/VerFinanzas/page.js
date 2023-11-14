@@ -25,7 +25,7 @@ import MetaApi from "../api_fronted/meta";
 import LimitgastoApi from "../api_fronted/Limitgasto";
 import MetaForm from "@/Components/Meta";
 import LimiteForm from "@/Components/LimiteForm";
-
+import TotalExpenses from "@/Components/TotalExpenses";
 import EliminarIngreso from "@/Components/EliminarIngreso.jsx"
 import EliminarGasto from "@/Components/EliminarGasto.jsx"
 const Finances = () => {
@@ -163,7 +163,7 @@ const Finances = () => {
   }, [selectedCard, listcards]);
 
   useEffect(() => {
-    calculateTotals();
+    //calculateTotals();
     checkSpendingLimit();
   
   }, [currentIncomesAndExpenses]);
@@ -187,10 +187,14 @@ const Finances = () => {
   };
 
   
+   
+  
   const handleSelectedCardChange = (event) => {  
-    const selectedCardData = listcards.find((e) => e.number === event.target.value);
-    setSelectedCard(selectedCardData); 
-    setSelectedCard2(selectedCardData.number); 
+    const selectedCardNumber = event.target.value;
+    const selectedCardData = listcards.find((card) => card.number === selectedCardNumber);
+
+    setSelectedCard(selectedCardNumber);
+     
     
     if (selectedCardData) {
       setSpendingLimit(selectedCardData.spendingLimit || 0);
@@ -199,7 +203,6 @@ const Finances = () => {
    
     console.log(selectedCardData)
   };
-
   const handleSelectedCategorieChange = (event) => {
     const selectedCat = listCategorias.find((e) => e.nombre === event.target.value);
     setSelectedCategorie(selectedCat.nombre); 
@@ -211,12 +214,15 @@ const Finances = () => {
     const Usuario = listUsuarios.find((e) => e.id === sesion.id);
     const expenseCategory = selectedCategorieId
     if (newExpense > 0 && selectedCard && expenseCategory) {
-      const card = listcards.find((e) => e.id === selectedCard.id);
+      const card = listcards.find((e) => e.number === selectedCard);
         let expenses= []
         expenses = listGastos.filter((e) => e.id_tarjeta == selectedCard.id);
         const expenseID= listGastos.length + 1;
         const currentDate = getCurrentDate();
         console.log(expenseID)
+
+
+        const spendingLimit = listLimit.filter((e) => e.id_tarjeta == selectedCard.id);
         
         ;
    
@@ -226,7 +232,7 @@ const Finances = () => {
       const cardIndex = updatedUserCards.findIndex((card) => card.number === selectedCard);
      */
       
-        if (card.spendingLimit && totalExpensesByCategory[expenseCategory]) {
+        if (spendingLimit && totalExpensesByCategory[expenseCategory]) {
           const categoryExpenses = totalExpensesByCategory[expenseCategory] + newExpense;
           if (categoryExpenses > card.spendingLimit) {
             setWarning("Has superado tu límite de gasto.");
@@ -235,7 +241,7 @@ const Finances = () => {
         }
       
 
-        const expense={ id_gastos: expenseID, monto: newExpense ,fecha_gastos:currentDate,id_categoria:expenseCategory , id_tarjeta: selectedCard.id}
+        const expense={ id_gastos: expenseID, monto: newExpense ,fecha_gastos:currentDate,id_categoria:expenseCategory , id_tarjeta: card.id}
         /*try {
           // Realiza la solicitud POST al backend para registrar el nuevo usuario utilizando la función personasApi
           const response = await GastosApi.create(expense)
@@ -278,14 +284,14 @@ const Finances = () => {
 //ya manda ingresos a la base de datos
 const addNewIncome = async() => {
   if (newIncome > 0 && selectedCard) {
-      console.log(selectedCard.id)
-      const card = listcards.find((e) => e.id === selectedCard.id);
+      
+    const card = listcards.find((e) => e.number === selectedCard);
       let incomes= []
       incomes = ListaIngresos.filter((e) => e.id_tarjeta == selectedCard.id);
       const incomeId= ListaIngresos.length + 1;
       const currentDate = getCurrentDate();
       console.log(incomeId)
-      const income={ id_ingresos: incomeId, monto: newIncome ,fecha_ingresos:currentDate, id_tarjeta: selectedCard.id}
+      const income={ id_ingresos: incomeId, monto: newIncome ,fecha_ingresos:currentDate, id_tarjeta: card.id}
       ;
       console.log("ingreso prueba",income.monto)
       try {
@@ -317,12 +323,13 @@ const addNewIncome = async() => {
 
   const addNewLimit = async() =>{
     if (newLimit > 0 && selectedCard) {
-      console.log(selectedCard.id)
-      const antiguolimite = listLimit.find((e) => e.id_tarjeta === selectedCard.id);
+      const card = listcards.find((e) => e.number === selectedCard);
+
+      const antiguolimite = listLimit.find((e) => e.id_tarjeta === card.id);
       const limiteid = listLimit.length + 1;
        // const card = listcards.find((e) => e.id === selectedCard.id);
    //const limitegasto = listLimit.find((e) => e.id_tarjeta === selectedCard.id)
-   const limite = {id:limiteid, monto:newLimit,id_tarjeta:selectedCard.id  };
+   const limite = {id:limiteid, monto:newLimit,id_tarjeta:card.id  };
    console.log(antiguolimite)
    if(!antiguolimite){
    try {
@@ -364,12 +371,12 @@ const addNewIncome = async() => {
 }
   const addNewMeta = async() =>{
     if (newMeta > 0 && selectedCard) {
-      console.log(selectedCard.id)
-      const antiguaMeta = listMeta.find((e) => e.id_tarjeta === selectedCard.id);
+      const card = listcards.find((e) => e.number === selectedCard);
+      const antiguaMeta = listMeta.find((e) => e.id_tarjeta === card.id);
       const Metaid = listMeta.length + 1;
        // const card = listcards.find((e) => e.id === selectedCard.id);
    //const limitegasto = listLimit.find((e) => e.id_tarjeta === selectedCard.id)
-   const Meta = {id:Metaid, monto:newMeta,id_tarjeta:selectedCard.id  };
+   const Meta = {id:Metaid, monto:newMeta,id_tarjeta:card.id  };
    console.log(Meta)
    if(!antiguaMeta){
    try {
@@ -636,7 +643,7 @@ const addNewIncome = async() => {
           <div ><h1>Tarjetas:</h1></div>
         <div className="card">
         <CardSelect
-          selectedCard={SelectedCard2}
+          selectedCard={selectedCard}
           userCards={listcards.filter((e) => e.id_usuario == sesion.id)}
           handleSelectedCardChange={handleSelectedCardChange}
           setSpendingLimit={setSpendingLimit}

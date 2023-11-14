@@ -8,21 +8,24 @@ import TarjetasApi from "../api_fronted/tarjetas";
 import IngresosApi from "../api_fronted/ingresos";
 import GastosApi from "../api_fronted/gastos";
 import UsuariosApi from "../api_fronted/usuarios";
-import ExpenseFormReport from "@/Components/ExpenseFormReport";
+import CategoriasApi from "../api_fronted/categorias";
+import MetaApi from "../api_fronted/meta";
+import LimitgastoApi from "../api_fronted/Limitgasto";
+import MetaForm from "@/Components/Meta";
+import LimiteForm from "@/Components/LimiteForm";
 
 const Reports = () => {
   const [selectedCard, setSelectedCard] = useState("");
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("currentUser")));
-  const [userCards, setUserCards] = useState(user?.cards || []);
+
+  const [userCards, setUserCards] = useState("");
   const [reporte, setReporte] = useState([]);
   const [selectedReportType, setSelectedReportType] = useState("daily");
   const [selectedReportCategory, setSelectedReportCategory] = useState("");
-  const [reportData, setReportData] = useState(null);
+  const [reportData, setReportData] = useState(null)  ;
   const currentUser = localStorage.getItem("currentUser");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [sesion , setSesion] = useState({});
   const [SelectedCard2, setSelectedCard2] = useState("")
-  const [listCategorias, setListCategorias] = useState([]);
 
   const [listcards, setListCards] = useState([]);
   const [currentIncomesAndExpenses, setCurrentIncomesAndExpenses] = useState({
@@ -31,6 +34,7 @@ const Reports = () => {
   });
   const [ListaIngresos,setListaIngresos] = useState([]);
   const [listGastos, setListGastos] = useState([]);
+  const [meta, setlistMeta] = useState([]);
   const [listUsuarios, setListUsuarios] = useState([]);
   //const [nombres, setFirstName] = useState("");
   //const [apellidos, setLastName] = useState("");
@@ -38,23 +42,35 @@ const Reports = () => {
  // const [contrasenia, setPassword] = useState("*******");
   //const [email, setEmail] = useState("");
   //const [isEditing, setIsEditing] = useState(false);
+  const[listLimit, setListLimit] = useState([]);
+  const[listCategorias, setListCategorias] = useState([]);
   const LoadData = async() =>{
     const result = await TarjetasApi.findAll();
     const result1  = await IngresosApi.findAll();
     const result2 = await GastosApi.findAll();
     const result3 = await UsuariosApi.findAll();
+    const result5 = await CategoriasApi.findAll();
+    const result6 = await MetaApi.findAll();
+    const result7 = await LimitgastoApi.findAll();
+    
     setListCards(result.data)
     setListaIngresos(result1.data)
     setListGastos(result2.data)
     setListUsuarios(result3.data)
     setListCategorias(result5.data)
+    setlistMeta(result6.data)
+    setListLimit(result7.data)
     
+  
+   
   }
+    
   const handleOnLoad = () => {
 
     let sesionGuardada = localStorage.getItem("sesion");
     setSesion(JSON.parse(sesionGuardada))
     console.log(sesion)
+   
                
 }
 useEffect(() => {
@@ -81,10 +97,13 @@ useEffect(() => {
   
 
   const handleSelectedCardChange = (event) => {  
-    const selectedCardData = listcards.find((e) => e.number === event.target.value);
-    setSelectedCard(selectedCardData); 
-    setSelectedCard2(selectedCardData.number); 
-    console.log(selectedCardData)
+    const selectedCardNumber = event.target.value;
+    const selectedCardData = listcards.find((card) => card.number === selectedCardNumber);
+    setUserCards(selectedCardData)
+    setSelectedCard(selectedCardNumber);
+     
+    
+   
   };
 
   const handleSelectedReportTypeChange = (event) => {
@@ -95,113 +114,60 @@ useEffect(() => {
     setSelectedReportCategory(event.target.value);
   };
 
-  const handleSelectedCategorieChange = (event) => {
-    const selectedCat = listCategorias.find((e) => e.nombre === event.target.value);
-    setSelectedCategorie(selectedCat.nombre); 
-    setSelectedCategorieId(selectedCat.id);
-    
-    console.log(selectedCat)
-  }
-
-  const generateReport = () => {
-    // Realizar la generación de informes y guardarlos en el almacenamiento local
+  const generateReport = async () => {
     const currentDate = getCurrentDate();
     const currentMonth = currentDate.slice(0, 7);
-    const dailyData = JSON.parse(localStorage.getItem("dailyData")) || {};
-    const monthlyData = JSON.parse(localStorage.getItem("monthlyData")) || {};
-
-    const selectedCardData = userCards.find((card) => card.number === selectedCard);
+  
+    const selectedCardData = listcards.find((card) => card.number === selectedCard);
     const category = selectedReportCategory;
-
-    if (selectedReportType === "daily") {
-      if (dailyData[currentDate]) {
-        const expenses = dailyData[currentDate].expenses[category] || 0;
-        const incomes = selectedCardData.incomes || [];
-
-        const totalIncome = incomes.reduce((total, income) => total + income.amount, 0);
-        const savings = totalIncome - expenses;
-
-        const report = {
-          type: "Daily",
-          date: currentDate,
-          category: category,
-          expenses: expenses,
-          incomes: totalIncome,
-          savings: savings,
-        };
-
-        // Obtén el "reporte" actual de la tarjeta seleccionada
-        const currentReporte = selectedCardData.reporte || [];
-        const updatedReporte = [...currentReporte, report];
-        
-        // Actualiza el "reporte" en la tarjeta seleccionada
-        selectedCardData.reporte = updatedReporte;
-
-        // Encuentra la tarjeta seleccionada en la lista de tarjetas del usuario
-        const updatedUserCards = userCards.map((card) => {
-          if (card.number === selectedCard) {
-            return selectedCardData;
-          }
-          return card;
-        });
-
-        // Actualiza la lista de tarjetas del usuario
-        setUserCards(updatedUserCards);
-
-        // Almacena los cambios en el usuario
-        setUser({ ...user, cards: updatedUserCards });
-        localStorage.setItem("currentUser", JSON.stringify(user));
-
-        // Actualiza el "reporte" en el almacenamiento local
-        localStorage.setItem("reporte", JSON.stringify(updatedReporte));
-      }
-    } else if (selectedReportType === "monthly") {
-      if (monthlyData[currentMonth]) {
-        const expenses = monthlyData[currentMonth].expenses[category] || 0;
-        const incomes = selectedCardData.incomes || [];
-
-        const totalIncome = incomes.reduce((total, income) => total + income.amount, 0);
-        const savings = totalIncome - expenses;
-
-        const report = {
-          type: "Monthly",
-          date: currentMonth,
-          category: category,
-          expenses: expenses,
-          incomes: totalIncome,
-          savings: savings,
-        };
-
-        // Obtén el "reporte" actual de la tarjeta seleccionada
-        const currentReporte = selectedCardData.reporte || [];
-        const updatedReporte = [...currentReporte, report];
-        
-        // Actualiza el "reporte" en la tarjeta seleccionada
-        selectedCardData.reporte = updatedReporte;
-
-        // Encuentra la tarjeta seleccionada en la lista de tarjetas del usuario
-        const updatedUserCards = userCards.map((card) => {
-          if (card.number === selectedCard) {
-            return selectedCardData;
-          }
-          return card;
-        });
-
-        // Actualiza la lista de tarjetas del usuario
-        setUserCards(updatedUserCards);
-
-        // Almacena los cambios en el usuario
-        setUser({ ...user, cards: updatedUserCards });
-        localStorage.setItem("currentUser", JSON.stringify(user));
-
-        // Actualiza el "reporte" en el almacenamiento local
-        localStorage.setItem("reporte", JSON.stringify(updatedReporte));
-      
-        
-      }
+  
+    try {
+      // Obtener datos de ingresos y gastos del backend para la tarjeta seleccionada
+      const incomesResponse = await IngresosApi.findAllByCardId(selectedCardData.id);
+      const expensesResponse = await GastosApi.findAllByCardId(selectedCardData.id);
+  
+      const incomes = incomesResponse.data || [];
+      const expenses = expensesResponse.data || [];
+  
+      const totalIncome = incomes.reduce((total, income) => total + income.amount, 0);
+      const totalExpenses = expenses.reduce((total, expense) => total + expense.amount, 0);
+      const savings = totalIncome - totalExpenses;
+  
+      const report = {
+        tipo: selectedReportType === "daily" ? "Daily" : "Monthly",
+        date: selectedReportType === "daily" ? currentDate : currentMonth,
+        categoria: category,
+        total_gastos: totalExpenses,
+        total_ingresos: totalIncome,
+        ahorro: savings,
+      };
+  
+      // Actualizar el "reporte" en la tarjeta seleccionada (en el backend)
+      await Re.updateReport(selectedCardData.id, report);
+  
+      // Actualizar la lista de tarjetas del usuario (en el backend)
+      const updatedUserCards = await TarjetasApi.findAllByUserId(sesion.id);
+  
+      setUserCards(updatedUserCards.data);
+  
+      // Almacena los cambios en el usuario (localmente, aunque podrías hacerlo en el backend)
+      const updatedUser = { ...user, cards: updatedUserCards.data };
+      setUser(updatedUser);
+      localStorage.setItem("currentUser", JSON.stringify(updatedUser));
+  
+      // Obtener el "reporte" actualizado de la tarjeta seleccionada
+      const updatedCardData = updatedUserCards.data.find((card) => card.number === selectedCard);
+      const updatedReporte = updatedCardData.reporte || [];
+  
+      // Actualizar el "reporte" en el almacenamiento local (opcional)
+      localStorage.setItem("reporte", JSON.stringify(updatedReporte));
+  
+      setReporte(updatedReporte);
+    } catch (error) {
+      console.error("Error al generar el informe:", error);
     }
   };
-
+  
   const handleReportClick = (report) => {
     setReportData(report);
   };
@@ -213,7 +179,7 @@ useEffect(() => {
         <h1>Reports</h1>
 
         <div className="card"><CardSelect
-          selectedCard={SelectedCard2}
+          selectedCard={selectedCard}
           userCards={listcards.filter((e) => e.id_usuario == sesion.id)}
           handleSelectedCardChange={handleSelectedCardChange}
         /></div>
@@ -225,24 +191,21 @@ useEffect(() => {
             <option value="monthly">Monthly</option>
           </select>
         </div>
-        <label>Report Category:</label>
+
         <div>
-        <ExpenseFormReport
-              
-              selectedCat = {selectedCategorie}
-              
-              expenseCategory={listCategorias.filter((e) => e.id_usuario == sesion.id)}
-             
-              onExpenseCategoryChange={handleSelectedCategorieChange}
-             />
-          
+          <label>Report Category:</label>
           <select value={selectedReportCategory} onChange={handleSelectedReportCategoryChange}>
             <option value="">Select Category</option>
-            {userCards.find((card) => card.number === selectedCard)?.categories?.map((category) => (
-              <option key={category} value={category}>
-                {category}
-              </option>
-            ))}
+            {
+                listCategorias
+                  .filter((category) => category.id_usuario === sesion.id)
+                  .map((category) => (
+                    <option key={category.id} value={category.id}>
+                      {category.nombre} {/* Asegúrate de ajustar esto según la estructura de tus categorías */}
+                    </option>
+                  ))
+              }
+
           </select>
         </div>
 
@@ -263,12 +226,12 @@ useEffect(() => {
           {reportData && (
             <div>
               <h2>Report Details</h2>
-              <p>Type: {reportData.type}</p>
+              <p>Tipo: {reportData.tipo}</p>
               <p>Date: {reportData.date}</p>
-              <p>Category: {reportData.category}</p>
-              <p>Expenses: ${reportData.expenses}</p>
-              <p>Incomes: ${reportData.incomes}</p>
-              <p>Savings: ${reportData.savings}</p>
+              <p>Categoria: {reportData.categoria}</p>
+              <p>Total de gastos: ${reportData.total_gastos}</p>
+              <p>Total de ingresos: ${reportData.total_ingresos}</p>
+              <p>Ahorro: ${reportData.ahorro}</p>
               {/* Agregar más detalles según el contenido del informe */}
             </div>
           )}
