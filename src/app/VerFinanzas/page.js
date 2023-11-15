@@ -418,7 +418,8 @@ const addNewIncome = async() => {
   //esto estaba cambiando (falta que mande a base de datos)
   const addNewCategory = async(event) => {
     event.preventDefault();
-    const categoriasUsuario = listCategorias.find((e) => e.id === sesion.id)
+    let categoriasUsuario = []
+    categoriasUsuario = listCategorias.filter((e) => e.id_usuario === sesion.id)
     
   
     
@@ -428,7 +429,13 @@ const addNewIncome = async() => {
         // Aumentamos el ID en 1
       nombre: newCategory,
       id_usuario: sesion.id,
-     };
+     }; 
+     
+     
+
+     if(categoriasUsuario.find((e)=>e.nombre ==categoriaNewData.nombre)){
+      alert("Ya tienes una categoria con ese nombre")
+     }else{
       
  
       try {
@@ -439,7 +446,7 @@ const addNewIncome = async() => {
           if (response && response.status === 200) {
               // Registro exitoso, redirige a la página de inicio de sesión
               alert('Registro exitoso!');
-             
+              setNewCategory("");
           } else {
               // Manejo de errores en caso de que algo salga mal en el backend
               alert('Error al registrar usuario( no manda la data)');
@@ -448,7 +455,7 @@ const addNewIncome = async() => {
        
       }
       // Limpia el campo de nueva categoría
-      setNewCategory("");
+      }
     
   };
   const calculateTotalsIncomes = () => {
