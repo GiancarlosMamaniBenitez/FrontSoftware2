@@ -112,7 +112,7 @@ useEffect(() => {
   const handleSelectedReportTypeChange = (event) => {
     setSelectedReportType(event.target.value);
     console.log(event.target.value)
-    setSelectedReportType("");
+
   };
 
   const handleSelectedReportCategoryChange = (event) => {
@@ -201,11 +201,11 @@ useEffect(() => {
       console.error("Error al generar el informe:", error);
     }
   };
+
+
   
   
-  const handleReportClick = (report) => {
-    setReportData(report);
-  };
+  
 
   const generateReportPDF = async (report) => {
     console.log(selectedReportCategory)
