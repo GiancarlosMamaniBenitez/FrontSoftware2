@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import "./perfil.css";
 import NavBar from "@/Components/NavBar";
+import { toast, ToastContainer } from 'react-toastify';
 import UsuariosApi from "../api_fronted/usuarios";
 const Profile = () => {
   const [nombres, setFirstName] = useState("");
@@ -98,8 +99,10 @@ const Profile = () => {
     if (confirmDelete){
       localStorage.removeItem("currentUser");
       router.push('/Login');
+      toast.succes("Usuario eliminado correctamente");
     }
   }
+  
   return (
     <div>
             <NavBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} sesion={sesion}/>
