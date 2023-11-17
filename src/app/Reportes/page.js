@@ -256,6 +256,7 @@ useEffect(() => {
         <h1>Reports</h1>
 
         <div className="card mx-auto">
+          <label className="subtituloReporte">Tarjeta:</label>
           <CardSelect
             selectedCard={selectedCard}
             userCards={listcards.filter((e) => e.id_usuario == sesion.id)}
@@ -264,15 +265,15 @@ useEffect(() => {
         </div>
 
         <div className="mx-auto">
-          <label>Report Type:</label>
+          <label className="subtituloReporte">Tipo de reporte:</label>
           <select className="form-control" value={selectedReportType} onChange={handleSelectedReportTypeChange}>
-            <option value="daily">Daily</option>
-            <option value="monthly">Monthly</option>
+            <option value="daily">Diario</option>
+            <option value="monthly">Mensual</option>
           </select>
         </div>
 
         <div className="mx-auto">
-          <label>Report Category:</label>
+          <label className="subtituloReporte">Categoria de gastos:</label>
           <select className="form-control" value={selectedReportCategory} onChange={handleSelectedReportCategoryChange}>
             <option value="">Select Category</option>
             {listCategorias
@@ -285,19 +286,19 @@ useEffect(() => {
           </select>
         </div>
 
-        <button className ="button-report" onClick={generateReport}>Generate Report</button>
+        <button className ="button-report" onClick={generateReport}>Generar Reporte</button>
 
         <div className="table-container">
       {userReport.length > 0 && (
         <div className="container mt-4">
-          <h2 className="table-title">Reports List</h2>
+          <h2 className="table-title">Lista de reportes</h2>
           <table className="table">
             <thead>
               <tr>
                 <th>Numero</th>
                 <th>Tipo</th>
                 <th>Fecha</th>
-                <th>Accion</th>
+                <th>Descargar</th>
               </tr>
             </thead>
             <tbody>

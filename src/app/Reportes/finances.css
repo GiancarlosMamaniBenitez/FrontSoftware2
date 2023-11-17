@@ -87,3 +87,8 @@
   .button-report:hover{
     background-color: rgb(252,157,157);
   }
+  .subtituloReporte{
+    text-align: center;
+    font-family: fantasy;
+    font-size: larger;
+  }
