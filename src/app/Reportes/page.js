@@ -112,7 +112,6 @@ useEffect(() => {
   const handleSelectedReportTypeChange = (event) => {
     setSelectedReportType(event.target.value);
     console.log(event.target.value)
-
   };
 
   const handleSelectedReportCategoryChange = (event) => {
@@ -222,7 +221,7 @@ useEffect(() => {
     
     // Contenido del Informe
     pdfDoc.setFontSize(14);
-    pdfDoc.text(`Tipo de Informe: ${report.tipo === 'daily' ? 'Diario' : 'Mensual'}`, 10, 30);
+    pdfDoc.text(`Tipo de Informe: ${report.tipo == 'daily' ? 'Diario' : 'Mensual'}`, 10, 30);
     pdfDoc.text(`Fecha del Informe: ${report.fecha_reportes}`, 10, 45);
     
     // Obtener el nombre de la tarjeta
@@ -305,7 +304,8 @@ useEffect(() => {
               {userReport.map((report, index) => (
                 <tr key={index}>
                   <td>{report.id_reportes}</td>
-                  <td>{report.tipo === "daily" ? "Diario" : "Mensual"}</td>
+                  
+                  <td>{report.tipo.trim().toLowerCase() === "daily" ? "Diario" : "Mensual"}</td>
 
                   <td>{report.fecha_reportes}</td>
                   <td>
