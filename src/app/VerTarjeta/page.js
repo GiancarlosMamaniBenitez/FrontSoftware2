@@ -6,7 +6,7 @@
 import React, { useState, useEffect } from 'react';
 import MenuNuevo from '@/Components/MenuNuevo';
 import ButtonAgregarTarjeta from '@/Components/ButtonAgregarTarjeta';
-import './tarjeta.css';
+import './Tarjeta.css';
 import EliminarTarjeta from '@/Components/EliminarTarjeta.jsx';
 import EditarTarjeta from '@/Components/EditarTarjeta.jsx'; 
 import NavBar from '@/Components/NavBar';

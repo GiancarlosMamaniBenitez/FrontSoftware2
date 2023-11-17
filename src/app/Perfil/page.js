@@ -183,11 +183,7 @@ const Profile = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         ) : (
-          <input
-          type="password"
-          value={contrasenia}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+          <span>{generarAsteriscos(contrasenia)}</span>
         )}
       </div>
       <div className="profile-details">
@@ -222,5 +218,16 @@ const Profile = () => {
     </div>
   );
 };
+
+function generarAsteriscos(inputString) {
+  // Check if the input is a string
+  if (typeof inputString === 'string') {
+    // Use inputString.length to get the length of the string
+    return Array.from({ length: inputString.length }, () => '*').join('');
+  } else {
+    // Handle invalid input
+    return 'Invalid input. Please provide a string.';
+  }
+}
 
 export default Profile;

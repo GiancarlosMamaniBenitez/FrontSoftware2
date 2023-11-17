@@ -1,6 +1,5 @@
 'use client'
 import Link from 'next/link';
-import IrAHistorial from '@/Components/IrAHistorial';
 import TarjetasApi from "../api_fronted/tarjetas";
 import React, { useState, useEffect } from "react";
 import NavBar from "@/Components/NavBar";
@@ -26,7 +25,6 @@ import CategoriasApi from "../api_fronted/categorias";
 
 
 import Button from 'react-bootstrap/Button';
-import Historial from "../Historial/page";
 import EliminarIngreso from "@/Components/EliminarIngreso.jsx"
 import EliminarGasto from "@/Components/EliminarGasto.jsx"
 const Finances = () => {

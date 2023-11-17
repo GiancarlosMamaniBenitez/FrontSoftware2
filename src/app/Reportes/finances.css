@@ -35,16 +35,24 @@
     padding: 20px;
   }
   .reports-container {
-    max-width: 800px;
-    margin: 0 auto;
+    width: 800px;
     padding: 20px;
-    margin-left: 200px;
+    margin-left: 20%;
+    border: 1px solid #ddd;
+    background-color: thistle;
+    border-radius: 50px;
+    margin-top: 5%;
+
   }
   .reports-container-shifted {
-    max-width: 800px;
-    margin: 0 auto;
+    width: 800px;
     padding: 20px;
-    margin-left: 200px;
+    margin-left: 25%;
+    margin-top: 5%;
+    border: 1px solid #ddd;
+    background-color: thistle;
+    border-radius: 50px;
+
   }
 
   
@@ -89,6 +97,11 @@
   }
   .subtituloReporte{
     text-align: center;
-    font-family: fantasy;
+    font-family: cursive;
     font-size: larger;
+  }
+  .tituloReporte{
+    text-align: center;
+    font-family:cursive;
+    font-size: xx-large;
   }

@@ -3,40 +3,43 @@ h1,h2{
     text-align: center;
 }
 body{
-    background-color: whitesmoke;
+    background-color: #84b6f4;
     margin-left: 230px;
 
 }
-/* Estilos generales */
 
-  
-  /* Contenedor principal */
 
   .container1{
   
   padding: 5px;
   text-align: center;
-  width:80%; /* Adjust the width to give space for the sidebar */
-
-  transition: width 0.3s ease;
+  width:1000px; 
+  border: 1px solid #ddd;
+  margin-top:5%;
+    background-color: thistle;
+    border-radius: 50px;  
+    margin-left: 12%;  
   }
   
   .container1-shifted{
-  
-    padding: 5px;
-    text-align: center;
-    width:80%; /* Adjust the width to give space for the sidebar */
-    
-   /* Adjust the value to match the sidebar width */
-    transition: width 0.3s ease;
-       }
+    border: 1px solid #ddd;
+    margin-left: 10%;
+    background-color: thistle;
+    border-radius: 50px;
+    margin-top:5%;
+    margin-left: 16%;  
 
-  /* Encabezado */
+    padding: 5px;
+    width:1000px; 
+  }
+    
+   
  
   .titulo{
     padding:20px;
     text-align: center;
-    font-size: 40px;
+    font-size: 50px;
+    font-family: cursive;
     padding-bottom: 10px;
     width: 100%;
   }
@@ -59,7 +62,12 @@ body{
     padding:40px;
     
   }
-  
+  .subtitulo{
+    font-size: 30px;
+    font-family: cursive;
+    margin: 10px 0;
+    padding-bottom: 30px;
+  }
   /* Imagen de la tarjeta */
   .card-image-container {
     text-align: center;

@@ -31,29 +31,36 @@
 }
 
 .card-buttonselected {
-  background-color: rgb(252,157,157);
+  background-color: rgb(236, 101, 101);
 }
 
 .card-button:hover {
-  background-color: rgb(252,157,157);
+  background-color: rgb(236, 101, 101);
 }
 .mb-2{
   text-align: center;
 }
 .button-addcard{
   text-align: center;
+  font-size: larger;
+  justify-content: center;
+
   text-decoration: none;
     margin: 10px;
     padding: 10px;
     border-radius: 5px;
-    background-color: rgb(252,157,157);
+    background-color: rgb(236, 101, 101);
     color: white;
     font-weight: bold;
     cursor: pointer;
     width: fit-content;
     margin: 0 auto;
     margin-top: 50px;
+    width: 300px;
+    height: 60;
+    align-items: center;
 }
+
 h1{
-  font-family:'Times New Roman', Times, serif
+  font-family:cursive
 }

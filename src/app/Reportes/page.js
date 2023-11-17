@@ -100,13 +100,14 @@ useEffect(() => {
   
 
   const handleSelectedCardChange = (event) => {  
-    const selectedCardNumber = event.target.value;
-    const selectedCardData = listcards.find((card) => card.number === selectedCardNumber);
-    setUserCards(selectedCardData)
-    setSelectedCard(selectedCardNumber);
-     
     
    
+        const selectedCardNumber = event.target.value;
+        const selectedCardData = listcards.find((card) => card.number === selectedCardNumber);
+        setUserCards(selectedCardData)
+        setSelectedCard(selectedCardNumber);
+    
+
   };
 
   const handleSelectedReportTypeChange = (event) => {
@@ -125,81 +126,82 @@ useEffect(() => {
   };
   const generateReport = async () => {
     
-    const currentDate = getCurrentDate();
-    const currentMonth = currentDate.slice(0, 7);
-  
-    const selectedCardData = listcards.find((card) => card.number === selectedCard);
-    const category = selectedReportCategory;
-    
-    const tarjeta = listcards.find((e) => e.id == selectedCardData.id);
-  let reportestarjeta = []
-   reportestarjeta = listReport.filter((e) => e.id_tarjeta == tarjeta.id);
-    setUserReport(reportestarjeta)
-  
-   // Filtrar ingresos y gastos según el tipo de informe
-    const ingresosusuario = selectedReportType === "daily"
-      ? ListaIngresos.filter((e) => e.id_tarjeta === tarjeta.id && e.fecha_ingresos === currentDate)
-      : ListaIngresos.filter((e) => e.id_tarjeta === tarjeta.id && e.fecha_ingresos.startsWith(currentMonth));
-  
-    const gastosusuario = selectedReportType === "daily"
-      ? listGastos.filter((e) => e.id_tarjeta === tarjeta.id && e.fecha_gastos === currentDate)
-      : listGastos.filter((e) => e.id_tarjeta === tarjeta.id && e.fecha_gastos.startsWith(currentMonth));
-  
-    const totalMonto = ingresosusuario.reduce((total, ingreso) => total + parseFloat(ingreso.monto), 0);
-    const totalGastos = gastosusuario.reduce((total, gasto) => total + parseFloat(gasto.monto), 0);
-  
-    console.log("Total de gastos:", totalGastos);
-    console.log("Total de montos:", totalMonto);
-  
-    const gastosusuarioFiltrados = selectedReportCategory
-      ? gastosusuario.filter((gasto) => gasto.id_categoria === selectedReportCategory)
-      : gastosusuario;
+        const currentDate = getCurrentDate();
+        const currentMonth = currentDate.slice(0, 7);
+      
+        const selectedCardData = listcards.find((card) => card.number === selectedCard);
+        const category = selectedReportCategory;
+        
+        const tarjeta = listcards.find((e) => e.id == selectedCardData.id);
+      let reportestarjeta = []
+      reportestarjeta = listReport.filter((e) => e.id_tarjeta == tarjeta.id);
+        setUserReport(reportestarjeta)
+      
+      // Filtrar ingresos y gastos según el tipo de informe
+        const ingresosusuario = selectedReportType === "daily"
+          ? ListaIngresos.filter((e) => e.id_tarjeta === tarjeta.id && e.fecha_ingresos === currentDate)
+          : ListaIngresos.filter((e) => e.id_tarjeta === tarjeta.id && e.fecha_ingresos.startsWith(currentMonth));
+      
+        const gastosusuario = selectedReportType === "daily"
+          ? listGastos.filter((e) => e.id_tarjeta === tarjeta.id && e.fecha_gastos === currentDate)
+          : listGastos.filter((e) => e.id_tarjeta === tarjeta.id && e.fecha_gastos.startsWith(currentMonth));
+      
+        const totalMonto = ingresosusuario.reduce((total, ingreso) => total + parseFloat(ingreso.monto), 0);
+        const totalGastos = gastosusuario.reduce((total, gasto) => total + parseFloat(gasto.monto), 0);
+      
+        console.log("Total de gastos:", totalGastos);
+        console.log("Total de montos:", totalMonto);
+      
+        const gastosusuarioFiltrados = selectedReportCategory
+          ? gastosusuario.filter((gasto) => gasto.id_categoria === selectedReportCategory)
+          : gastosusuario;
 
-    const gastosPorCategoria = selectedReportCategory
-      ? gastosusuarioFiltrados.reduce((acumulador, gasto) => {
-          const categoriaId = gasto.id_categoria;
-          const categoria = listCategorias.find((cat) => cat.id === categoriaId);
-          const nombreCategoria = categoria ? categoria.nombre : "Sin Categoría";
-          setCategorias(categoria.nombre)
-         
-          acumulador[nombreCategoria] = (acumulador[nombreCategoria] || 0) + parseFloat(gasto.monto);
-          return acumulador;
-        }, {})
-      : {};
-  
-    console.log("Gastos por categoría:", gastosPorCategoria);
-  
-    const savings = totalMonto - totalGastos;
-    const reportesId = listReport.length + 1;
-    const catId = parseInt(selectedReportCategory, 10);
-  
-    const report = {
-      id_reportes: reportesId,
-      tipo: selectedReportType === "daily" ? "Daily" : "Monthly",
-      fecha_reportes: selectedReportType === "daily" ? currentDate : currentMonth,
-      id_tarjeta: tarjeta.id,
-      id_categoria: catId || null, // Usa null si no hay categoría seleccionada
-      totalGastos: totalGastos,
-      totalIngresos: totalMonto,
-      ahorro: savings,
-    };
-  
-    console.log(report);
-  
-    try {
-      const response = await ReportesApi.create(report);
-      LoadData();
-     
-      LoadData();
-      if (response && response.status === 200) {
-        alert('Reporte generado exitosamente!');
-      } else {
-        alert('Error al generar el reporte');
-      }
-    } catch (error) {
-      console.error("Error al generar el informe:", error);
-    }
+        const gastosPorCategoria = selectedReportCategory
+          ? gastosusuarioFiltrados.reduce((acumulador, gasto) => {
+              const categoriaId = gasto.id_categoria;
+              const categoria = listCategorias.find((cat) => cat.id === categoriaId);
+              const nombreCategoria = categoria ? categoria.nombre : "Sin Categoría";
+              setCategorias(categoria.nombre)
+            
+              acumulador[nombreCategoria] = (acumulador[nombreCategoria] || 0) + parseFloat(gasto.monto);
+              return acumulador;
+            }, {})
+          : {};
+      
+        console.log("Gastos por categoría:", gastosPorCategoria);
+      
+        const savings = totalMonto - totalGastos;
+        const reportesId = listReport.length + 1;
+        const catId = parseInt(selectedReportCategory, 10);
+      
+        const report = {
+          id_reportes: reportesId,
+          tipo: selectedReportType === "daily" ? "Daily" : "Monthly",
+          fecha_reportes: selectedReportType === "daily" ? currentDate : currentMonth,
+          id_tarjeta: tarjeta.id,
+          id_categoria: catId || null, // Usa null si no hay categoría seleccionada
+          totalGastos: totalGastos,
+          totalIngresos: totalMonto,
+          ahorro: savings,
+        };
+      
+        console.log(report);
+      
+        try {
+          const response = await ReportesApi.create(report);
+          LoadData();
+        
+          LoadData();
+          if (response && response.status === 200) {
+            alert('Reporte generado exitosamente!');
+          } else {
+            alert('Error al generar el reporte');
+          }
+        } catch (error) {
+          console.error("Error al generar el informe:", error);
+        }
   };
+
 
 
   
@@ -253,7 +255,7 @@ useEffect(() => {
     <div className="text-center"> {/* Agregado para centrar todo */}
       <NavBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} sesion={sesion}/>
       <div className={`reports-container${isSidebarOpen ? '-shifted' : ''} mx-auto`}>
-        <h1>Reports</h1>
+        <h1 className="tituloReporte">Reports</h1>
 
         <div className="card mx-auto">
           <label className="subtituloReporte">Tarjeta:</label>
@@ -272,7 +274,7 @@ useEffect(() => {
           </select>
         </div>
 
-        <div className="mx-auto">
+        <div  className="mx-auto">
           <label className="subtituloReporte">Categoria de gastos:</label>
           <select className="form-control" value={selectedReportCategory} onChange={handleSelectedReportCategoryChange}>
             <option value="">Select Category</option>
@@ -287,6 +289,7 @@ useEffect(() => {
         </div>
 
         <button className ="button-report" onClick={generateReport}>Generar Reporte</button>
+        <button className ="button-report" >Categorizar los gastos</button>
 
         <div className="table-container">
       {userReport.length > 0 && (
