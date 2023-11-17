@@ -7,6 +7,9 @@ import './page.css';
 import { useRouter } from 'next/navigation';
 
 import NavBar from '@/Components/NavBar';
+//Toast
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"
 
 export default function Home() {
 
@@ -25,8 +28,26 @@ const router = useRouter();
             router.push('/')
         }
         setSesion(JSON.parse(sesionGuardada))
+        
+          const mensaje = 'Bienvenido de vuelta! 😉';
+          notifySuccess(mensaje);
+          
+        
         console.log(sesion)
   }, []);
+
+  const notifySuccess = (mensaje) => {
+    toast(mensaje, {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      });
+  }
 
   const handleLogout = () => {
     // Elimina la marca o token de autenticación del Local Storage
@@ -40,14 +61,18 @@ const router = useRouter();
   return (
     <div>
       <NavBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} sesion={sesion}/>
+      {sesion ? (<ToastContainer></ToastContainer>):(<div></div>)}
+      
       <div className={`container${isSidebarOpen ? '-shifted' : ''}`}>
       
           
           {sesion ? (
             <div className="about-us">
+              
               <h1>{`Bienvenido, ${userName}`}</h1>
               <p>Ahora puedes mejorar la gestión de tus controles de gastos de tu tarjeta de crédito o débito con WiseWallet. Nuestra plataforma te brinda métodos financieros para simplificar la gestión de tus finanzas.</p>
             </div>
+              
           ) : (
             <div className="about-us">
               <h1>Bienvenido a WiseWallet</h1>

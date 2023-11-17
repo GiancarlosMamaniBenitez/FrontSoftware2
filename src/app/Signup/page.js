@@ -6,6 +6,10 @@ import Link from "next/link";
 import UsuariosApi from "../api_fronted/usuarios.js"
 import { useRouter } from 'next/navigation';
 
+//Toast
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"
+
 const SignUp = () => {
 
   const [usuarios, setUsuarios] = useState([]);
@@ -17,13 +21,38 @@ const SignUp = () => {
   const [contrasenia, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [email, setEmail] = useState("");
+  
 
   const nameRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/;
 const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{5,}$/;
  
 
+  const notifyError = (mensaje) => {
+    toast.error(mensaje , {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      });
+  }
 
-
+  const notifySuccess = (mensaje) => {
+    toast.success(mensaje , {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      });
+  }
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
   
@@ -32,16 +61,21 @@ const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{5
     //const usersList = Array.isArray(storedUsers) ? storedUsers : [];
   
     if (nombres === "" || apellidos === "" || username === "" || contrasenia === "" || confirmPassword === "" || email === "") {
-      alert("Por favor, complete todos los campos.");
+      const mensaje = "Por favor llene todos los campos"
+      notifyError(mensaje)
+      return;
+      
     //} else if (!nameRegex.test(firstName) || !nameRegex.test(lastName)) {
     //  alert("El nombre y apellido deben contener solo letras y espacios.");
     //} else if (!passwordRegex.test(password) || !passwordRegex.test(confirmPassword)) {
      // alert("La contraseña debe tener al menos 5 caracteres, incluyendo una letra, un dígito y un carácter especial.");
     }  if (contrasenia !== confirmPassword) {
-      alert("Las contraseñas no coinciden.");
+      const mensaje = "Las contraseñas no coinciden"
+      notifyError(mensaje)
       return;
     }  if(usuarios.find((e) => e.email === email)) {
-      alert('Ese correo ya existe');
+      const mensaje = "Este correo ya está registrado"
+      notifyError(mensaje)
       return;
     }
 
@@ -65,15 +99,16 @@ const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{5
         // Comprueba el resultado de la solicitud
           if (response && response.status === 200) {
               // Registro exitoso, redirige a la página de inicio de sesión
-              alert('Registro exitoso!');
+              const mensaje = "Registro exitoso"
+              notifySuccess(mensaje)
               router.push('/Congrats');
           } else {
               // Manejo de errores en caso de que algo salga mal en el backend
-              alert('Error al registrar usuario');
+              const mensaje = "Error al registrar"
+              notifyError(mensaje)
           }
       } catch (error) {
         console.error("Error en la solicitud: ", error);
-    alert("Error al registrar usuario. Consulta la consola para más detalles.");
       }
         
 
@@ -107,7 +142,10 @@ const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{5
 
   
   return (
+    <div>
+    <ToastContainer></ToastContainer>
     <div className="register-container">
+      
       <h1>Sign Up for</h1>
       <img src="https://cdn.discordapp.com/attachments/1025977476096204862/1162442035278659604/logo-name.jpeg?ex=653bf382&is=65297e82&hm=530a33fa80ce87770b863c679e0da9e2cfa806c99cfea4f8bf423de6a7ee639f&" alt="" />
 
@@ -190,6 +228,7 @@ const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{5
           Terms and Conditions
         </Link>
       </a>
+    </div>
     </div>
   );
 };

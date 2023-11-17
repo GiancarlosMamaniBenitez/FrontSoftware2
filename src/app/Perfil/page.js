@@ -5,9 +5,14 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import "./perfil.css";
 import NavBar from "@/Components/NavBar";
-import { toast, ToastContainer } from 'react-toastify';
 import UsuariosApi from "../api_fronted/usuarios";
+import { useRouter } from 'next/navigation';
+//Toast
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"
 const Profile = () => {
+
+  const router = useRouter()
   const [nombres, setFirstName] = useState("");
   const [apellidos, setLastName] = useState("");
   const [username, setUsername] = useState("");
@@ -19,11 +24,36 @@ const Profile = () => {
   const [sesion , setSesion] = useState({});
   const [usuarios, setUsuarios ] = useState([]);
   
+  const notifyError = (mensaje) => {
+    toast.error( mensaje ,{
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined
+    })
+  }
+
+  const notifySuccess = (mensaje) => {
+    toast.success(mensaje , {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      });
+  }
+  
   useEffect(() => {
     // Verifica si el usuario ha iniciado sesión
     let sesionGuardada = localStorage.getItem("sesion");
         if(sesionGuardada == undefined){
-          alert("No hya sesion guardada")
+          
             router.push('/Login')
         }
         setSesion(JSON.parse(sesionGuardada))
@@ -67,16 +97,11 @@ const Profile = () => {
         // Realiza la solicitud POST al backend para registrar el nuevo usuario utilizando la función personasApi
         const response = await UsuariosApi.update(authenticatedUser.id,authenticatedUser);
         handleOnLoadAct();
-        
-        // Comprueba el resultado de la solicitud
-          if (response && response.status === 200) {
-              // Registro exitoso, redirige a la página de inicio de sesión
-              alert('Actualización exitosa!');
-              router.push('/Congrats');
-          } else {
-              // Manejo de errores en caso de que algo salga mal en el backend
-              alert('Error al actualizar usuario');
-          }
+        //poner aqui el mensaje de la notificacion
+        const mensaje = 'Actualización exitosa!'
+        //en caso de ser un error poner notifyError
+        notifySuccess(mensaje)
+  
       } catch (error) {
          }
     
@@ -93,21 +118,25 @@ const Profile = () => {
     localStorage.setItem('sesion', JSON.stringify(resultData.data))
   }
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     const confirmDelete = window.confirm("¿Estás seguro que desea eliminar su usuario?")
 
     if (confirmDelete){
       localStorage.removeItem("currentUser");
+      const result = await UsuariosApi.remove(sesion.id)
       router.push('/Login');
-      toast.succes("Usuario eliminado correctamente");
+      
     }
   }
   
   return (
     <div>
             <NavBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} sesion={sesion}/>
-
+            <div>
+            <ToastContainer></ToastContainer>
+            </div>  
       <div className={`profile-container${isSidebarOpen ? '-shifted' : ''}`}>
+      
       <h1>Perfil</h1>
       <div className="profile-details">
         <label>Nombre:</label>
@@ -189,6 +218,7 @@ const Profile = () => {
           <button className ="eliminar-button" onClick ={handleDelete}>Eliminar Usuario</button>
       </div>
     </div>
+    
     </div>
   );
 };
