@@ -124,6 +124,7 @@ const Profile = () => {
     if (confirmDelete){
       localStorage.removeItem("currentUser");
       const result = await UsuariosApi.remove(sesion.id)
+      alert("Usuario eliminado correctamente!");
       router.push('/Login');
       
     }
