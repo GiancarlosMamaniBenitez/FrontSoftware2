@@ -2,16 +2,31 @@
     max-width: 1200px;
   
    padding: 20px;
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
+    font-family: cursive;
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     text-align: center;
-    margin-top: 30px;
-    width: 80%
+    margin-top: 5%;
+    margin-left: 6%;
+    border: 1px solid #ddd;
     
-
-  }.horizonta{
+    background-color: thistle;
+  }
+  .finances-container-shifted{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: cursive;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    margin-left: 10%;
+    border: 1px solid #ddd;
+    
+    background-color: thistle;
+    text-align: center;
+    margin-top: 5%;
+    }
+  .horizonta{
     display: flex;
     margin-left: 10px;
     
@@ -32,27 +47,18 @@
     text-align: center;
     align-items: center;
     width: 80%;
+    margin-top: 1%;
   }
   .centra{
     text-align: center;
   }
 
-  .finances-container-shifted{
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-   
-    text-align: center;
-     /* Adjust the width to give space for the sidebar */
-    margin-top: 30px;
-   /* Adjust the value to match the sidebar width */
-    transition: width 0.3s ease;
-       }
   
+  select, input{
+    background-color: white;
+    color: black;
+  }
+
   h1 {
     font-size: 24px;
     margin-bottom: 20px;

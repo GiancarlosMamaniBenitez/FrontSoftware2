@@ -1,0 +1,128 @@
+.finances-container {
+    max-width: 1200px;
+    margin: 0 auto;
+   padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width:80%; /* Adjust the width to give space for the sidebar */
+    margin-top: 30px;
+    position: absolute;
+
+  }.horizonta{
+    display: flex;
+    margin-left: 10px;
+    
+  }
+  .horizonta2{
+    text-align: center;
+
+    display: flex;
+    margin-left: 10px;
+    width: 100%;
+
+  }
+  .finanza{
+    margin: 20px;
+  }
+  .card{
+    margin-left: 20px;
+    text-align: center;
+    align-items: center;
+    width: 80%;
+  }
+  .centra{
+    text-align: center;
+  }
+
+  .finances-container-shifted{
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+   
+    text-align: center;
+    width:80%; /* Adjust the width to give space for the sidebar */
+    margin-top: 30px;
+   /* Adjust the value to match the sidebar width */
+    transition: width 0.3s ease;
+       }
+  
+  h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .add-expense, .add-income, .add-category {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  input[type="number"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .button-container {
+    padding: 10px 20px;
+    background-color: rgb(144,12,63);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  li {
+    font-size: 16px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background-color: #fff
+  }
+  .navbar-container {
+    margin-left: 100000000000px; /* Añade margen izquierdo */
+  }
+  .botonHistorial{
+    color: black;
+    background-color: peru;
+  }
+  .botonEditar{
+    background-color: black;
+  }

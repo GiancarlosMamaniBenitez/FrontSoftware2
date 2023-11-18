@@ -28,7 +28,8 @@ function SideBar() {
       <li><span onClick={() => router.push('/Perfil')} className="link-sidebar">Datos de Perfil</span></li>
       <li><span onClick={() => router.push('/VerTarjeta')} className="link-sidebar">Ver Tarjetas</span></li>
       <li><span onClick={() => router.push('/Reportes')} className="link-sidebar">Reportes</span></li>
-      <li><span onClick={() => router.push('/VerFinanzas')} className="link-sidebar">Ver Ingresos y Gastos</span></li>
+      <li><span onClick={() => router.push('/Ingreso')} className="link-sidebar">Ingresos</span></li>
+      <li><span onClick={() => router.push('/Gasto')} className="link-sidebar">Gastos</span></li>
         
           <li>
             <div className="logout-container">

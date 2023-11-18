@@ -41,8 +41,10 @@ body{
 }
 .title-shifted{
   
-  font-size: 24px;
+  font-size: 40px;
   font-weight: bold;
+  font-family: cursive;
+
   background-color: #333;
   text-decoration: none;
   color: white;
@@ -53,12 +55,12 @@ body{
   transition: width 0.3s ease;
      }
 .title {
-  font-size: 24px;
+  font-size: 40px;
   font-weight: bold;
   background-color: #333;
   text-decoration: none;
   color: white;
-  
+  font-family: cursive;
   
   
 }
@@ -88,18 +90,13 @@ body{
 /* Añade relleno al cuerpo para empujar el contenido debajo de la barra de navegación */
 body {
   padding-top: 70px; /* Ajusta según la altura de tu barra de navegación */
-  margin-left: 200px; /* Para dejar espacio a la barra lateral */
+  
 }
 
 .right-button {
-  text-align: center;
-  list-style: none;
-  margin: 10px;
   padding: 10px;
   border-radius: 5px;
-  background-color: rgb(252,157,157);
   color: white;
-  font-weight: bold;
   cursor: pointer;
   text-decoration: none;
 }
