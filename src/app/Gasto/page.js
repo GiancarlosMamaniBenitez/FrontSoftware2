@@ -302,7 +302,7 @@ const Finances = () => {
       
       const totalExpenseAmount1 = cardExpenses.reduce((total, expense) => total + parseFloat(expense.monto), 0);
       setTotalExpenseAmount(totalExpenseAmount1)
-
+      alert("Se actualizo tus gastos!");
       console.log("Suma de todos los montos de gastos:", totalExpenseAmount);
     }
 
