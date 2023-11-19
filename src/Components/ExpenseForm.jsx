@@ -6,7 +6,7 @@ const ExpenseForm = ({
   selectedCat,
   newExpense,
   expenseCategory,
-  hasExceededSpendingLimit,
+  
   warning,
   onNewExpenseChange,
   onExpenseCategoryChange,
@@ -29,7 +29,7 @@ const ExpenseForm = ({
           
         />
       
-      {hasExceededSpendingLimit && <p className="warning">Has superado tu límite de gasto.</p>}
+      
       {warning && <p className="warning">{warning}</p>}
       <button className="button-container" onClick={addNewExpense}>Añadir Gasto</button>
     </div>

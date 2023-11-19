@@ -72,7 +72,6 @@ const Finances = () => {
     const result3 = await UsuariosApi.findAll();
     const result5 = await CategoriasApi.findAll()
     setListCategorias(result5.data)
-    
     setListCards(result.data)
     setListaIngresos(result1.data)
     setListGastos(result2.data)
@@ -151,9 +150,10 @@ const Finances = () => {
   };*/
 
 
-  const getCurrentIncomesAndExpenses = () => {
+  const getCurrentIncomesAndExpenses = async () => {
+    const resultIngresos = await IngresosApi.findAll() 
     if (selectedCard) {
-      const card = listcards.find((e) => e.id === selectedCard);
+      const card = listcards.find((e) => e.id === selectedCard.id);
       if (card) {
         return {
           incomes: card.incomes || [],
@@ -172,7 +172,7 @@ const Finances = () => {
     calculateTotalsIncomes();
     calculateTotalsExpenses();
     getCurrentDate();
-    console.log(expenseCategory)
+    
     
   }, [selectedCard, listcards]);
 
@@ -181,24 +181,22 @@ const Finances = () => {
     //calculateTotals();
     checkSpendingLimit();
   
-  }, [currentIncomesAndExpenses]);
+  }, [listGastos]);
 
   const checkSpendingLimit = () => {
-    if (selectedCard && spendingLimit > 0) {
-      const currentExpenses = currentIncomesAndExpenses.expenses;
-      const totalExpensesAmount = currentExpenses.reduce(
-        (total, expense) => total + expense.amount,
-        0
-      );
-
-      if (totalExpensesAmount > spendingLimit) {
-        setWarning("Has superado tu límite de gasto.");
-      } else if (totalExpensesAmount >= spendingLimit * 0.8) {
+      
+      if (totalExpenseAmount > spendingLimit) {
+        setWarning("Has superado tu límite de gasto.")
+      } else if (totalExpenseAmount > spendingLimit*0.8) {
         setWarning("Ten cuidado, estás cerca de llegar a tu límite.");
-      } else {
+      } else if (totalExpenseAmount == spendingLimit){
+        setWarning("Has llegado a tu límite")
+      }
+
+      else {
         setWarning("");
       }
-    }
+    
   };
 
   
@@ -246,6 +244,7 @@ const Finances = () => {
           const categoryExpenses = totalExpensesByCategory[expenseCategory] + newExpense;
           if (categoryExpenses > card.spendingLimit) {
             setWarning("Has superado tu límite de gasto.");
+            console.log("ES ESTE")
             return;
           }
         }
@@ -271,7 +270,7 @@ const Finances = () => {
 
         try {
           const response = await GastosApi.create(expense);
-          await LoadData(); // Esperar a que LoadData termine antes de continuar
+          LoadData(); // Esperar a que LoadData termine antes de continuar
           setCurrentIncomesAndExpenses(getCurrentIncomesAndExpenses());
           setNewExpense(0);
           setExpenseCategory();
@@ -472,7 +471,8 @@ const calculateTotalsIncomes = () => {
         
         // Realizar la solicitud para guardar los cambios en el servidor
         const response = await TarjetasApi.update(selectedCard.id, updatedCard);
-  
+        LoadData()
+        console.log("subido")
         /*if (response.status === 200) {
           // Actualizar los datos en la lista de tarjetas
           const updatedListCards = listcards.map((card) =>
@@ -592,7 +592,7 @@ const calculateTotalsIncomes = () => {
               selectedCat = {selectedCategorie}
               onNewExpenseChange={(e) => setNewExpense(parseFloat(e.target.value))}
               expenseCategory={listCategorias.filter((e) => e.id_usuario == sesion.id)}
-              hasExceededSpendingLimit={warning !== ""}
+              
               warning={warning}
               onExpenseCategoryChange={handleSelectedCategorieChange}
               addNewExpense={addNewExpense}/></div>

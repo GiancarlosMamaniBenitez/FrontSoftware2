@@ -1,5 +1,7 @@
 'use client'
 
+import Link from 'next/link';
+
 import TarjetasApi from "../api_fronted/tarjetas";
 import React, { useState, useEffect } from "react";
 import NavBar from "@/Components/NavBar";
@@ -19,7 +21,6 @@ import UsuariosApi from "../api_fronted/usuarios";
 import GastosApi from "../api_fronted/gastos";
 
 import CategoriasApi from "../api_fronted/categorias";
-
 
 
 import EliminarGasto from "@/Components/EliminarGasto.jsx"
@@ -296,7 +297,7 @@ const Finances = () => {
       
       const totalExpenseAmount1 = cardExpenses.reduce((total, expense) => total + parseFloat(expense.monto), 0);
       setTotalExpenseAmount(totalExpenseAmount1)
-
+      alert("Se actualizo tus gastos!");
       console.log("Suma de todos los montos de gastos:", totalExpenseAmount);
     }
 

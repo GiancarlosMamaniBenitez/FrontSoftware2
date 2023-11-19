@@ -1,4 +1,6 @@
 'use client'
+import Link from 'next/link';
+
 import TarjetasApi from "../api_fronted/tarjetas";
 import React, { useState, useEffect } from "react";
 import NavBar from "@/Components/NavBar";
