@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './navbar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faUser } from '@fortawesome/free-solid-svg-icons';
+
 import Link from "next/link";
 import Sidebar from './SideBar'; 
 import { useRouter } from 'next/navigation';

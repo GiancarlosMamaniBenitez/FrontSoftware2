@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import './page.css';
+import '../app/home.css';
 import { useRouter } from 'next/navigation';
 
 import NavBar from '@/Components/NavBar';

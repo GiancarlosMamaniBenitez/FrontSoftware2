@@ -2,7 +2,7 @@
 
 /* styles.css */
 body{
-  background-color: #84b6f4;
+  background-color: whitesmoke;
 }
 .navbar {
   position: fixed;
@@ -24,6 +24,7 @@ body{
   color: #fff;
   border: none;
   padding: 10px 20px;
+  margin-right: 10px;
   border-radius: 5px;
   cursor: pointer;
 }
@@ -35,7 +36,7 @@ body{
 .Wisewallet{
   font-size: 24px;
   font-weight: bold;
-  background-color: #333;
+
   text-decoration: none;
   color: white;
 }

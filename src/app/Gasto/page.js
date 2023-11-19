@@ -1,4 +1,5 @@
 'use client'
+
 import Link from 'next/link';
 
 import TarjetasApi from "../api_fronted/tarjetas";
@@ -18,10 +19,7 @@ import CategoryForm from "@/Components/CategoryForm.jsx";
 import IngresosApi from "../api_fronted/ingresos";
 import UsuariosApi from "../api_fronted/usuarios";
 import GastosApi from "../api_fronted/gastos";
-import { List } from "@mui/material";
-import Gastos from "../IngresosGastos/Ing_Gas/Gastos";
-import CatSelect from "@/Components/CategorySelect";
-import CategorySelect from "@/Components/CategorySelect";
+
 import CategoriasApi from "../api_fronted/categorias";
 
 //Toast
@@ -331,7 +329,7 @@ const Finances = () => {
 
       const totalExpenseAmount1 = cardExpenses.reduce((total, expense) => total + parseFloat(expense.monto), 0);
       setTotalExpenseAmount(totalExpenseAmount1)
-
+      alert("Se actualizo tus gastos!");
       console.log("Suma de todos los montos de gastos:", totalExpenseAmount);
     }
 

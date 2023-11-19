@@ -1,7 +1,7 @@
 /* perfil.css */
 
 body {
-  background-color: #84b6f4;
+  background-color: whitesmoke;
   margin: 0;
   display: flex;
   justify-content: center;
@@ -15,24 +15,23 @@ h1{
 .profile-container {
   width: 500px;
   padding: 20px;
-  background-color: thistle;
+  background-color: white;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-55%, -50%);
+  top: 25%;
+  left: 32%;
+ 
 }
 .profile-container-shifted {
   width: 500px;
   padding: 20px;
-  background-color: thistle;
+  background-color: white;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-40%, -50%);
+  top: 25%;
+  left: 32%;
 
   /*transform: translate(-20%, -50%);*/
 }
@@ -60,6 +59,7 @@ h1{
 
 .profile-actions {
   margin-top: 20px;
+  margin-left: 100px;
 }
 
 .edit-button,
