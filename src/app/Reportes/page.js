@@ -271,7 +271,7 @@ const handleBuscarRepo = () => {
     <div className="text-center"> {/* Agregado para centrar todo */}
       <NavBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} sesion={sesion}/>
       <div className={`reports-container${isSidebarOpen ? '-shifted' : ''} mx-auto`}>
-        <h1 className="tituloReporte">Reports</h1>
+        <h1 className="tituloReporte">Reportes</h1>
 
         <div className="card mx-auto">
           <label className="subtituloReporte">Tarjeta:</label>
