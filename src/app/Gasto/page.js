@@ -1,6 +1,5 @@
 'use client'
-import Link from 'next/link';
-import IrAHistorial from '@/Components/IrAHistorial';
+
 import TarjetasApi from "../api_fronted/tarjetas";
 import React, { useState, useEffect } from "react";
 import NavBar from "@/Components/NavBar";
@@ -18,16 +17,11 @@ import CategoryForm from "@/Components/CategoryForm.jsx";
 import IngresosApi from "../api_fronted/ingresos";
 import UsuariosApi from "../api_fronted/usuarios";
 import GastosApi from "../api_fronted/gastos";
-import { List } from "@mui/material";
-import Gastos from "../IngresosGastos/Ing_Gas/Gastos";
-import CatSelect from "@/Components/CategorySelect";
-import CategorySelect from "@/Components/CategorySelect";
+
 import CategoriasApi from "../api_fronted/categorias";
 
 
-import Button from 'react-bootstrap/Button';
-import Historial from "../Historial/page";
-import EliminarIngreso from "@/Components/EliminarIngreso.jsx"
+
 import EliminarGasto from "@/Components/EliminarGasto.jsx"
 const Finances = () => {
 

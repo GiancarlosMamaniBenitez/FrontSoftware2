@@ -1,38 +1,18 @@
 'use client'
-import Link from 'next/link';
-import IrAHistorial from '@/Components/IrAHistorial';
 import TarjetasApi from "../api_fronted/tarjetas";
 import React, { useState, useEffect } from "react";
 import NavBar from "@/Components/NavBar";
 import "./financesIngreso.css"; // Importar el archivo CSS
 import CardSelect from "@/Components/CardSelect.jsx";
 import TotalIncomes from "@/Components/TotalIncomes.jsx";
-import TotalExpenses from "@/Components/TotalExpenses.jsx";
-import TotalExpensesByCategory from "@/Components/TotalExpensesByCategory.jsx";
-import RecentExpensesList from "@/Components/RecentExpensesList.jsx";
-import RecentIncomesList from "@/Components/RecentIncomesList.jsx";
-import SpendingAndSavings from "@/Components/SpendingAndSavings.jsx";
-import ExpenseForm from "@/Components/ExpenseForm.jsx";
 import IncomeForm from "@/Components/IncomeForm.jsx";
-import CategoryForm from "@/Components/CategoryForm.jsx";
 import IngresosApi from "../api_fronted/ingresos";
 import UsuariosApi from "../api_fronted/usuarios";
 import GastosApi from "../api_fronted/gastos";
-import { List } from "@mui/material";
-import Gastos from "../IngresosGastos/Ing_Gas/Gastos";
-import CatSelect from "@/Components/CategorySelect";
-import CategorySelect from "@/Components/CategorySelect";
 import CategoriasApi from "../api_fronted/categorias";
-
-
-import Button from 'react-bootstrap/Button';
-import Historial from "../Historial/page";
 import EliminarIngreso from "@/Components/EliminarIngreso.jsx"
-import EliminarGasto from "@/Components/EliminarGasto.jsx"
+
 const Finances = () => {
-
-  
-
   const [selectedCard, setSelectedCard] = useState("");
   const [totalIncomeAmount, setTotalIncomeAmount] = useState(0);
   const [totalExpenseAmount, setTotalExpenseAmount] = useState(0);
@@ -305,7 +285,7 @@ const calculateTotalsIncomes = () => {
             setSpendingLimit={setSpendingLimit}
             setSavingsGoal={setSavingsGoal}
           />
-        </div>
+        </div></div><div>
         {selectedCard && (
           <div>
             <h1>Finanzas</h1>

@@ -15,10 +15,11 @@ import MetaForm from "@/Components/Meta";
 import LimiteForm from "@/Components/LimiteForm";
 import ReportesApi from "../api_fronted/reportes";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleDown } from '@fortawesome/free-solid-svg-icons';
+
+import { faCircleDown, faSyncAlt } from '@fortawesome/free-solid-svg-icons';
 const Reports = () => {
   const [selectedCard, setSelectedCard] = useState("");
-
+  const [refreshing, setRefreshing] = useState(false);
   const [userCards, setUserCards] = useState("");
   const [selectedReportType, setSelectedReportType] = useState("daily");
   const [selectedReportCategory, setSelectedReportCategory] = useState("");
@@ -26,7 +27,7 @@ const Reports = () => {
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [sesion , setSesion] = useState({});
- 
+ const [usuarioRepo , setUsuarioRepo] = useState([])
   const [categorias, setCategorias] = useState([])
   const [listcards, setListCards] = useState([]);
   const [currentIncomesAndExpenses, setCurrentIncomesAndExpenses] = useState({
@@ -76,6 +77,11 @@ const Reports = () => {
    
                
 }
+/*const reportesUsuario = () =>{
+  const listarepo = listReport.find((e) => e.id_tarjeta === selectedCard);
+  setUsuarioRepo(listarepo)
+  
+}*/
 useEffect(() => {
     
   handleOnLoad();
@@ -83,9 +89,13 @@ useEffect(() => {
   
   
   
+  
 
       
 }, []);
+const handleBuscarRepo = () => {
+  router.push("/buscarRepo")
+};
   useEffect(() => {
 
    const loadedReporte = JSON.parse(localStorage.getItem("reporte")) || [];
@@ -106,7 +116,11 @@ useEffect(() => {
         const selectedCardData = listcards.find((card) => card.number === selectedCardNumber);
         setUserCards(selectedCardData)
         setSelectedCard(selectedCardNumber);
-    
+        
+        const listarepo = listReport.filter((e) => e.id_tarjeta === selectedCardData.id);
+        console.log(listarepo)
+        setUsuarioRepo(listarepo)
+      
 
   };
 
@@ -118,7 +132,7 @@ useEffect(() => {
   const handleSelectedReportCategoryChange = (event) => {
     const selectedcategoriID  = event.target.value;
     const cat = listCategorias.find((e) => e.id == selectedcategoriID);
-    const nombrecat = cat.nombre
+    const nombrecat = cat.nombre;
     console.log(nombrecat)
     setSelectedReportCategory(event.target.value);
     setCategorias(nombrecat)
@@ -136,6 +150,7 @@ useEffect(() => {
       let reportestarjeta = []
       reportestarjeta = listReport.filter((e) => e.id_tarjeta == tarjeta.id);
         setUserReport(reportestarjeta)
+        setUsuarioRepo(reportestarjeta)
       
       // Filtrar ingresos y gastos según el tipo de informe
         const ingresosusuario = selectedReportType === "daily"
@@ -176,7 +191,7 @@ useEffect(() => {
       
         const report = {
           id_reportes: reportesId,
-          tipo: selectedReportType === "daily" ? "Daily" : "Monthly",
+          tipo: selectedReportType === 'daily' ? "Daily" : "Monthly",
           fecha_reportes: selectedReportType === "daily" ? currentDate : currentMonth,
           id_tarjeta: tarjeta.id,
           id_categoria: catId || null, // Usa null si no hay categoría seleccionada
@@ -194,6 +209,7 @@ useEffect(() => {
           LoadData();
           if (response && response.status === 200) {
             alert('Reporte generado exitosamente!');
+            setUsuarioRepo([...usuarioRepo, response.data]);
           } else {
             alert('Error al generar el reporte');
           }
@@ -230,7 +246,7 @@ useEffect(() => {
     pdfDoc.text(`Nombre de la Tarjeta: ${selectedCard ? selectedCard : 'Sin Tarjeta'}`, 10, 60);
 
     // Obtener el nombre de la categoría
-    const category = listCategorias.find((cat) => cat.id == report.id_categoria);
+  
     console.log(categorias)
     pdfDoc.text(`Categoría: ${categorias ? categorias : 'Sin Categoría'}`, 10, 75);
     
@@ -287,12 +303,15 @@ useEffect(() => {
               ))}
           </select>
         </div>
-
+        <button className="button-report" onClick={() => handleBuscarRepo()} disabled={refreshing}>
+          Buscar Reporte
+          {refreshing && <FontAwesomeIcon icon={faSyncAlt} spin style={{ marginLeft: '5px' }} />}
+        </button>
         <button className ="button-report" onClick={generateReport}>Generar Reporte</button>
         <button className ="button-report" >Categorizar los gastos</button>
 
         <div className="table-container">
-      {userReport.length > 0 && (
+ 
         <div className="container mt-4">
           <h2 className="table-title">Lista de reportes</h2>
           <table className="table">
@@ -305,7 +324,7 @@ useEffect(() => {
               </tr>
             </thead>
             <tbody>
-              {userReport.map((report, index) => (
+            {usuarioRepo.slice(-5).map((report, index) => (
                 <tr key={index}>
                   <td>{report.id_reportes}</td>
                   
@@ -314,7 +333,8 @@ useEffect(() => {
                   <td>{report.fecha_reportes}</td>
                   <td>
                     <button className="btn btn-primary" onClick={() => generateReportPDF(report)}>
-                    <FontAwesomeIcon icon={faCircleDown} />
+                    <FontAwesomeIcon icon={faCircleDown} style={{ color: 'black' }} />
+
                     </button>
                   </td>
                 </tr>
@@ -322,7 +342,7 @@ useEffect(() => {
             </tbody>
           </table>
         </div>
-      )}
+      
     </div>
 
       </div>

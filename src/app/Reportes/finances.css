@@ -35,13 +35,16 @@
     padding: 20px;
   }
   .reports-container {
-    width: 800px;
-    padding: 20px;
-    margin-left: 20%;
-    border: 1px solid #ddd;
-    background-color: thistle;
-    border-radius: 50px;
-    margin-top: 5%;
+        /* width: 80%; */
+        padding: 20px;
+        margin: 2%;
+        border: 1px solid #ddd;
+        background-color: white;
+        border-radius: 50px;
+        
+        /* position: absolute; */
+        /* top: 25%; */
+    
 
   }
   .reports-container-shifted {
@@ -50,7 +53,7 @@
     margin-left: 25%;
     margin-top: 5%;
     border: 1px solid #ddd;
-    background-color: thistle;
+    background-color: white;
     border-radius: 50px;
 
   }
