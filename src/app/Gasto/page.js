@@ -24,21 +24,23 @@ import CatSelect from "@/Components/CategorySelect";
 import CategorySelect from "@/Components/CategorySelect";
 import CategoriasApi from "../api_fronted/categorias";
 
-
+//Toast
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"
 import Button from 'react-bootstrap/Button';
 
 import EliminarIngreso from "@/Components/EliminarIngreso.jsx"
 import EliminarGasto from "@/Components/EliminarGasto.jsx"
 const Finances = () => {
 
-  
+
 
   const [selectedCard, setSelectedCard] = useState("");
   const [totalIncomeAmount, setTotalIncomeAmount] = useState(0);
   const [totalExpenseAmount, setTotalExpenseAmount] = useState(0);
-  const [usuariotarjeta,setUsuariotarjeta] = useState([])
-  const [usuarioingresos,setUsuarioingresos] = useState([])
-  const [usuariogastos,setUsuariogastos] = useState([])
+  const [usuariotarjeta, setUsuariotarjeta] = useState([])
+  const [usuarioingresos, setUsuarioingresos] = useState([])
+  const [usuariogastos, setUsuariogastos] = useState([])
   const [selectedCategorie, setSelectedCategorie] = useState("")
   const [selectedCategorieId, setSelectedCategorieId] = useState(0)
   const [totalIncomes, setTotalIncomes] = useState(0);
@@ -57,65 +59,89 @@ const Finances = () => {
     expenses: [],
   });
   const [SelectedCard2, setSelectedCard2] = useState("")
-  const [usuariocategoria,setUsuariocategoria] = useState([])
+  const [usuariocategoria, setUsuariocategoria] = useState([])
   const [listcards, setListCards] = useState([]);
-  const [sesion , setSesion] = useState([]);
-  const [ListaIngresos,setListaIngresos] = useState([]);
+  const [sesion, setSesion] = useState([]);
+  const [ListaIngresos, setListaIngresos] = useState([]);
   const [listGastos, setListGastos] = useState([]);
   const [listUsuarios, setListUsuarios] = useState([]);
   const [listCategorias, setListCategorias] = useState([]);
   //importar la data de la api
-  const LoadData = async() =>{
+  const LoadData = async () => {
     const result = await TarjetasApi.findAll();
-    const result1  = await IngresosApi.findAll();
+    const result1 = await IngresosApi.findAll();
     const result2 = await GastosApi.findAll();
     const result3 = await UsuariosApi.findAll();
     const result5 = await CategoriasApi.findAll()
-    setListCategorias(result5.data)
     
+    setListCategorias(result5.data)
+
     setListCards(result.data)
     setListaIngresos(result1.data)
     setListGastos(result2.data)
     setListUsuarios(result3.data)
-    
+
 
 
   }
 
 
+
+  const notifyError = (mensaje) => {
+    toast.error( mensaje ,{
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined
+    })
+  }
+
+  const notifySuccess = (mensaje) => {
+    toast.success(mensaje , {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      });
+  }
+  const LoadOnlyCategorias = async () => {
+
+    const result3 = await CategoriasApi.findAll()
+    setListCategorias(result3.data)
+    
+  }
+  /*
   
-
-  const LoadDataId  = async () =>{
-    
-    const result3 = await UsuariosApi.findOne(sesion.id)
-    setUsuariocategoria(result3.data.categories)
-    console.log(result3.data.categories)
-  }
-/*
-
-*/
+  */
   //almacenar la sesion en la variable sesion
   const handleOnLoad = () => {
 
     var sesionGuardada = localStorage.getItem("sesion");
     setSesion(JSON.parse(sesionGuardada))
     console.log(sesionGuardada.id)
-               
-}
 
-// para que lo renderice apenas carga la pagina 
+  }
+
+  // para que lo renderice apenas carga la pagina 
   useEffect(() => {
-    
+
     handleOnLoad();
     LoadData()
-  
-    
-    
-    
+
+
+
+
     //tarjetaLocal();
-        
+
   }, []);
- 
+
   //  obtener fecha
   const getCurrentDate = () => {
     const now = new Date();
@@ -140,17 +166,17 @@ const Finances = () => {
     }
     return { incomes: [], expenses: [] };
   };
-  
+
 
   useEffect(() => {
     console.log("Lista de Ingresos cargada:", ListaIngresos);
-    console.log("Lista de Gastos cargada:",listGastos);
+    console.log("Lista de Gastos cargada:", listGastos);
     setCurrentIncomesAndExpenses(getCurrentIncomesAndExpenses());
-  
+
     calculateTotalsExpenses();
     getCurrentDate();
     console.log(expenseCategory)
-    
+
   }, [selectedCard, listcards]);
 
   useEffect(() => {
@@ -158,46 +184,48 @@ const Finances = () => {
     //calculateTotals();
     checkSpendingLimit();
   
-  }, [currentIncomesAndExpenses]);
+  }, [listGastos]);
 
   const checkSpendingLimit = () => {
-    if (selectedCard && spendingLimit > 0) {
-      const currentExpenses = currentIncomesAndExpenses.expenses;
-      const totalExpensesAmount = currentExpenses.reduce(
-        (total, expense) => total + expense.amount,
-        0
-      );
-
-      if (totalExpensesAmount > spendingLimit) {
-        setWarning("Has superado tu límite de gasto.");
-      } else if (totalExpensesAmount >= spendingLimit * 0.8) {
-        setWarning("Ten cuidado, estás cerca de llegar a tu límite.");
-      } else {
-        setWarning("");
+      
+      if (totalExpenseAmount > spendingLimit) {
+        const mensaje = "Has superado tu límite de gasto 😣"
+        notifyError(mensaje)
+      } else if (totalExpenseAmount > spendingLimit*0.8 && totalExpenseAmount < spendingLimit) {
+        const mensaje = "Ten cuidado, estás cerca de llegar a tu límite."
+        notifyError(mensaje)
+      } else if (totalExpenseAmount == spendingLimit){
+        
       }
-    }
+
+      else {
+        const mensaje = "Sigue añadiendo tus gastos 😉"
+        notifySuccess(mensaje)
+      }
+    
   };
 
-  
-  const handleSelectedCardChange = (event) => {  
+
+  const handleSelectedCardChange = (event) => {
     const selectedCardData = listcards.find((e) => e.number === event.target.value);
-    setSelectedCard(selectedCardData); 
-    setSelectedCard2(selectedCardData.number); 
-    
+    setSelectedCard(selectedCardData);
+    setSelectedCard2(selectedCardData.number);
+
     if (selectedCardData) {
       setSpendingLimit(selectedCardData.spendingLimit || 0);
       setSavingsGoal(selectedCardData.savingsGoal || 0);
     }
-   
-    console.log(selectedCardData)
+
+    console.log("AAAAAAAAAAAAAAAAAAAAAA",selectedCardData)
+    console.log(spendingLimit)
     LoadData();
   };
 
   const handleSelectedCategorieChange = (event) => {
     const selectedCat = listCategorias.find((e) => e.nombre === event.target.value);
-    setSelectedCategorie(selectedCat.nombre); 
+    setSelectedCategorie(selectedCat.nombre);
     setSelectedCategorieId(selectedCat.id);
-    
+
     console.log(selectedCat)
   }
   const addNewExpense = async () => {
@@ -205,101 +233,102 @@ const Finances = () => {
     const expenseCategory = selectedCategorieId
     if (newExpense > 0 && selectedCard && expenseCategory) {
       const card = listcards.find((e) => e.id === selectedCard.id);
-        let expenses= []
-        expenses = listGastos.filter((e) => e.id_tarjeta == selectedCard.id);
-        const expenseID= listGastos.length + 1;
-        const currentDate = getCurrentDate();
-        console.log(expenseID)
-        
+      let expenses = []
+      expenses = listGastos.filter((e) => e.id_tarjeta == selectedCard.id);
+      const expenseID = listGastos.length + 1;
+      const currentDate = getCurrentDate();
+      console.log(expenseID)
+
         ;
-   
 
-      
-        if (card.spendingLimit && totalExpensesByCategory[expenseCategory]) {
-          const categoryExpenses = totalExpensesByCategory[expenseCategory] + newExpense;
-          if (categoryExpenses > card.spendingLimit) {
-            setWarning("Has superado tu límite de gasto.");
-            return;
-          }
+
+
+      if (card.spendingLimit && totalExpensesByCategory[expenseCategory]) {
+        const categoryExpenses = totalExpensesByCategory[expenseCategory] + newExpense;
+        if (categoryExpenses > card.spendingLimit) {
+          setWarning("Has superado tu límite de gasto.");
+          return;
         }
-      
-
-        const expense={ id_gastos: expenseID, monto: newExpense ,fecha_gastos:currentDate,id_categoria:expenseCategory , id_tarjeta: selectedCard.id}
+      }
 
 
-        try {
-          const response = await GastosApi.create(expense);
-          await LoadData(); // Esperar a que LoadData termine antes de continuar
-          setCurrentIncomesAndExpenses(getCurrentIncomesAndExpenses());
-          setNewExpense(0);
-          setExpenseCategory();
-          setWarning("");
-          //calculateTotals(); // Calcular totales después de actualizar los datos
-        } catch (error) {
-          console.error("Error al agregar gasto:", error);
-        }
+      const expense = { id_gastos: expenseID, monto: newExpense, fecha_gastos: currentDate, id_categoria: expenseCategory, id_tarjeta: selectedCard.id }
 
-        console.log(expense)
+
+      try {
+        const response = await GastosApi.create(expense);
+        await LoadData(); // Esperar a que LoadData termine antes de continuar
         setCurrentIncomesAndExpenses(getCurrentIncomesAndExpenses());
         setNewExpense(0);
         setExpenseCategory();
         setWarning("");
-        calculateTotalsExpenses
-        LoadData();
+        //calculateTotals(); // Calcular totales después de actualizar los datos
+      } catch (error) {
+        console.error("Error al agregar gasto:", error);
       }
-    
+
+      console.log(expense)
+      setCurrentIncomesAndExpenses(getCurrentIncomesAndExpenses());
+      setNewExpense(0);
+      setExpenseCategory();
+      setWarning("");
+      calculateTotalsExpenses
+      LoadData();
+    }
+
   };
 
 
-  
-  const addNewCategory = async(event) => {
+
+  const addNewCategory = async (event) => {
     event.preventDefault();
     const categoriasUsuario = listCategorias.find((e) => e.id === sesion.id)
-    
-  
-    
-   console.log(categoriasUsuario)
-    
-      const categoriaNewData = {
-        // Aumentamos el ID en 1
+
+
+
+    console.log(categoriasUsuario)
+
+    const categoriaNewData = {
+      // Aumentamos el ID en 1
       nombre: newCategory,
       id_usuario: sesion.id,
-     };
-      
- 
-      try {
-        // Realiza la solicitud POST al backend para registrar el nuevo usuario utilizando la función personasApi
-        const response = await CategoriasApi.create(categoriaNewData)
-        LoadData()
-        // Comprueba el resultado de la solicitud
-          if (response && response.status === 200) {
-              // Registro exitoso, redirige a la página de inicio de sesión
-              alert('Registro exitoso!');
-             
-          } else {
-              // Manejo de errores en caso de que algo salga mal en el backend
-              alert('Error al registrar usuario( no manda la data)');
-          }
-      } catch (error) {
-       
+    };
+
+
+    try {
+      // Realiza la solicitud POST al backend para registrar el nuevo usuario utilizando la función personasApi
+      const response = await CategoriasApi.create(categoriaNewData)
+      LoadOnlyCategorias()
+      // Comprueba el resultado de la solicitud
+      if (response && response.status === 200) {
+        // Registro exitoso, redirige a la página de inicio de sesión
+        const mensaje = "Categoria agregada"
+        notifySuccess(mensaje)
+
+      } else {
+        // Manejo de errores en caso de que algo salga mal en el backend
+        alert('Error al registrar usuario( no manda la data)');
       }
-      // Limpia el campo de nueva categoría
-      setNewCategory("");
-    
+    } catch (error) {
+
+    }
+    // Limpia el campo de nueva categoría
+    setNewCategory("");
+
   };
-  
 
 
 
-  const calculateTotalsExpenses=()=>{
-    
+
+  const calculateTotalsExpenses = () => {
+
 
     if (selectedCard && listGastos.length > 0) {
-      
+
       const cardExpenses = listGastos.filter((expense) => expense.id_tarjeta === selectedCard.id);
-      console.log("Gastos filtrados:",cardExpenses);
-      
-      
+      console.log("Gastos filtrados:", cardExpenses);
+
+
       const totalExpenseAmount1 = cardExpenses.reduce((total, expense) => total + parseFloat(expense.monto), 0);
       setTotalExpenseAmount(totalExpenseAmount1)
 
@@ -309,15 +338,15 @@ const Finances = () => {
   };
 
 
-  
 
-  const handleSpendingLimitChange =  (event) => {
-    
+
+  const handleSpendingLimitChange = (event) => {
+
     const newLimit = parseFloat(event.target.value);
     setSpendingLimit(newLimit);
-    
+
     console.log(spendingLimit)
-   // const response = await TarjetasApi.update()
+    // const response = await TarjetasApi.update()
   };
 
   const handleSavingsGoalChange = (event) => {
@@ -335,89 +364,98 @@ const Finances = () => {
 
         updatedCard.spendingLimit = spendingLimit;
         updatedCard.savingGoal = savingsGoal;
-        
-       
+
+
         const response = await TarjetasApi.update(selectedCard.id, updatedCard);
-  
-        
+
+
       } catch (error) {
         console.error("Error en la solicitud de actualización:", error);
       }
     }
   };
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  
-  
+
+
   return (
     <div>
-    <div className="centra">
+
+      <div className="">
         <NavBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} sesion={sesion} />
+        <ToastContainer></ToastContainer>
         <div className={`finances-container${isSidebarOpen ? '-shifted' : ''}`}>
-            <div className="horizonta">
-                <div className="tarjetah1">
-                    <h1>Tarjetas:</h1>
-                </div>
-                <div className="card">
-                    <CardSelect
-                        selectedCard={SelectedCard2}
-                        userCards={listcards.filter((e) => e.id_usuario == sesion.id)}
-                        handleSelectedCardChange={handleSelectedCardChange}
-                        setSpendingLimit={setSpendingLimit}
-                        setSavingsGoal={setSavingsGoal}
-                    />
-                </div>
-                {selectedCard && (
-                    <div>
-                        <h1>Finanzas</h1>
-                        <div className="horizonta2">
-                            <div className="finanza">
-                                <div className="finanza">
-                                    <CategoryForm
-                                        newCategory={newCategory}
-                                        onNewCategoryChange={(e) => setNewCategory(e.target.value)}
-                                        addNewCategory={addNewCategory}
-                                    />
-                                </div>
-                                <div className="finanza">
-                                    <ExpenseForm
-                                        newExpense={newExpense}
-                                        selectedCat={selectedCategorie}
-                                        onNewExpenseChange={(e) => setNewExpense(parseFloat(e.target.value))}
-                                        expenseCategory={listCategorias.filter((e) => e.id_usuario == sesion.id)}
-                                        hasExceededSpendingLimit={warning !== ""}
-                                        warning={warning}
-                                        onExpenseCategoryChange={handleSelectedCategorieChange}
-                                        addNewExpense={addNewExpense}
-                                    />
-                                </div>
-                                <div className="finanza">
-                                    <SpendingAndSavings
-                                        spendingLimit={spendingLimit}
-                                        savingsGoal={savingsGoal}
-                                        handleSpendingLimitChange={(e) => handleSpendingLimitChange(e)}
-                                        handleSavingsGoalChange={(e) => handleSavingsGoalChange(e)}
-                                        onSaveClick={handleSaveClick}
-                                    />
-                                </div>
-                            </div>
-                            <b></b>
-                            <TotalExpenses totalExpenseAmount={totalExpenseAmount} />
-                            <EliminarGasto
-                                ListaGastos={[listGastos]}
-                                selectedCardId={selectedCard.id}
-                                listcards={listcards}
-                                listCategorias={listCategorias}
-                                totalExpenseAmount={totalExpenseAmount}
-                            />
-                        </div>
-                    </div>
-                )}
+          <div className="">
+            <div className="tarjetah1">
+              <h1>Tarjetas:</h1>
             </div>
+            <div className=''>
+              <CardSelect
+                selectedCard={SelectedCard2}
+                userCards={listcards.filter((e) => e.id_usuario == sesion.id)}
+                handleSelectedCardChange={handleSelectedCardChange}
+                setSpendingLimit={setSpendingLimit}
+                setSavingsGoal={setSavingsGoal}
+                className={"form-select"}
+              />
+            </div>
+            {selectedCard && (
+              <div>
+                <div className="horizonta2">
+                  <div className="finanza">
+                    <div className="finanza">
+                      <TotalExpenses totalExpenseAmount={totalExpenseAmount} />
+                    </div>
+                    <div className="finanza">
+                      <CategoryForm
+                        newCategory={newCategory}
+                        onNewCategoryChange={(e) => setNewCategory(e.target.value)}
+                        addNewCategory={addNewCategory}
+                      />
+                    </div>
+                    <div className="finanza">
+                      <ExpenseForm
+                        newExpense={newExpense}
+                        selectedCat={selectedCategorie}
+                        onNewExpenseChange={(e) => setNewExpense(parseFloat(e.target.value))}
+                        expenseCategory={listCategorias.filter((e) => e.id_usuario == sesion.id)}
+                        hasExceededSpendingLimit={warning !== ""}
+                       
+                        onExpenseCategoryChange={handleSelectedCategorieChange}
+                        addNewExpense={addNewExpense}
+                      />
+                    </div>
+                    <div className="finanza">
+                      <SpendingAndSavings
+                        spendingLimit={spendingLimit}
+                        savingsGoal={savingsGoal}
+                        handleSpendingLimitChange={(e) => handleSpendingLimitChange(e)}
+                        handleSavingsGoalChange={(e) => handleSavingsGoalChange(e)}
+                        onSaveClick={handleSaveClick}
+                      />
+                    </div>
+                  </div>
+
+
+                  <div className='finanza'>
+                    <EliminarGasto
+                      ListaGastos={[listGastos]}
+                      selectedCardId={selectedCard.id}
+                      listcards={listcards}
+                      listCategorias={listCategorias}
+                      totalExpenseAmount={totalExpenseAmount}
+                      sesionId={sesion.id}
+                    /></div>
+
+
+                </div>
+              </div>
+            )}
+          </div>
         </div>
+      </div>
     </div>
-</div>
-    
-    );
+
+  );
 };
 
 export default Finances;

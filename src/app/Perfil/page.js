@@ -131,6 +131,7 @@ const Profile = () => {
   
   return (
     <div>
+    
             <NavBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} sesion={sesion}/>
             <div>
             <ToastContainer></ToastContainer>

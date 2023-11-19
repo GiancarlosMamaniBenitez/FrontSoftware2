@@ -1,6 +1,7 @@
 import React, { useState, useEffect  } from 'react';
 import TotalExpensesNew from './TotalExpensesNew';
 import Form from 'react-bootstrap/Form';
+import 'react-bootstrap'
 import Button from 'react-bootstrap/Button';
 import GastosApi from '@/app/api_fronted/gastos';
 const EliminarGasto = ({ListaGastos,selectedCardId,listcards,listCategorias,totalExpenseAmount }) => {
@@ -9,6 +10,7 @@ const EliminarGasto = ({ListaGastos,selectedCardId,listcards,listCategorias,tota
     let gastoFiltrado = [];
     let catArray = [];
     let categoriaArray = [];
+    const sinFiltro = "Sin filtro"
     const [selectedDate, setSelectedDate] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedCatName, setSelectedCatName] = useState('');
@@ -50,8 +52,12 @@ const EliminarGasto = ({ListaGastos,selectedCardId,listcards,listCategorias,tota
             )
           );
         console.log("categoria nombres array",categoriaArray);
-
-        gastoFiltrado = Array.from(new Set(gastosAplanados.filter(gasto => ((gasto.id_tarjeta === selectedCardId) && (gasto.fecha_gastos === selectedDate) || (gasto.id_categoria===selectedCategory)))));
+        if(selectedDate == sinFiltro){
+            gastoFiltrado = Array.from(new Set(gastosAplanados.filter(gasto => ((gasto.id_tarjeta === selectedCardId) || (gasto.id_categoria===selectedCategory)))));
+        }else{
+            gastoFiltrado = Array.from(new Set(gastosAplanados.filter(gasto => ((gasto.id_tarjeta === selectedCardId) && (gasto.fecha_gastos === selectedDate) || (gasto.id_categoria===selectedCategory)))));
+        }
+       
         console.log("gasto filtrados",gastoFiltrado);
 
         console.log("select name category",selectedCatName);
@@ -124,6 +130,7 @@ const EliminarGasto = ({ListaGastos,selectedCardId,listcards,listCategorias,tota
     };
     return(
         <div>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"></link>
             <h2>Gastos en Array</h2>
             <label htmlFor="selectFecha">Selecciona una fecha:</label>
             <select
@@ -134,53 +141,24 @@ const EliminarGasto = ({ListaGastos,selectedCardId,listcards,listCategorias,tota
                     }}
                     value={selectedDate} // Establecer el valor actual del estado para que el select refleje el estado
                 >
+                <option>{sinFiltro}</option>
                     {fechaArray.map((fecha, index) => (
                     <option key={index} value={fecha}>
                         {fecha}
                     </option>
                     ))}
             </select>
-            <label htmlFor="selectCategory">Selecciona una categoria:</label>
-            <select
-                    id="selectCategory"
-                    onChange={(e) => {
-                    // Actualizar la fecha seleccionada cuando cambia el valor del select
-                    setSelectedCategory(e.target.value);
-                    }}
-                    value={selectedCategory} // Establecer el valor actual del estado para que el select refleje el estado
-                >
-                    {catArray.map((cat, index) => (
-                    <option key={index} value={cat}>
-                        {cat}
-                    </option>
-                    ))}
-            </select>
-            <label htmlFor="selectNameCategory">Selecciona un nombre categoria:</label>
-            <select
-                    id="selectNameCategory"
-                    onChange={(e) => {
-                    // Actualizar la fecha seleccionada cuando cambia el valor del select
-                    setSelectedCatName(e.target.value);
-                    }}
-                    value={selectedCatName} // Establecer el valor actual del estado para que el select refleje el estado
-                >
-                    {categoriaArray.map((cat, index) => (
-                <option key={index} value={cat.id}>
-                    {cat.nombre}
-                </option>
-))}
-                    
-            </select>
+            
 
             {/* Mostrar los ingresos filtrados en una tabla */}
-            <table>
+            <table className='table'>
                 <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Monto</th>
-                    <th>Fecha Gastos</th>
-                    <th>ID Categoria</th>
-                    <th>SELECCIONA</th>
+                    <th scope='col'>ID</th>
+                    <th scope='col'>Monto</th>
+                    <th scope='col'>Fecha Gastos</th>
+                    <th scope='col'>Categoria</th>
+                    <th scope='col'>Opciones</th>
                     {/* ... Otros encabezados de columna */}
                 </tr>
 
@@ -188,7 +166,7 @@ const EliminarGasto = ({ListaGastos,selectedCardId,listcards,listCategorias,tota
                 <tbody>
                     {gastoFiltrado.map((gasto) => (
                         <tr key={gasto.id_gastos}>
-                            <td>{gasto.id_gastos}</td>
+                            <th scope='row'>{gasto.id_gastos}</th>
                             <td>
                                 <fieldset>
                                     {
@@ -235,35 +213,19 @@ const EliminarGasto = ({ListaGastos,selectedCardId,listcards,listCategorias,tota
 
                             </td>
                             <td>{gasto.fecha_gastos}</td>
-                            <td>{gasto.id_categoria}</td>
+                            <td >{categoriaArray.find(cat => (cat.id === gasto.id_categoria)).nombre}</td>
                             <td>
                             {
                             //isEditing
                             editingRows[gasto.id_gastos] ? (
-                                <Button className="botonGuardar" onClick={() => handleSave(gasto.id_gastos)}>Guardar</Button>
+                                <Button className="mx-2" onClick={() => handleSave(gasto.id_gastos)}>Guardar</Button>
                             ) : (
-                                <Button className="botonEditar" onClick={() => handleEdit(gasto.id_gastos)}>Editar</Button>
+                                <Button className="mx-2" onClick={() => handleEdit(gasto.id_gastos)}>Editar</Button>
                                 
                             )}
   
-                        </td>
-
-                            <td>
-                                <input
-                                    type="radio"
-                                    name="seleccion"
-                                    value={gasto.monto}
-                                    checked={selectedAmount === gasto.monto}
-                                    onChange={() => {
-                                        setSelectedAmount(gasto.monto);
-                                        setDifference(totalExpenseAmount - gasto.monto)
-                                        
-                                    }}
-                                />
-                            </td>
-                            <td>
                                 <Button
-                                    className='botonEliminar'
+                                    className='mx-2 btn-danger'
                                     onClick={() => handleDelete(gasto.id_gastos)}
                                     
                                 >
@@ -271,28 +233,14 @@ const EliminarGasto = ({ListaGastos,selectedCardId,listcards,listCategorias,tota
                                 </Button>
                             </td>
                         </tr>
-                    ))}
+                    ))
+                    
+                    }
+                   
                 </tbody>
                 
             </table>
 
-            <div>
-                <h2> EXPENSE ACTUALIZADO</h2>
-                <div>
-                    <label>Total Expense Amount:</label>
-                    <input type="text" value={totalExpenseAmount} readOnly />
-
-                    <label>Símbolo:</label>
-                    <input type="text" value="-" readOnly />
-
-                    <label>Selected Amount:</label>
-                    <input type="text" value={selectedAmount} readOnly />
-
-                    <label>Diferencia:</label>
-                    <input type="text" value={difference} readOnly />
-                </div>
-            </div>
-            <TotalExpensesNew difference={difference} ></TotalExpensesNew>
             
         </div>
     );

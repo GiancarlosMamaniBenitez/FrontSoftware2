@@ -7,7 +7,7 @@ const ExpenseForm = ({
   newExpense,
   expenseCategory,
   
-  warning,
+
   onNewExpenseChange,
   onExpenseCategoryChange,
   addNewExpense,
@@ -30,8 +30,8 @@ const ExpenseForm = ({
         />
       
       
-      {warning && <p className="warning">{warning}</p>}
-      <button className="button-container" onClick={addNewExpense}>Añadir Gasto</button>
+      
+      <button className="btn btn-primary" onClick={addNewExpense}>Añadir Gasto</button>
     </div>
   );
 }

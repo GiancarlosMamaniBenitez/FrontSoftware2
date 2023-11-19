@@ -1,15 +1,17 @@
 .finances-container {
     max-width: 1200px;
     margin: 0 auto;
-   padding: 20px;
+    padding: 20px;
     font-family: Arial, sans-serif;
     background-color: #f5f5f5;
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     text-align: center;
-    width:80%; /* Adjust the width to give space for the sidebar */
+    width:100%; /* Adjust the width to give space for the sidebar */
     margin-top: 30px;
     position: absolute;
+    align-items: center;
+
 
   }.horizonta{
     display: flex;
