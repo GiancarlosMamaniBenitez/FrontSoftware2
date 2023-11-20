@@ -22,6 +22,7 @@ const Reports = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [userCards, setUserCards] = useState("");
   const [selectedReportType, setSelectedReportType] = useState("daily");
+  const [selectedReportInform, setSelectedReportInform] = useState("general");
   const [selectedReportCategory, setSelectedReportCategory] = useState("");
   const [reportData, setReportData] = useState(null)  ;
 
@@ -87,10 +88,6 @@ useEffect(() => {
   handleOnLoad();
   LoadData()
   
-  
-  
-  
-
       
 }, []);
 const handleBuscarRepo = () => {
@@ -129,6 +126,11 @@ const handleBuscarRepo = () => {
     console.log(event.target.value)
   };
 
+   const handleSelectedReportInformeChange =(event) => {
+    setSelectedReportInform(event.target.value);
+    console.log(event.target.value)
+  };
+
   const handleSelectedReportCategoryChange = (event) => {
     const selectedcategoriID  = event.target.value;
     const cat = listCategorias.find((e) => e.id == selectedcategoriID);
@@ -151,6 +153,9 @@ const handleBuscarRepo = () => {
       reportestarjeta = listReport.filter((e) => e.id_tarjeta == tarjeta.id);
         setUserReport(reportestarjeta)
         setUsuarioRepo(reportestarjeta)
+
+    //Reporte general o detallado
+      const informeusuario = selectedReportInform === "general"
       
       // Filtrar ingresos y gastos según el tipo de informe
         const ingresosusuario = selectedReportType === "daily"
@@ -192,6 +197,7 @@ const handleBuscarRepo = () => {
         const report = {
           id_reportes: reportesId,
           tipo: selectedReportType === 'daily' ? "Daily" : "Monthly",
+           informe: selectedReportInform === "general" ? "General": "Detallado",
           fecha_reportes: selectedReportType === "daily" ? currentDate : currentMonth,
           id_tarjeta: tarjeta.id,
           id_categoria: catId || null, // Usa null si no hay categoría seleccionada
