@@ -1,4 +1,4 @@
-const CardSelect = ({ selectedCard, userCards, handleSelectedCardChange, setSpendingLimit, setSavingsGoal  }) => (
+const CardSelect = ({ selectedCard, userCards, handleSelectedCardChange }) => (
     <>
     <select className = "form-select" value={selectedCard} onChange={handleSelectedCardChange}>
       

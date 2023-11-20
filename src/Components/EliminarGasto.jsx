@@ -22,27 +22,19 @@ const EliminarGasto = ({ListaGastos,selectedCardId,listcards,listCategorias,tota
     const [editingRows, setEditingRows] = useState({});
    
     if(selectedCardId){
-        console.log("lista categorias",listCategorias);
-        console.log("lista gastos",ListaGastos);
         const gastosAplanados = ListaGastos.flat();
-        console.log("fechas ingresos",gastosAplanados);
+       
         const catAplanados = listCategorias.flat();
-        console.log("cat:",catAplanados);
-
+ 
         idArray = Array.from(new Set(gastosAplanados.map(gasto=> gasto.id_tarjeta || " ")));
-        console.log("idArray gastos",idArray);
 
         fechaArray = Array.from(new Set(gastosAplanados.filter(gasto => gasto.id_tarjeta === selectedCardId).map(gasto => (gasto.fecha_gastos || " ")  )));
-        console.log("fechaArray gasto:",fechaArray);
-        
+    
         catArray = Array.from(new Set(gastosAplanados.filter(gasto => gasto.id_tarjeta === selectedCardId ).map(gasto => gasto.id_categoria || " ")));
-        console.log("catArray",catArray);
-
-        console.log("selected date",selectedDate);
-        console.log("selected category",selectedCategory);
+      
         
         const valorCategoria = selectedCategory;
-        console.log("selectedcardid",selectedCardId);
+    
         //categoriaArray = Array.from(new Set(catAplanados.map(cat => cat.nombre)));
         categoriaArray = Array.from(
             new Set(
@@ -51,23 +43,11 @@ const EliminarGasto = ({ListaGastos,selectedCardId,listcards,listCategorias,tota
                 .map(cat => ({ nombre: cat.nombre, id: cat.id }))
             )
           );
-        console.log("categoria nombres array",categoriaArray);
         if(selectedDate == sinFiltro){
             gastoFiltrado = Array.from(new Set(gastosAplanados.filter(gasto => ((gasto.id_tarjeta === selectedCardId) || (gasto.id_categoria===selectedCategory)))));
         }else{
             gastoFiltrado = Array.from(new Set(gastosAplanados.filter(gasto => ((gasto.id_tarjeta === selectedCardId) && (gasto.fecha_gastos === selectedDate) || (gasto.id_categoria===selectedCategory)))));
         }
-       
-        console.log("gasto filtrados",gastoFiltrado);
-
-        console.log("select name category",selectedCatName);
-
-        
-        console.log("gasto monto seleccionado", selectedAmount);
-        console.log("totalexpenseamount",totalExpenseAmount);
-
-        
-        
         
     }
 

@@ -9,7 +9,7 @@
           type="text"
           value={newCategory}
           onChange={onNewCategoryChange}
-          placeholder="Enter New Category"
+          placeholder="Ingresa una nueva categoria"
         />
         <button className="btn btn-primary" onClick={addNewCategory}>Añadir Categoria</button>
       </div>

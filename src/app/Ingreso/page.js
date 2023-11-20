@@ -1,4 +1,5 @@
 'use client'
+
 import Link from 'next/link';
 
 import TarjetasApi from "../api_fronted/tarjetas";
@@ -8,90 +9,110 @@ import "./financesIngreso.css"; // Importar el archivo CSS
 import CardSelect from "@/Components/CardSelect.jsx";
 import TotalIncomes from "@/Components/TotalIncomes.jsx";
 import IncomeForm from "@/Components/IncomeForm.jsx";
+import OrigenForm from "@/Components/OrigenForm";
 import IngresosApi from "../api_fronted/ingresos";
-import UsuariosApi from "../api_fronted/usuarios";
-import GastosApi from "../api_fronted/gastos";
 import CategoriasApi from "../api_fronted/categorias";
+//Toast
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"
 import EliminarIngreso from "@/Components/EliminarIngreso.jsx"
-
+import MetaApi from '../api_fronted/meta';
+import MetaIngreso from '@/Components/MetaIngreso';
+import OrigenApi from '../api_fronted/origen';
 const Finances = () => {
   const [selectedCard, setSelectedCard] = useState("");
   const [totalIncomeAmount, setTotalIncomeAmount] = useState(0);
-  const [totalExpenseAmount, setTotalExpenseAmount] = useState(0);
-  const [usuariotarjeta,setUsuariotarjeta] = useState([])
-  const [usuarioingresos,setUsuarioingresos] = useState([])
-  const [usuariogastos,setUsuariogastos] = useState([])
-  const [selectedCategorie, setSelectedCategorie] = useState("")
-  const [selectedCategorieId, setSelectedCategorieId] = useState(0)
-  const [totalIncomes, setTotalIncomes] = useState(0);
-  const [totalExpensesByCategory, setTotalExpensesByCategory] = useState({});
-  const [recentIncomes, setRecentIncomes] = useState([]);
-  const [newExpense, setNewExpense] = useState(0);
-  const [expenseCategory, setExpenseCategory] = useState([]);
+
+  const [selectedOrigen, setSelectedOrigen] = useState("")
+  const [selectedOrigenId, setSelectedOrigenId] = useState(0)
+
   const [newIncome, setNewIncome] = useState(0);
-  const [newCategory, setNewCategory] = useState("");
-  const [spendingLimit, setSpendingLimit] = useState(0);
+  const [IncomeOrigen, setIncomeOrigen] = useState([]);
+
+  const [newOrigen, setNewOrigen] = useState("");
   const [savingsGoal, setSavingsGoal] = useState(0);
-  const [warning, setWarning] = useState("");
-  const [recentExpenses, setRecentExpenses] = useState([]);
-  const [currentIncomesAndExpenses, setCurrentIncomesAndExpenses] = useState({
-    incomes: [],
-    expenses: [],
-  });
+  const [savingsGoalFound, setSavingsGoalFound] = useState(false)
   const [SelectedCard2, setSelectedCard2] = useState("")
-  const [usuariocategoria,setUsuariocategoria] = useState([])
+  const [estadoBoton, setEstadoBoton] = useState("Establecer meta")
   const [listcards, setListCards] = useState([]);
-  const [sesion , setSesion] = useState([]);
-  const [ListaIngresos,setListaIngresos] = useState([]);
-  const [listGastos, setListGastos] = useState([]);
-  const [listUsuarios, setListUsuarios] = useState([]);
-  const [listCategorias, setListCategorias] = useState([]);
+  const [sesion, setSesion] = useState([]);
+  const [listIngresos, setListIngresos] = useState([]);
+  const [listOrigen, setListOrigen] = useState([]);
+
+  const [listMetas, setListMetas] = useState([]);
   //importar la data de la api
-  const LoadData = async() =>{
+  const LoadData = async () => {
     const result = await TarjetasApi.findAll();
-    const result1  = await IngresosApi.findAll();
-    const result2 = await GastosApi.findAll();
-    const result3 = await UsuariosApi.findAll();
-    const result5 = await CategoriasApi.findAll()
-    setListCategorias(result5.data)
+    const result2 = await IngresosApi.findAll();
+    const result5 = await OrigenApi.findAll()
+    const result6 = await MetaApi.findAll()
     
+    setListMetas(result6.data)
+    setListOrigen(result5.data)
+ 
     setListCards(result.data)
-    setListaIngresos(result1.data)
-    setListGastos(result2.data)
-    setListUsuarios(result3.data)
-    
+    setListIngresos(result2.data)
 
 
   }
 
 
+
+  const notifyError = (mensaje) => {
+    toast.error( mensaje ,{
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined
+    })
+  }
+
+  const notifySuccess = (mensaje) => {
+    toast.success(mensaje , {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      });
+  }
+  const LoadOnlyOrigen = async () => {
+
+    const result3 = await OrigenApi.findAll()
+    setListOrigen(result3.data)
+    
+  }
+  /*
   
-
-  const LoadDataId  = async () =>{
-    
-    const result3 = await UsuariosApi.findOne(sesion.id)
-    setUsuariocategoria(result3.data.categories)
-    console.log(result3.data.categories)
-  }
-
+  */
   //almacenar la sesion en la variable sesion
   const handleOnLoad = () => {
 
     var sesionGuardada = localStorage.getItem("sesion");
     setSesion(JSON.parse(sesionGuardada))
     console.log(sesionGuardada.id)
-               
-}
 
-// para que lo renderice apenas carga la pagina 
+  }
+
+  // para que lo renderice apenas carga la pagina 
   useEffect(() => {
-    
+
     handleOnLoad();
     LoadData()
 
-        
+
+
+
+    //tarjetaLocal();
+
   }, []);
- 
+
   //  obtener fecha
   const getCurrentDate = () => {
     const now = new Date();
@@ -102,216 +123,294 @@ const Finances = () => {
   };
 
 
-
-
-  const getCurrentIncomesAndExpenses = () => {
-    if (selectedCard) {
-      const card = listcards.find((e) => e.id === selectedCard);
-      if (card) {
-        return {
-          incomes: card.incomes || [],
-          expenses: card.expenses || [],
-        };
-      }
-    }
-    return { incomes: [], expenses: [] };
-  };
-  
-
   useEffect(() => {
-    console.log("Lista de Ingresos cargada:", ListaIngresos);
-    console.log("Lista de Gastos cargada:",listGastos);
-    setCurrentIncomesAndExpenses(getCurrentIncomesAndExpenses());
+
     calculateTotalsIncomes();
-    calculateTotalsExpenses();
     getCurrentDate();
-    console.log(expenseCategory)
-    
+
   }, [selectedCard, listcards]);
 
   useEffect(() => {
     //console.log("Total de Ingresos actualizado:", totalIncomes);
     //calculateTotals();
-    
+    checkSavingsGoal();
   
-  }, [currentIncomesAndExpenses]);
+  }, [totalIncomeAmount]);
 
-
-
-  
-  const handleSelectedCardChange = (event) => {  
-    const selectedCardData = listcards.find((e) => e.number === event.target.value);
-    setSelectedCard(selectedCardData); 
-    setSelectedCard2(selectedCardData.number); 
-    
-    if (selectedCardData) {
-      setSpendingLimit(selectedCardData.spendingLimit || 0);
-      setSavingsGoal(selectedCardData.savingsGoal || 0);
-    }
+  const checkSavingsGoal = () => {
    
-    console.log(selectedCardData)
-    LoadData();
+      if (totalIncomeAmount > savingsGoal*0.8 && totalIncomeAmount < savingsGoal) {
+        const mensaje = "Continua, estás cerca de tu meta 🙌"
+        notifySuccess(mensaje)
+        return
+      } else if (totalIncomeAmount == savingsGoal){
+        const mensaje = "Haz llegado a tu meta de ahorro 🐱‍👤"
+        notifySuccess(mensaje)
+        return
+      }
+
+      else {
+        const mensaje = "Añade tus Ingresos 😉"
+        notifySuccess(mensaje)
+        return
+      }
+      LoadData()
+      
+    
   };
 
 
-  
-//ya manda ingresos a la base de datos
-  const addNewIncome = async() => {
-    if (newIncome > 0 && selectedCard) {
-        console.log(selectedCard.id)
-        const card = listcards.find((e) => e.id === selectedCard.id);
-        let incomes= []
-        incomes = ListaIngresos.filter((e) => e.id_tarjeta == selectedCard.id);
-        const incomeId= ListaIngresos.length + 1;
-        const currentDate = getCurrentDate();
-        console.log(incomeId)
-        const income={ id_ingresos: incomeId, monto: newIncome ,fecha_ingresos:currentDate, id_tarjeta: selectedCard.id}
-        ;
-        console.log("ingreso prueba",income.monto)
-        try {
-          // Realiza la solicitud POST al backend para registrar el nuevo usuario utilizando la función personasApi
-          const response = await IngresosApi.create(income);
-          // Comprueba el resultado de la solicitud
-            if (response && response.status === 200) {
-                // Registro exitoso, redirige a la página de inicio de sesión
-                alert('Registro exitoso!');
-                router.push('/VerTarjeta');
-            } else {
-                // Manejo de errores en caso de que algo salga mal en el backend
-                alert('Error al registrar usuario( no manda la data)');
-            }
-        } catch (error) {
-         
-        }
+  const handleSelectedCardChange = (event) => {
+    
+    const selectedCardData = listcards.find((e) => e.number === event.target.value);
+    setSelectedCard(selectedCardData);
+    setSelectedCard2(selectedCardData.number);
 
-        setCurrentIncomesAndExpenses(getCurrentIncomesAndExpenses());
-        setNewIncome(0);
+    if (selectedCardData) {
+      const meta = listMetas.find((e) => e.id_usuario === sesion.id)
+      if (meta) {
+        console.log(" se encuentra")
+        setSavingsGoal(meta.monto);
+        setSavingsGoalFound(true)
         
-        calculateTotalsIncomes();
-
-        LoadData();
+        
+      }else{
+        console.log("no se encuentra el monto")
+        
+      }
+      
       
     }
+    LoadData();
+    
   };
 
-  //esto estaba cambiando (falta que mande a base de datos)
-  
-const calculateTotalsIncomes = () => {
-
-  if (selectedCard && ListaIngresos.length > 0) {
-    // Filtra los ingresos por id_tarjeta
-    //console.log("ID de tarjeta seleccionada:", selectedCard.id);
-    //const cardIncomes = ListaIngresos.filter((income) => income.id_tarjeta === selectedCard.id);
-    //console.log("Ingresos filtrados:", cardIncomes);
-    if (selectedCard && ListaIngresos.length > 0) {
-      // Filtra los ingresos por id_tarjeta
-      const cardIncomes = ListaIngresos.filter((income) => income.id_tarjeta === selectedCard.id);
-      console.log("Ingresos filtrados:", cardIncomes);
-      // Suma los montos de todos los ingresos
-      const totalIncomeAmount1 = cardIncomes.reduce((total, income) => total + parseFloat(income.monto), 0);
-      setTotalIncomeAmount(totalIncomeAmount1)
-  
-      console.log("Suma de todos los montos de ingresos:", totalIncomeAmount);
-    }
+  const handleSelectedOrigenChange = (event) => {
+    const selectedOri = listOrigen.find((e) => e.nombre === event.target.value);
+    setSelectedOrigen(selectedOri.nombre);
+    setSelectedOrigenId(selectedOri.id);
 
   }
-};
-  const calculateTotalsExpenses=()=>{
-    
+  const addNewIncome = async () => {
+    const IncomeOrigen = selectedOrigenId
+    if (newIncome > 0 && selectedCard && IncomeOrigen) {
+      const IncomeID = listIngresos.length + 1;
+      const currentDate = getCurrentDate();
+      
 
-    if (selectedCard && listGastos.length > 0) {
-      
-      const cardExpenses = listGastos.filter((expense) => expense.id_tarjeta === selectedCard.id);
-      console.log("Gastos filtrados:",cardExpenses);
-      
-      
-      const totalExpenseAmount1 = cardExpenses.reduce((total, expense) => total + parseFloat(expense.monto), 0);
-      setTotalExpenseAmount(totalExpenseAmount1)
 
-      console.log("Suma de todos los montos de gastos:", totalExpenseAmount);
+      const income = { 
+        id_ingresos: IncomeID, 
+        monto: newIncome, 
+        fecha_ingresos: currentDate, 
+        id_origen: IncomeOrigen, 
+        id_tarjeta: selectedCard.id 
+      }
+
+
+      try {
+        const response = await IngresosApi.create(income);
+        const mensaje = "Se añadió el Ingreso"
+        notifySuccess(mensaje)
+        LoadData(); // Esperar a que LoadData termine antes de continuar
+        
+        setNewIncome(0);
+        setIncomeOrigen();
+        
+        //calculateTotals(); // Calcular totales después de actualizar los datos
+      } catch (error) {
+        console.error("Error al agregar Ingreso:", error);
+      }
+      setNewIncome(0);
+      setIncomeOrigen();
+      
+      calculateTotalsIncomes()
+      
     }
 
   };
 
 
 
-  
+  const addNewOrigen = async (event) => {
+    event.preventDefault();
+    
+    const origenNewData = {
+      // Aumentamos el ID en 1
+      nombre: newOrigen,
+      id_usuario: sesion.id,
+    };
+
+
+    try {
+      // Realiza la solicitud POST al backend para registrar el nuevo usuario utilizando la función personasApi
+      const response = await OrigenApi.create(origenNewData)
+      LoadOnlyOrigen()
+      // Comprueba el resultado de la solicitud
+      if (response && response.status === 200) {
+        // Registro exitoso, redirige a la página de inicio de sesión
+        const mensaje = "Origen agregado"
+        notifySuccess(mensaje)
+
+      } else {
+        // Manejo de errores en caso de que algo salga mal en el backend
+        alert('Error al registrar usuario( no manda la data)');
+      }
+    } catch (error) {
+
+    }
+    // Limpia el campo de nueva categoría
+    setNewOrigen("");
+
+  };
+
+
+
+
+  const calculateTotalsIncomes = () => {
+
+
+    if (selectedCard && listIngresos.length > 0) {
+
+      const cardIncomes = listIngresos.filter((Income) => Income.id_tarjeta === selectedCard.id);
+      console.log("Ingresos filtrados:", cardIncomes);
+
+
+      const totalIncomeAmount1 = cardIncomes.reduce((total, Income) => total + parseFloat(Income.monto), 0);
+      setTotalIncomeAmount(totalIncomeAmount1)
+      
+    }
+
+  };
+
+
+
 
   const handleSavingsGoalChange = (event) => {
-    const newGoal = parseFloat(event.target.value);
-    setSavingsGoal(newGoal);
-    console.log(savingsGoal)
-  };
-  const handleSaveClick = async () => {
-    console.log(selectedCard)
-    console.log(spendingLimit)
-    if (selectedCard) {
-      try {
-        // Actualizar los límites de gasto y metas en el objeto de tarjeta seleccionada
-        const updatedCard = { ...selectedCard };
 
-        updatedCard.spendingLimit = spendingLimit;
-        updatedCard.savingGoal = savingsGoal;
-        
-        // Realizar la solicitud para guardar los cambios en el servidor
-        const response = await TarjetasApi.update(selectedCard.id, updatedCard);
+    const newMeta = parseFloat(event.target.value);
+    setSavingsGoal(newMeta);
+    console.log(savingsGoal)
+
+  };
+
+  const handleSaveClick = async () => {
+    const userId = sesion.id
+    if (selectedCard) {
+      if (savingsGoalFound === false) {
+        try {
+          // Actualizar los límites de Ingreso y metas en el objeto de tarjeta seleccionada
+      
+          const metaData = {
+            monto: savingsGoal,
+            id_usuario: userId
+          }
+            console.log("siiiii")
+            const response3 = await MetaApi.create(metaData)
+            const mensaje = "Se definió la meta"
+            notifySuccess(mensaje)  
+            
   
-        
-      } catch (error) {
-        console.error("Error en la solicitud de actualización:", error);
+        } catch (error) {
+          console.error("Error en la solicitud de actualización:", error);
+        }
+      }else if (savingsGoalFound === true) {
+        const metaData = {
+          monto: savingsGoal,
+          id_usuario: userId
+        }
+          const meta = listMetas.find((e)=> e.id_usuario === userId)
+          const response3 = await MetaApi.update(meta.id, metaData)
+          LoadData() 
+          const mensaje = "Se actualizó la meta"
+          notifySuccess(mensaje)
+          setEstadoBoton("Actualizar limite")
       }
+      
     }
   };
-  
 
- 
-
-  
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  
-  
+
   return (
-    <div className="centra">
-    <NavBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} sesion={sesion}/>
-    <div className={`finances-container${isSidebarOpen ? '-shifted' : ''}`}>
-      <div className="horizonta">
-        <div>
-          <h1>Tarjetas:</h1>
-        </div>
-        <div className="card">
-          <CardSelect
-            selectedCard={SelectedCard2}
-            userCards={listcards.filter((e) => e.id_usuario == sesion.id)}
-            handleSelectedCardChange={handleSelectedCardChange}
-            setSpendingLimit={setSpendingLimit}
-            setSavingsGoal={setSavingsGoal}
-          />
-        </div></div><div>
-        {selectedCard && (
-          <div>
-            <h1>Finanzas</h1>
-            <div className="horizonta2"> 
-              <div className="finanza"> 
-                <IncomeForm
-                  newIncome={newIncome}
-                  onNewIncomeChange={(e) => setNewIncome(parseFloat(e.target.value))}
-                  addNewIncome={addNewIncome}
-                />
-              </div> 
-              <div className="finanza"> 
-                {/* Contenido de la segunda parte de las finanzas */}
-              </div>
+    <div>
+
+      <div className="">
+        <NavBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} sesion={sesion} />
+        <ToastContainer></ToastContainer>
+        <div className={`finances-container${isSidebarOpen ? '-shifted' : ''}`}>
+          <div className="">
+            <div className="tarjetah1">
+              <h1>Tarjetas:</h1>
             </div>
-            <b></b>
-            <TotalIncomes totalIncomeAmount={totalIncomeAmount} />
-            <EliminarIngreso ListaIngresos={[ListaIngresos]} selectedCardId={selectedCard.id} totalIncomeAmount={totalIncomeAmount}/>
+            <div className=''>
+              <CardSelect
+                selectedCard={SelectedCard2}
+                userCards={listcards.filter((e) => e.id_usuario == sesion.id)}
+                handleSelectedCardChange={handleSelectedCardChange}
+              
+                className={"form-select"}
+              />
+            </div>
+            {selectedCard && (
+              <div>
+                <div className="horizonta2">
+                  <div className="finanza">
+                    <div className="finanza">
+                      <TotalIncomes totalIncomeAmount={totalIncomeAmount} />
+                    </div>
+                    <div className="finanza">
+                      <MetaIngreso
+                        Meta={savingsGoal}
+                        estadoBoton = {estadoBoton}
+                        handleMetaChange={(e) => handleSavingsGoalChange(e)}
+                        onSaveClick={handleSaveClick}
+                      />
+                    </div>
+                    <div className="finanza">
+                      <OrigenForm
+                        newCategory={newOrigen}
+                        onNewCategoryChange={(e) => setNewOrigen(e.target.value)}
+                        addNewCategory={addNewOrigen}
+                      />
+                    </div>
+                    <div className="finanza">
+                      <IncomeForm
+                        newIncome={newIncome}
+                        selectedCat={selectedOrigen}
+                        onNewIncomeChange={(e) => setNewIncome(parseFloat(e.target.value))}
+                        IncomeCategory={listOrigen.filter((e) => e.id_usuario == sesion.id)}
+                       
+                        onIncomeCategoryChange={handleSelectedOrigenChange}
+                        addNewIncome={addNewIncome}
+                      />
+                    </div>
+            
+                   
+                  </div>
+
+
+                  <div className='finanza'>
+                    <EliminarIngreso
+                      ListaIngresos={[listIngresos]}
+                      selectedCardId={selectedCard.id}
+                      listcards={listcards}
+                      listCategorias={listOrigen}
+                      totalIncomeAmount={totalIncomeAmount}
+                      sesionId={sesion.id}
+                    /></div>
+
+
+                </div>
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
     </div>
-  </div>
-);
+
+  );
 };
 
 export default Finances;
