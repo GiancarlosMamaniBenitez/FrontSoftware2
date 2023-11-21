@@ -17,6 +17,7 @@ import ReportesApi from "../api_fronted/reportes";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { faCircleDown, faSyncAlt } from '@fortawesome/free-solid-svg-icons';
+import { useRouter } from "next/navigation";
 const Reports = () => {
   const [selectedCard, setSelectedCard] = useState("");
   const [refreshing, setRefreshing] = useState(false);
@@ -45,7 +46,7 @@ const Reports = () => {
   const[listCategorias, setListCategorias] = useState([]);
   const [ listReport , setListReport ] = useState([])
   const [ userReport, setUserReport] = useState([]);
-  
+  const router = useRouter();
   
   
   const LoadData = async() =>{
@@ -91,7 +92,8 @@ useEffect(() => {
       
 }, []);
 const handleBuscarRepo = () => {
-  router.push("/buscarRepo")
+  
+  router.push('/BuscarRepo')
 };
   useEffect(() => {
 
