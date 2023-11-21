@@ -290,6 +290,14 @@ const handleBuscarRepo = () => {
           />
         </div>
 
+        <div  className="mx-auto">
+          <label className="subtituloReporte">Tipo de informe:</label>
+          <select className="form-control" value={selectedReportInform} onChange={handleSelectedReportInformeChange}>
+            <option value="general">General</option>
+            <option value="detallado">Detallado</option>      
+          </select>
+        </div>
+
         <div className="mx-auto">
           <label className="subtituloReporte">Tipo de reporte:</label>
           <select className="form-control" value={selectedReportType} onChange={handleSelectedReportTypeChange}>
