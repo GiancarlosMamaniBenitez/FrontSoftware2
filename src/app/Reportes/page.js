@@ -20,6 +20,7 @@ import { faCircleDown, faSyncAlt } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from "next/navigation";
 const Reports = () => {
   const [selectedCard, setSelectedCard] = useState("");
+  const [selectedCard2, setSelectedCard2] = useState("");
   const [refreshing, setRefreshing] = useState(false);
   const [userCards, setUserCards] = useState("");
   const [selectedReportType, setSelectedReportType] = useState("daily");
@@ -47,8 +48,6 @@ const Reports = () => {
   const [ listReport , setListReport ] = useState([])
   const [ userReport, setUserReport] = useState([]);
   const router = useRouter();
-  
-  
   const LoadData = async() =>{
     const result = await TarjetasApi.findAll();
     const result1  = await IngresosApi.findAll();
@@ -110,16 +109,25 @@ const handleBuscarRepo = () => {
 
   const handleSelectedCardChange = (event) => {  
     
-   
-        const selectedCardNumber = event.target.value;
-        const selectedCardData = listcards.find((card) => card.number === selectedCardNumber);
+      const numero = event.target.value
+      
+        const selectedCardData = listcards.find((card) => card.number == numero);
         setUserCards(selectedCardData)
-        setSelectedCard(selectedCardNumber);
-        
+        if(numero){
+          setSelectedCard2(selectedCardData.number);
+        setSelectedCard(selectedCardData);
         const listarepo = listReport.filter((e) => e.id_tarjeta === selectedCardData.id);
         console.log(listarepo)
         setUsuarioRepo(listarepo)
       
+        }
+        
+        else{
+          setSelectedCard(null)
+          setSelectedCard2(null)
+        }
+        
+       
 
   };
 
@@ -284,7 +292,7 @@ const handleBuscarRepo = () => {
         <div className="card mx-auto">
           <label className="subtituloReporte">Tarjeta:</label>
           <CardSelect
-            selectedCard={selectedCard}
+            selectedCard={selectedCard2}
             userCards={listcards.filter((e) => e.id_usuario == sesion.id)}
             handleSelectedCardChange={handleSelectedCardChange}
           />
@@ -339,22 +347,25 @@ const handleBuscarRepo = () => {
                 <th>Descargar</th>
               </tr>
             </thead>
+            
             <tbody>
-            {usuarioRepo.slice(-5).map((report, index) => (
-                <tr key={index}>
-                  <td>{report.id_reportes}</td>
-                  
-                  <td>{report.tipo.trim().toLowerCase() === "daily" ? "Diario" : "Mensual"}</td>
+                {selectedCard &&
+                  usuarioRepo.slice(-5).map((report, index) => (
+                    <tr key={index}>
+                      <td>{report.id_reportes}</td>
+                      <td>{report.tipo.trim().toLowerCase() === "daily" ? "Diario" : "Mensual"}</td>
+                      <td>{report.fecha_reportes}</td>
+                      <td>
+                        <button className="btn btn-primary" onClick={() => generateReportPDF(report)}>
+                          <FontAwesomeIcon icon={faCircleDown} style={{ color: 'black' }} />
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                }
+              
 
-                  <td>{report.fecha_reportes}</td>
-                  <td>
-                    <button className="btn btn-primary" onClick={() => generateReportPDF(report)}>
-                    <FontAwesomeIcon icon={faCircleDown} style={{ color: 'black' }} />
-
-                    </button>
-                  </td>
-                </tr>
-              ))}
+            
             </tbody>
           </table>
         </div>

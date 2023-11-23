@@ -48,15 +48,14 @@
 
   }
   .reports-container-shifted {
-    width: 800px;
+    width: 80%;
     padding: 20px;
-    margin-left: 25%;
+    margin-left: 13%;
     margin-top: 5%;
     border: 1px solid #ddd;
     background-color: white;
     border-radius: 50px;
-
-  }
+}
 
   
   /* Estilos para el título de la página */

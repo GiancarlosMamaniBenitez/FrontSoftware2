@@ -29,8 +29,8 @@ const Finances = () => {
   const [newIncome, setNewIncome] = useState(0);
   const [IncomeOrigen, setIncomeOrigen] = useState([]);
 
-  const [newOrigen, setNewOrigen] = useState("");
-  const [savingsGoal, setSavingsGoal] = useState(0);
+  const [newOrigen, setNewOrigen] = useState(""); 
+  const [savingsGoal, setSavingsGoal] = useState(null);
   const [savingsGoalFound, setSavingsGoalFound] = useState(false)
   const [SelectedCard2, setSelectedCard2] = useState("")
   const [estadoBoton, setEstadoBoton] = useState("Establecer meta")
@@ -138,7 +138,7 @@ const Finances = () => {
   }, [totalIncomeAmount]);
 
   const checkSavingsGoal = () => {
-   
+    if (selectedCard){
       if (totalIncomeAmount > savingsGoal*0.8 && totalIncomeAmount < savingsGoal) {
         const mensaje = "Continua, estás cerca de tu meta 🙌"
         notifySuccess(mensaje)
@@ -155,9 +155,11 @@ const Finances = () => {
         return
       }
       LoadData()
-      
+    }
     
-  };
+    
+  
+};
 
 
   const handleSelectedCardChange = (event) => {
