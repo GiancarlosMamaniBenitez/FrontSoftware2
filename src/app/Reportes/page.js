@@ -142,20 +142,26 @@ const handleBuscarRepo = () => {
   };
 
   const handleSelectedReportCategoryChange = (event) => {
+    
     const selectedcategoriID  = event.target.value;
+    if (selectedcategoriID){
     const cat = listCategorias.find((e) => e.id == selectedcategoriID);
     const nombrecat = cat.nombre;
     console.log(nombrecat)
     setSelectedReportCategory(event.target.value);
     setCategorias(nombrecat)
-
+    }else{
+      setSelectedReportCategory(null);
+    setCategorias(null)
+    }
   };
   const generateReport = async () => {
     
         const currentDate = getCurrentDate();
         const currentMonth = currentDate.slice(0, 7);
-      
-        const selectedCardData = listcards.find((card) => card.number === selectedCard);
+
+        const selectedCardData = listcards.find((card) => card.number === selectedCard2);
+        console.log(selectedCardData)
         const category = selectedReportCategory;
         
         const tarjeta = listcards.find((e) => e.id == selectedCardData.id);
@@ -181,7 +187,7 @@ const handleBuscarRepo = () => {
       
         console.log("Total de gastos:", totalGastos);
         console.log("Total de montos:", totalMonto);
-      
+      if (selectedReportCategory){
         const gastosusuarioFiltrados = selectedReportCategory
           ? gastosusuario.filter((gasto) => gasto.id_categoria === selectedReportCategory)
           : gastosusuario;
@@ -197,26 +203,70 @@ const handleBuscarRepo = () => {
               return acumulador;
             }, {})
           : {};
-      
+            // No se que hacer ( falta hacer que se pueda ingresar sin categoria)
         console.log("Gastos por categoría:", gastosPorCategoria);
-      
-        const savings = totalMonto - totalGastos;
+      }
+             const savings = totalMonto - totalGastos;
         const reportesId = listReport.length + 1;
         const catId = parseInt(selectedReportCategory, 10);
+        console.log(selectedReportCategory)
+        let report; // Declarar la variable para contener el objeto report
+
+  if (selectedReportCategory) {
+    // Cuando se selecciona una categoría específica
+    const gastosusuarioFiltrados = gastosusuario.filter(
+      (gasto) => gasto.id_categoria === selectedReportCategory
+    );
+
+    const gastosPorCategoria = gastosusuarioFiltrados.reduce((acumulador, gasto) => {
+      const categoriaId = gasto.id_categoria;
+      const categoria = listCategorias.find((cat) => cat.id === categoriaId);
+      const nombreCategoria = categoria ? categoria.nombre : "Sin Categoría";
+      setCategorias(categoria.nombre);
+
+      acumulador[nombreCategoria] = (acumulador[nombreCategoria] || 0) + parseFloat(gasto.monto);
+      return acumulador;
+    }, {});
+
+    report = {
+      id_reportes: reportesId,
+      tipo: selectedReportType === 'daily' ? "Daily" : "Monthly",
+      informe: selectedReportInform === "general" ? "General" : "Detallado",
+      fecha_reportes: selectedReportType === "daily" ? currentDate : currentMonth,
+      id_tarjeta: tarjeta.id,
+      id_categoria: catId || null, // Usa null si no hay categoría seleccionada
+      totalGastos: totalGastos,
+      totalIngresos: totalMonto,
+      ahorro: savings,
       
-        const report = {
-          id_reportes: reportesId,
-          tipo: selectedReportType === 'daily' ? "Daily" : "Monthly",
-           informe: selectedReportInform === "general" ? "General": "Detallado",
-          fecha_reportes: selectedReportType === "daily" ? currentDate : currentMonth,
-          id_tarjeta: tarjeta.id,
-          id_categoria: catId || null, // Usa null si no hay categoría seleccionada
-          totalGastos: totalGastos,
-          totalIngresos: totalMonto,
-          ahorro: savings,
-        };
-      
-        console.log(report);
+    };
+  } else {
+    // Cuando no se selecciona ninguna categoría (id_categoria = 0)
+    const gastosPorCategoria = gastosusuario.reduce((acumulador, gasto) => {
+      const categoriaId = gasto.id_categoria;
+      const categoria = listCategorias.find((cat) => cat.id === categoriaId);
+      const nombreCategoria = categoria ? categoria.nombre : "Sin Categoría";
+      setCategorias(categoria.nombre);
+
+      acumulador[nombreCategoria] = (acumulador[nombreCategoria] || 0) + parseFloat(gasto.monto);
+      return acumulador;
+    }, {});
+
+    report = {
+      id_reportes: reportesId,
+      tipo: selectedReportType === 'daily' ? "Daily" : "Monthly",
+      informe: selectedReportInform === "general" ? "General" : "Detallado",
+      fecha_reportes: selectedReportType === "daily" ? currentDate : currentMonth,
+      id_tarjeta: tarjeta.id,
+      id_categoria: 0, // Asigna 0 si no hay categoría seleccionada
+      totalGastos: totalGastos,
+      totalIngresos: totalMonto,
+      ahorro: savings,
+     
+    };
+  }
+
+  console.log(report);
       
         try {
           const response = await ReportesApi.create(report);
@@ -259,12 +309,16 @@ const handleBuscarRepo = () => {
     pdfDoc.text(`Fecha del Informe: ${report.fecha_reportes}`, 10, 45);
     
     // Obtener el nombre de la tarjeta
-    pdfDoc.text(`Nombre de la Tarjeta: ${selectedCard ? selectedCard : 'Sin Tarjeta'}`, 10, 60);
-
+    pdfDoc.text(`Nombre de la Tarjeta: ${selectedCard2 ? selectedCard2 : 'Sin Tarjeta'}`, 10, 60);
     // Obtener el nombre de la categoría
   
     console.log(categorias)
-    pdfDoc.text(`Categoría: ${categorias ? categorias : 'Sin Categoría'}`, 10, 75);
+    if(report.id_categoria ==0){
+      pdfDoc.text(`Categoría:  Sin Categoría`, 10, 75);
+    }else{
+      pdfDoc.text(`Categoría: ${categorias ? categorias : 'Sin Categoría'}`, 10, 75);
+    }
+    
     
     pdfDoc.text(`Total de Gastos: $${report.totalGastos}`, 10, 90);
     pdfDoc.text(`Total de Ingresos: $${report.totalIngresos}`, 10, 105);
@@ -323,6 +377,7 @@ const handleBuscarRepo = () => {
               .map((category) => (
                 <option key={category.id} value={category.id}>
                   {category.nombre}
+
                 </option>
               ))}
           </select>

@@ -2,8 +2,7 @@
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleDown } from '@fortawesome/free-solid-svg-icons';
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 const TablaRepo = ({ usuarioRepo, generateReportPDF,eliminar }) => {
   return (
     <div className="table-container">
@@ -33,7 +32,7 @@ const TablaRepo = ({ usuarioRepo, generateReportPDF,eliminar }) => {
               </td>
               <td>
               <button className="btn btn-primary" onClick={() => eliminar(report)}>
-                  <FontAwesomeIcon icon={faTrashXmark}  style={{ color: 'black' }} />
+              <FontAwesomeIcon icon={faTrash}   style={{ color: 'black' }} />
                 </button>
               </td>
             </tr>

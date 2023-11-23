@@ -7,8 +7,7 @@ import ReportesApi from "../api_fronted/reportes";
 import TablaRepo from "@/Components/TablaRepo";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-
+import { faTrashXmark } from '@fortawesome/free-solid-svg-icons';
 import TarjetasApi from "../api_fronted/tarjetas";
 import GastosApi from "../api_fronted/gastos";
 import IngresosApi from "../api_fronted/ingresos";
@@ -159,7 +158,8 @@ const [ reportesFiltrado, setReportesFiltrado] = useState([])
       if (response && response.status === 200) {
           // Eliminación exitosa
           alert('Eliminación exitosa');
-          handleOnLoadAct();
+          const nuevosReportesFiltrados = reportesFiltrado.filter((r) => r.id_reportes !== report.id_reportes);
+          setReportesFiltrado(nuevosReportesFiltrados);
       } else {
           // Manejo de errores en caso de que algo salga mal en el backend
           alert('Error al eliminar ingreso');
