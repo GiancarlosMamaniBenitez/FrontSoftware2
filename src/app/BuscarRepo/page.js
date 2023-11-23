@@ -5,8 +5,10 @@ import React, { useState, useEffect, use } from "react";
 import NavBar from "@/Components/NavBar";
 import ReportesApi from "../api_fronted/reportes";
 import TablaRepo from "@/Components/TablaRepo";
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSyncAlt } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+
 import TarjetasApi from "../api_fronted/tarjetas";
 import GastosApi from "../api_fronted/gastos";
 import IngresosApi from "../api_fronted/ingresos";
@@ -151,10 +153,23 @@ const [ reportesFiltrado, setReportesFiltrado] = useState([])
          setSesion(JSON.parse(sesionGuardada))
          console.log(sesion)
    }, []);
-   const handleBuscarRepo = async () => {
-    
+   const handleEliminar = async (report) => {
+    try {
+      const response = await ReportesApi.remove(report.id_reportes);
+      if (response && response.status === 200) {
+          // Eliminación exitosa
+          alert('Eliminación exitosa');
+          handleOnLoadAct();
+      } else {
+          // Manejo de errores en caso de que algo salga mal en el backend
+          alert('Error al eliminar ingreso');
+      }
+  } catch (error) {
+      console.error('Error en la solicitud de eliminación:', error);
+  }
 
   }
+  
 
   const generateReportPDF = async (report) => {
     console.log(selectedReportCategory)
@@ -221,7 +236,7 @@ const [ reportesFiltrado, setReportesFiltrado] = useState([])
         {/* Controles de búsqueda */}
         
         {selectedCard && selectedDate &&
-        <TablaRepo usuarioRepo={reportesFiltrado} generateReportPDF={generateReportPDF} />
+        <TablaRepo usuarioRepo={reportesFiltrado} generateReportPDF={generateReportPDF} eliminar={handleEliminar}/>
       }
         </div>
     </div>
