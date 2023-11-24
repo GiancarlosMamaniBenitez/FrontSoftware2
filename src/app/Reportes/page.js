@@ -19,6 +19,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleDown, faSyncAlt } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from "next/navigation";
 const Reports = () => {
+  const[totalGastos1,setTotalGastos1] =useState()
   const [selectedCard, setSelectedCard] = useState("");
   const [selectedCard2, setSelectedCard2] = useState("");
   const [refreshing, setRefreshing] = useState(false);
@@ -187,11 +188,18 @@ const handleBuscarRepo = () => {
       
         console.log("Total de gastos:", totalGastos);
         console.log("Total de montos:", totalMonto);
-      if (selectedReportCategory){
+     
         const gastosusuarioFiltrados = selectedReportCategory
-          ? gastosusuario.filter((gasto) => gasto.id_categoria === selectedReportCategory)
+          ? gastosusuario.filter((gasto) => gasto.id_categoria == selectedReportCategory)
           : gastosusuario;
+      console.log(gastosusuarioFiltrados)
+      const totalMontoGastosCat = gastosusuarioFiltrados.reduce((total, gasto) => {
+        return total + parseFloat(gasto.monto);
+      }, 0);
+      setTotalGastos1(totalMontoGastosCat)
 
+      
+      console.log("Total de gastos por categoría:", totalMontoGastosCat);
         const gastosPorCategoria = selectedReportCategory
           ? gastosusuarioFiltrados.reduce((acumulador, gasto) => {
               const categoriaId = gasto.id_categoria;
@@ -205,66 +213,31 @@ const handleBuscarRepo = () => {
           : {};
             // No se que hacer ( falta hacer que se pueda ingresar sin categoria)
         console.log("Gastos por categoría:", gastosPorCategoria);
-      }
+      
              const savings = totalMonto - totalGastos;
         const reportesId = listReport.length + 1;
         const catId = parseInt(selectedReportCategory, 10);
         console.log(selectedReportCategory)
         let report; // Declarar la variable para contener el objeto report
 
-  if (selectedReportCategory) {
-    // Cuando se selecciona una categoría específica
-    const gastosusuarioFiltrados = gastosusuario.filter(
-      (gasto) => gasto.id_categoria === selectedReportCategory
-    );
 
-    const gastosPorCategoria = gastosusuarioFiltrados.reduce((acumulador, gasto) => {
-      const categoriaId = gasto.id_categoria;
-      const categoria = listCategorias.find((cat) => cat.id === categoriaId);
-      const nombreCategoria = categoria ? categoria.nombre : "Sin Categoría";
-      setCategorias(categoria.nombre);
-
-      acumulador[nombreCategoria] = (acumulador[nombreCategoria] || 0) + parseFloat(gasto.monto);
-      return acumulador;
-    }, {});
-
+ 
     report = {
       id_reportes: reportesId,
       tipo: selectedReportType === 'daily' ? "Daily" : "Monthly",
       informe: selectedReportInform === "general" ? "General" : "Detallado",
       fecha_reportes: selectedReportType === "daily" ? currentDate : currentMonth,
       id_tarjeta: tarjeta.id,
-      id_categoria: catId || null, // Usa null si no hay categoría seleccionada
-      totalGastos: totalGastos,
+      id_categoria: catId || 0, // Usa null si no hay categoría seleccionada
+      totalGastos: totalMontoGastosCat,
       totalIngresos: totalMonto,
       ahorro: savings,
       
     };
-  } else {
+  
     // Cuando no se selecciona ninguna categoría (id_categoria = 0)
-    const gastosPorCategoria = gastosusuario.reduce((acumulador, gasto) => {
-      const categoriaId = gasto.id_categoria;
-      const categoria = listCategorias.find((cat) => cat.id === categoriaId);
-      const nombreCategoria = categoria ? categoria.nombre : "Sin Categoría";
-      setCategorias(categoria.nombre);
-
-      acumulador[nombreCategoria] = (acumulador[nombreCategoria] || 0) + parseFloat(gasto.monto);
-      return acumulador;
-    }, {});
-
-    report = {
-      id_reportes: reportesId,
-      tipo: selectedReportType === 'daily' ? "Daily" : "Monthly",
-      informe: selectedReportInform === "general" ? "General" : "Detallado",
-      fecha_reportes: selectedReportType === "daily" ? currentDate : currentMonth,
-      id_tarjeta: tarjeta.id,
-      id_categoria: 0, // Asigna 0 si no hay categoría seleccionada
-      totalGastos: totalGastos,
-      totalIngresos: totalMonto,
-      ahorro: savings,
-     
-    };
-  }
+  
+  
 
   console.log(report);
       
