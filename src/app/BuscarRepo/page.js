@@ -19,9 +19,8 @@ import { useRouter } from "next/navigation";
 import CardSelect from "@/Components/CardSelect";
 import SelectReport from "@/Components/SelectReport";
 const BuscarRepo = () => {
-  const [searchDate, setSearchDate] = useState(getCurrentDate());
+
   const [usuarioRepo, setUsuarioRepo] = useState([]);
-  const [refreshing, setRefreshing] = useState(false);
   const [reportscard ,setReportscard] = useState([])
 const [sesion , setSesion ] = useState("")
 const [selectedCard, setSelectedCard] = useState("");
@@ -37,10 +36,7 @@ const [ reportesFiltrado, setReportesFiltrado] = useState([])
   const [categorias, setCategorias] = useState([])
   const [listcards, setListCards] = useState([]);
   const [selectedDate, setSelectedDate] = useState("")
-  const [currentIncomesAndExpenses, setCurrentIncomesAndExpenses] = useState({
-    incomes: [],
-    expenses: [],
-  });
+ 
 
   const [ListaIngresos,setListaIngresos] = useState([]);
   const [listGastos, setListGastos] = useState([]);
@@ -84,9 +80,8 @@ const [ reportesFiltrado, setReportesFiltrado] = useState([])
       setSelectedCard2(selectedCardData.number);
     setSelectedCard(selectedCardData);
     const listarepo = listReport.filter((e) => e.id_tarjeta === selectedCardData.id);
-    console.log(listarepo)
+
     setUsuarioRepo(listarepo)
-  
     }
     
     else{
@@ -107,7 +102,7 @@ const [ reportesFiltrado, setReportesFiltrado] = useState([])
     let reportestarjeta = listReport.filter((e) => e.id_tarjeta == tarjeta.id)
     setReportscard(reportestarjeta);
     
-    console.log(selectedDate)
+
     setUsuarioRepo(reportestarjeta)
     let reportesFiltrados = usuarioRepo.filter((e) => e.fecha_reportes == selectedDate);
 

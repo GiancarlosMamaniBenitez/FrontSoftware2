@@ -11,14 +11,15 @@ import UsuariosApi from "../api_fronted/usuarios";
 import CategoriasApi from "../api_fronted/categorias";
 import MetaApi from "../api_fronted/meta";
 import LimitgastoApi from "../api_fronted/Limitgasto";
-import MetaForm from "@/Components/Meta";
-import LimiteForm from "@/Components/LimiteForm";
+
 import ReportesApi from "../api_fronted/reportes";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { faCircleDown, faSyncAlt } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from "next/navigation";
 const Reports = () => {
+  const [ nombreCat, setNombreCat] = useState("")
+  const [gastosPorCategoria, setGastosPorCategoria] = useState([]);
   const[totalGastos1,setTotalGastos1] =useState()
   const [selectedCard, setSelectedCard] = useState("");
   const [selectedCard2, setSelectedCard2] = useState("");
@@ -34,10 +35,7 @@ const Reports = () => {
  const [usuarioRepo , setUsuarioRepo] = useState([])
   const [categorias, setCategorias] = useState([])
   const [listcards, setListCards] = useState([]);
-  const [currentIncomesAndExpenses, setCurrentIncomesAndExpenses] = useState({
-    incomes: [],
-    expenses: [],
-  });
+
 
   const [ListaIngresos,setListaIngresos] = useState([]);
   const [listGastos, setListGastos] = useState([]);
@@ -79,11 +77,7 @@ const Reports = () => {
    
                
 }
-/*const reportesUsuario = () =>{
-  const listarepo = listReport.find((e) => e.id_tarjeta === selectedCard);
-  setUsuarioRepo(listarepo)
-  
-}*/
+
 useEffect(() => {
     
   handleOnLoad();
@@ -186,9 +180,7 @@ const handleBuscarRepo = () => {
         const totalMonto = ingresosusuario.reduce((total, ingreso) => total + parseFloat(ingreso.monto), 0);
         const totalGastos = gastosusuario.reduce((total, gasto) => total + parseFloat(gasto.monto), 0);
       
-        console.log("Total de gastos:", totalGastos);
-        console.log("Total de montos:", totalMonto);
-     
+      console.log("ingresos : " ,totalMonto)
         const gastosusuarioFiltrados = selectedReportCategory
           ? gastosusuario.filter((gasto) => gasto.id_categoria == selectedReportCategory)
           : gastosusuario;
@@ -196,7 +188,7 @@ const handleBuscarRepo = () => {
       const totalMontoGastosCat = gastosusuarioFiltrados.reduce((total, gasto) => {
         return total + parseFloat(gasto.monto);
       }, 0);
-      setTotalGastos1(totalMontoGastosCat)
+      setGastosPorCategoria(gastosusuarioFiltrados);
 
       
       console.log("Total de gastos por categoría:", totalMontoGastosCat);
@@ -211,11 +203,21 @@ const handleBuscarRepo = () => {
               return acumulador;
             }, {})
           : {};
-            // No se que hacer ( falta hacer que se pueda ingresar sin categoria)
-        console.log("Gastos por categoría:", gastosPorCategoria);
+          
+        
       
              const savings = totalMonto - totalGastos;
-        const reportesId = listReport.length + 1;
+             console.log(listReport.length + 1)
+       
+             // Obtén el último reporte en la lista
+const ultimoReporte = listReport[listReport.length - 1];
+console.log("ultimo reporte",ultimoReporte)
+// Genera el nuevo ID sumándole 1 al ID del último reporte
+const nuevoId = ultimoReporte ? ultimoReporte.id_reportes + 1 : 1;
+
+// Utiliza el nuevo ID en tu lógica
+const reportesId = nuevoId;
+
         const catId = parseInt(selectedReportCategory, 10);
         console.log(selectedReportCategory)
         let report; // Declarar la variable para contener el objeto report
@@ -234,10 +236,7 @@ const handleBuscarRepo = () => {
       ahorro: savings,
       
     };
-  
-    // Cuando no se selecciona ninguna categoría (id_categoria = 0)
-  
-  
+ 
 
   console.log(report);
       
@@ -268,45 +267,60 @@ const handleBuscarRepo = () => {
     console.log(selectedCard)
 
   
-    //const nombrecat = cat.nombre
-   
+  
     const pdfDoc = new jsPDF();
 
+    const addContentToPage = (content, yOffset, maxY) => {
+      if (yOffset > maxY) {
+        pdfDoc.addPage();
+        yOffset = 15; // Ajusta el valor según sea necesario para el espacio del encabezado en la nueva página.
+      }
+    
+      pdfDoc.text(content, 10, yOffset);
+      return yOffset + 10; // Incrementa según sea necesario para el espacio entre líneas.
+    };
+    
     // Título y Estilo
-    pdfDoc.setFontSize(18);
-    pdfDoc.text(" Reporte Financiero", 105, 15, { align: "center" });
+    let yOffset = 15;
+    yOffset = addContentToPage("Reporte Financiero", yOffset, 200);
     
     // Contenido del Informe
-    pdfDoc.setFontSize(14);
-    pdfDoc.text(`Tipo de Informe: ${report.tipo == 'daily' ? 'Diario' : 'Mensual'}`, 10, 30);
-    pdfDoc.text(`Fecha del Informe: ${report.fecha_reportes}`, 10, 45);
+    yOffset = addContentToPage(`Tipo de Informe: ${report.tipo == 'daily' ? 'Diario' : 'Mensual'}`, yOffset, 200);
+    yOffset = addContentToPage(`Fecha del Informe: ${report.fecha_reportes}`, yOffset, 200);
+    yOffset = addContentToPage(`Nombre de la Tarjeta: ${selectedCard2 ? selectedCard2 : 'Sin Tarjeta'}`, yOffset, 200);
+   
+    if (selectedReportInform === "general") {
+      yOffset = addContentToPage(`Total de Gastos: $${report.totalGastos}`, yOffset, 200);
+    } else {
+      // Gastos por categoría
+      if (gastosPorCategoria.length > 0) {
+        yOffset = addContentToPage("Gastos por Categoría:", yOffset, 200);
     
-    // Obtener el nombre de la tarjeta
-    pdfDoc.text(`Nombre de la Tarjeta: ${selectedCard2 ? selectedCard2 : 'Sin Tarjeta'}`, 10, 60);
-    // Obtener el nombre de la categoría
-  
-    console.log(categorias)
-    if(report.id_categoria ==0){
-      pdfDoc.text(`Categoría:  Sin Categoría`, 10, 75);
-    }else{
-      pdfDoc.text(`Categoría: ${categorias ? categorias : 'Sin Categoría'}`, 10, 75);
+        // Sumar montos de gastos con el mismo ID
+        const gastosSumados = gastosPorCategoria.reduce((acumulador, gasto) => {
+          const idCategoria = gasto.id_categoria;
+          const nombrecat = listCategorias.find((e) => e.id === idCategoria)?.nombre || 'Sin Categoría';
+          acumulador[nombrecat] = (acumulador[nombrecat] || 0) + parseFloat(gasto.monto);
+          return acumulador;
+        }, {});
+        
+        for (const [nombreCat, monto] of Object.entries(gastosSumados)) {
+          yOffset = addContentToPage(`Categoría: ${nombreCat} - Monto Total: $${monto.toFixed(2)}`, yOffset, 200);
+        }
+        
+      }
+    
+      // Resto de la información
+      yOffset = addContentToPage(`Total de Ingresos: $${report.totalIngresos}`, yOffset, 200);
+      yOffset = addContentToPage(`Ahorro: $${report.ahorro}`, yOffset, 200);
     }
     
-    
-    pdfDoc.text(`Total de Gastos: $${report.totalGastos}`, 10, 90);
-    pdfDoc.text(`Total de Ingresos: $${report.totalIngresos}`, 10, 105);
-    pdfDoc.text(`Ahorro: $${report.ahorro}`, 10, 120);
-    
     // Pie de Página
-    pdfDoc.setLineWidth(1.5); 
-    pdfDoc.line(10, 135, 200, 135);
-    pdfDoc.setFontSize(12);
-    pdfDoc.text("¡Gracias por utilizar nuestro servicio de reportes financieros!", 105, 142, { align: "center" });
+    addContentToPage("¡Gracias por utilizar nuestro servicio de reportes financieros!", yOffset, 200);
     
     // Guardar el PDF
     pdfDoc.save(`Informe_${report.id_reportes}.pdf`);
   }    
-
     
   
 
@@ -397,7 +411,7 @@ const handleBuscarRepo = () => {
             </tbody>
           </table>
         </div>
-      
+       
     </div>
 
       </div>
