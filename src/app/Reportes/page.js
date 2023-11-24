@@ -270,31 +270,34 @@ const reportesId = nuevoId;
   
     const pdfDoc = new jsPDF();
 
-    const addContentToPage = (content, yOffset, maxY) => {
+    const addContentToPage = (content, yOffset, maxY, fontSize = 14, color = "black") => {
       if (yOffset > maxY) {
         pdfDoc.addPage();
         yOffset = 15; // Ajusta el valor según sea necesario para el espacio del encabezado en la nueva página.
       }
     
+      pdfDoc.setTextColor(color);
+      pdfDoc.setFontSize(fontSize);
       pdfDoc.text(content, 10, yOffset);
-      return yOffset + 10; // Incrementa según sea necesario para el espacio entre líneas.
+    
+      return yOffset + 15; // Incrementa según sea necesario para el espacio entre líneas.
     };
     
     // Título y Estilo
     let yOffset = 15;
-    yOffset = addContentToPage("Reporte Financiero", yOffset, 200);
+    yOffset = addContentToPage("Reporte Financiero", yOffset, 200, 18, "blue");
     
     // Contenido del Informe
     yOffset = addContentToPage(`Tipo de Informe: ${report.tipo == 'daily' ? 'Diario' : 'Mensual'}`, yOffset, 200);
     yOffset = addContentToPage(`Fecha del Informe: ${report.fecha_reportes}`, yOffset, 200);
     yOffset = addContentToPage(`Nombre de la Tarjeta: ${selectedCard2 ? selectedCard2 : 'Sin Tarjeta'}`, yOffset, 200);
-   
+    
     if (selectedReportInform === "general") {
-      yOffset = addContentToPage(`Total de Gastos: $${report.totalGastos}`, yOffset, 200);
+      yOffset = addContentToPage(`Total de Gastos: $${report.totalGastos}`, yOffset, 200, 16, "red");
     } else {
       // Gastos por categoría
       if (gastosPorCategoria.length > 0) {
-        yOffset = addContentToPage("Gastos por Categoría:", yOffset, 200);
+        yOffset = addContentToPage("Gastos por Categoría:", yOffset, 200, 16, "green");
     
         // Sumar montos de gastos con el mismo ID
         const gastosSumados = gastosPorCategoria.reduce((acumulador, gasto) => {
@@ -303,25 +306,24 @@ const reportesId = nuevoId;
           acumulador[nombrecat] = (acumulador[nombrecat] || 0) + parseFloat(gasto.monto);
           return acumulador;
         }, {});
-        
+    
         for (const [nombreCat, monto] of Object.entries(gastosSumados)) {
-          yOffset = addContentToPage(`Categoría: ${nombreCat} - Monto Total: $${monto.toFixed(2)}`, yOffset, 200);
+          yOffset = addContentToPage(`Categoría: ${nombreCat} - Monto Total: $${monto.toFixed(2)}`, yOffset, 200, 14, "blue");
         }
-        
       }
     
       // Resto de la información
-      yOffset = addContentToPage(`Total de Ingresos: $${report.totalIngresos}`, yOffset, 200);
-      yOffset = addContentToPage(`Ahorro: $${report.ahorro}`, yOffset, 200);
+      yOffset = addContentToPage(`Total de Ingresos: $${report.totalIngresos}`, yOffset, 200, 16, "purple");
+      yOffset = addContentToPage(`Ahorro: $${report.ahorro}`, yOffset, 200, 16, "orange");
     }
     
     // Pie de Página
-    addContentToPage("¡Gracias por utilizar nuestro servicio de reportes financieros!", yOffset, 200);
+    addContentToPage("¡Gracias por utilizar nuestro servicio de reportes financieros!", yOffset, 200, 14, "gray");
     
     // Guardar el PDF
     pdfDoc.save(`Informe_${report.id_reportes}.pdf`);
-  }    
-    
+     
+  }
   
 
   return (
