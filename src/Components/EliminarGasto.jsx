@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import 'react-bootstrap'
 import Button from 'react-bootstrap/Button';
 import GastosApi from '@/app/api_fronted/gastos';
-
+import Toast from 'react-bootstrap/Toast';
 import Pagination from 'react-bootstrap/Pagination';
 const EliminarGasto = ({ListaGastos,selectedCardId,listcards,listCategorias,totalExpenseAmount }) => {
     let fechaArray = []; // Declarar fechaArray fuera del bloque if
@@ -25,6 +25,7 @@ const EliminarGasto = ({ListaGastos,selectedCardId,listcards,listCategorias,tota
 
     const [currentPage, setCurrentPage] = useState(1); // Nuevo estado para la página actual
   const itemsPerPage = 3; // Número de elementos por página
+  const [showNotification, setShowNotification] = useState(false);
    
     if(selectedCardId){
         const gastosAplanados = ListaGastos.flat();
@@ -113,6 +114,18 @@ const EliminarGasto = ({ListaGastos,selectedCardId,listcards,listCategorias,tota
             console.error('Error en la solicitud de eliminación:', error);
         }
     };
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+          setShowNotification(true);
+        }, 5000);
+    
+        // Limpiar el intervalo cuando el componente se desmonta
+        return () => clearInterval(intervalId);
+      }, []);
+    
+      const handleNotificationClose = () => {
+        setShowNotification(false);
+      };
     return(
         <div>
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"></link>
@@ -238,7 +251,15 @@ const EliminarGasto = ({ListaGastos,selectedCardId,listcards,listCategorias,tota
                 </Pagination>
             </div>
 
-            
+            <div>
+            <Toast show={showNotification} onClose={handleNotificationClose}>
+        <Toast.Header>
+          <strong className="me-auto">Recordatorio</strong>
+          <small>Justo ahora</small>
+        </Toast.Header>
+        <Toast.Body>No olvides actualizar tus ingresos.</Toast.Body>
+      </Toast>
+            </div>
         </div>
     );
   
