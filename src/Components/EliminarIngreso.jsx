@@ -3,6 +3,8 @@ import TotalIncomesNew from './TotalIncomesNew';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import IngresosApi from "@/app/api_fronted/ingresos.js"
+
+import Pagination from 'react-bootstrap/Pagination';
 const EliminarIngreso = ({ ListaIngresos ,selectedCardId,totalIncomeAmount, listCategorias}) => {
     let fechaArray = []; // Declarar fechaArray fuera del bloque if
     let idArray = []; // Declarar idArray
@@ -19,6 +21,9 @@ const EliminarIngreso = ({ ListaIngresos ,selectedCardId,totalIncomeAmount, list
     const [isEditing, setIsEditing] = useState(false);
     const [montos,setMontos]= useState({});
     const [editingRows, setEditingRows] = useState({});
+
+    const [currentPage, setCurrentPage] = useState(1); // Nuevo estado para la página actual
+  const itemsPerPage = 3; // Número de elementos por página
    
     if(selectedCardId){
        
@@ -148,7 +153,9 @@ const EliminarIngreso = ({ ListaIngresos ,selectedCardId,totalIncomeAmount, list
 
                 </thead>
                 <tbody>
-                    {ingresoFiltrado.map((ingreso) => (
+                    {ingresoFiltrado
+                    .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+                    .map((ingreso) => (
                         <tr key={ingreso.id_ingresos}>
                             <th scope='row'>{ingreso.id_ingresos}</th>
                             <td>
@@ -224,6 +231,16 @@ const EliminarIngreso = ({ ListaIngresos ,selectedCardId,totalIncomeAmount, list
                 </tbody>
                 
             </table>
+
+            <div>
+                <Pagination>
+                    {[...Array(Math.ceil(ingresoFiltrado.length / itemsPerPage)).keys()].map((number) => (
+                    <Pagination.Item key={number + 1} active={number + 1 === currentPage} onClick={() => setCurrentPage(number + 1)}>
+                        {number + 1}
+                    </Pagination.Item>
+                    ))}
+                </Pagination>
+            </div>
 
             
         </div>
