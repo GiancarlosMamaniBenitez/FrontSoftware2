@@ -14,7 +14,7 @@ import LimitgastoApi from "../api_fronted/Limitgasto";
 
 import ReportesApi from "../api_fronted/reportes";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
+import Chart from '@/Components/Chart';
 import { faCircleDown, faSyncAlt } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from "next/navigation";
 const Reports = () => {
@@ -29,7 +29,7 @@ const Reports = () => {
   const [selectedReportInform, setSelectedReportInform] = useState("general");
   const [selectedReportCategory, setSelectedReportCategory] = useState("");
   const [reportData, setReportData] = useState(null)  ;
-
+ 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [sesion , setSesion] = useState({});
  const [usuarioRepo , setUsuarioRepo] = useState([])
@@ -47,6 +47,8 @@ const Reports = () => {
   const [ listReport , setListReport ] = useState([])
   const [ userReport, setUserReport] = useState([]);
   const router = useRouter();
+
+  
   const LoadData = async() =>{
     const result = await TarjetasApi.findAll();
     const result1  = await IngresosApi.findAll();
@@ -64,11 +66,9 @@ const Reports = () => {
     setlistMeta(result6.data)
     setListLimit(result7.data)
     setListReport(result8.data)
-    
-  
    
   }
-    
+
   const handleOnLoad = () => {
 
     let sesionGuardada = localStorage.getItem("sesion");
@@ -78,10 +78,12 @@ const Reports = () => {
                
 }
 
+  
+
 useEffect(() => {
     
   handleOnLoad();
-  LoadData()
+  LoadData();
   
       
 }, []);
@@ -236,8 +238,8 @@ const reportesId = nuevoId;
       ahorro: savings,
       
     };
- 
-
+    
+  
   console.log(report);
       
         try {
@@ -248,7 +250,8 @@ const reportesId = nuevoId;
           if (response && response.status === 200) {
             alert('Reporte generado exitosamente!');
             setUsuarioRepo([...usuarioRepo, response.data]);
-          } else {
+          } 
+          else {
             alert('Error al generar el reporte');
           }
         } catch (error) {
@@ -267,7 +270,7 @@ const reportesId = nuevoId;
     console.log(selectedCard)
 
   
-  
+    
     const pdfDoc = new jsPDF();
 
     const addContentToPage = (content, yOffset, maxY, fontSize = 14, color = "black") => {
@@ -322,7 +325,8 @@ const reportesId = nuevoId;
     
     // Guardar el PDF
     pdfDoc.save(`Informe_${report.id_reportes}.pdf`);
-     
+    
+    
   }
   
 
@@ -339,6 +343,11 @@ const reportesId = nuevoId;
             userCards={listcards.filter((e) => e.id_usuario == sesion.id)}
             handleSelectedCardChange={handleSelectedCardChange}
           />
+        </div>
+
+        <div className="chart-container" style = {{width:"450px", height:"225px"}}>
+          <h2 className="chart-title">Gráfico Circular</h2>
+          <Chart Ingresos = {100} Gastos= {200}/>
         </div>
 
         <div  className="mx-auto">
