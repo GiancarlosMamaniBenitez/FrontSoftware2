@@ -160,6 +160,7 @@ const redirectToHome = () => {
       const idUser = usuario.id;
       const card = {
          // Aumentamos el ID en 1
+        id: nuevoId,
         cardType: cardType,
         cvv: cvv,  
         number: number,

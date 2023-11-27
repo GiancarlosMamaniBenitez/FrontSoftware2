@@ -11,7 +11,7 @@ import UsuariosApi from "../api_fronted/usuarios";
 import CategoriasApi from "../api_fronted/categorias";
 import MetaApi from "../api_fronted/meta";
 import LimitgastoApi from "../api_fronted/Limitgasto";
-import Chart from "@/Components/Chart";
+
 import html2canvas from 'html2canvas';
 import ReportesApi from "../api_fronted/reportes";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -295,10 +295,7 @@ const reportesId = nuevoId;
     yOffset = addContentToPage(`Tipo de Informe: ${report.tipo == 'daily' ? 'Diario' : 'Mensual'}`, yOffset, 200);
     yOffset = addContentToPage(`Fecha del Informe: ${report.fecha_reportes}`, yOffset, 200);
     yOffset = addContentToPage(`Nombre de la Tarjeta: ${selectedCard2 ? selectedCard2 : 'Sin Tarjeta'}`, yOffset, 200);
-    const chartRef = useRef(null);
-    useEffect(() => {
-      chartRef.current = <Chart Ingresos={100} Gastos={200} />;
-    }, [report.totalIngresos, report.totalGastos]);
+   
     if (selectedReportInform === "general") {
       yOffset = addContentToPage(`Total de Gastos: $${report.totalGastos}`, yOffset, 200, 16, "red");
     } else {
@@ -319,28 +316,7 @@ const reportesId = nuevoId;
         }
       }
       // Renderizar el gráfico en un elemento invisible
-  const chartRef = useRef(null);
-  useEffect(() => {
-    chartRef.current = document.createElement('div');
-    document.body.appendChild(chartRef.current);
-
-    const renderChart = async () => {
-      ReactDOM.render(
-        <Chart Ingresos={report.totalIngresos} Gastos={report.totalGastos} />,
-        chartRef.current
-      );
-      await new Promise((resolve) => setTimeout(resolve, 500)); // Esperar un tiempo para asegurarse de que se haya renderizado
-
-      const imageData = chartRef.current.getElementsByTagName('canvas')[0].toDataURL('image/png');
-      pdfDoc.addImage(imageData, 'PNG', 10, yOffset, 180, 180);
-      yOffset += 200;
-
-      ReactDOM.unmountComponentAtNode(chartRef.current);
-      document.body.removeChild(chartRef.current);
-    };
-
-    renderChart();
-  }, [report.totalIngresos, report.totalGastos]);
+ 
       // Resto de la información
       yOffset = addContentToPage(`Total de Ingresos: $${report.totalIngresos}`, yOffset, 200, 16, "purple");
       yOffset = addContentToPage(`Ahorro: $${report.ahorro}`, yOffset, 200, 16, "orange");
@@ -373,7 +349,7 @@ const reportesId = nuevoId;
 
         <div className="chart-container" style = {{width:"450px", height:"225px"}}>
           <h2 className="chart-title">Gráfico Circular</h2>
-          <Chart Ingresos = {100} Gastos= {200}/>
+          
         </div>
 
         <div  className="mx-auto">

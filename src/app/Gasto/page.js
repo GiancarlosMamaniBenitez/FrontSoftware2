@@ -226,6 +226,7 @@ const [expensesChanged, setExpensesChanged] = useState(false);
 
       try {
         const response = await GastosApi.create(expense);
+        setListGastos([...listGastos, response.data]);
         const mensaje = "Se añadió el gasto"
         
         setListGastos([...listGastos, response.data]);
@@ -234,6 +235,7 @@ const [expensesChanged, setExpensesChanged] = useState(false);
         
         setNewExpense(0);
         setExpenseCategory();
+        calculateTotalsExpenses()
         
         //calculateTotals(); // Calcular totales después de actualizar los datos
       } catch (error) {
@@ -296,6 +298,7 @@ const [expensesChanged, setExpensesChanged] = useState(false);
 
 
       const totalExpenseAmount1 = cardExpenses.reduce((total, expense) => total + parseFloat(expense.monto), 0);
+      console.log("total", totalExpenseAmount1)
       setTotalExpenseAmount(totalExpenseAmount1)
       
     }
