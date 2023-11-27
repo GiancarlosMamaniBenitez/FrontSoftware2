@@ -168,14 +168,14 @@ useEffect(() => {
     <ToastContainer></ToastContainer>
     <div className="register-container">
       
-      <h1>Sign Up for</h1>
+      <h1>Regístrate en</h1>
       <img src="https://cdn.discordapp.com/attachments/1025977476096204862/1162442035278659604/logo-name.jpeg?ex=653bf382&is=65297e82&hm=530a33fa80ce87770b863c679e0da9e2cfa806c99cfea4f8bf423de6a7ee639f&" alt="" />
 
       <input
         className="register-input"
         type="text"
         name="firstName"
-        placeholder="First Name"
+        placeholder="Nombre"
         value={nombres}
         onChange={(event) => {
           if (nameRegex.test(event.target.value)) {
@@ -188,7 +188,7 @@ useEffect(() => {
         className="register-input"
         type="text"
         name="lastName"
-        placeholder="Last Name"
+        placeholder="Apellido"
         value={apellidos}
         onChange={(event) => {
           if (nameRegex.test(event.target.value)) {
@@ -210,7 +210,7 @@ useEffect(() => {
         className="register-input"
         type="text"
         name="username"
-        placeholder="Username"
+        placeholder="Nombre de usuario"
         value={username}
         onChange={(event) => setUsername(event.target.value)}
       />
@@ -219,7 +219,7 @@ useEffect(() => {
         className="register-input"
         type="password"
         name="password"
-        placeholder="Password"
+        placeholder="Contraseña"
         value={contrasenia}
         onChange={(event) => {
           setPassword(event.target.value);
@@ -230,24 +230,24 @@ useEffect(() => {
         className="register-input"
         type="password"
         name="confirmPassword"
-        placeholder="Confirm Password"
+        placeholder="Confirmar contraseña"
         value={confirmPassword}
         onChange={(event) => {
           setConfirmPassword(event.target.value);
         }}
       />
       <button className="register-button" onClick={handleSubmit}>
-        Create your new Account
+        Crear cuenta
       </button>
       <hr></hr>
-      <span onClick={() => router.push('/Login')} className="already-button">Tienes una cuenta?, Ingresa aquí</span>
+      <span onClick={() => router.push('/Login')} className="already-button">Tienes una cuenta? Ingresa aquí</span>
            
 
       <hr></hr>
-      <a className="terms">By selecting Create your new Account, you agree to our <a> </a>
+      <a className="terms">Al seleccionar Crear Cuenta, está aceptando nuestros <a> </a>
         
         <Link href="./Terms">
-          Terms and Conditions
+          Términos y Condiciones
         </Link>
       </a>
     </div>

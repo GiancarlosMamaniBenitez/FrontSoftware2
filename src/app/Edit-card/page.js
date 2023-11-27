@@ -160,7 +160,7 @@ const EditCard = () => {
         />
         <hr />
         <button className="add-button" onClick={handleSubmit}>
-          Save Changes
+          Guardar Cambios
         </button>
       </div>
     </div>

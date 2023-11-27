@@ -72,8 +72,8 @@ const Login = () => {
       <img src="https://cdn.discordapp.com/attachments/1025977476096204862/1162442034884390962/logo-colored.jpeg?ex=653bf382&is=65297e82&hm=89132243369e55b33a9c51123383eeaa0f1f95e3116481e49d82043faab9a0fc&" alt="" />
       <form onSubmit={handleSubmit}>
         <input className="login-input" type="text" name="email" placeholder="Email" value={email} onChange={(event) => setEmail(event.target.value)} />
-        <input className="login-input" type="password" name="password" placeholder="Password" value={password} onChange={(event) => setPassword(event.target.value)} />
-        <button className="login-button" type="submit">Sign in</button>
+        <input className="login-input" type="password" name="password" placeholder="Contraseña" value={password} onChange={(event) => setPassword(event.target.value)} />
+        <button className="login-button" type="submit">Ingresar</button>
       </form>
       
       <hr></hr>
@@ -85,7 +85,7 @@ const Login = () => {
       </div><div>
     
       <button className="create-button">
-        <Link href="/Signup" className="create-link">Create a new account</Link>
+        <Link href="/Signup" className="create-link">Crear Cuenta</Link>
       </button>
       </div>
       </div>

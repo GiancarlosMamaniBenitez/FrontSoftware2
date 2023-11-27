@@ -70,6 +70,7 @@ function VerTarjeta() {
     const result = await TarjetasApi.remove(eliminada.id);
     // Actualiza el estado de 'cards' para reflejar el cambio
     setListCards(updatedCards);
+    
     }
   
 

@@ -140,12 +140,15 @@ const redirectToHome = () => {
       }
       
       // Encontramos el ID más alto entre las tarjetas del usuario actual
-      const highestCardId = (usuario.cards || []).reduce((maxId, card) => {
-        return card.id > maxId ? card.id : maxId;
-      }, 0);
+      const ultimoID = Cards[Cards.length - 1];
+      console.log("ultimo reporte",Cards)
+      console.log("ultimo reporte",ultimoID)
+      // Genera el nuevo ID sumándole 1 al ID del último reporte
+      const nuevoId = ultimoID ? ultimoID.id + 1 : 1;
       const idUser = usuario.id;
       const card = {
          // Aumentamos el ID en 1
+        id: nuevoId,  
         cardType: cardType,
         cvv: cvv,  
         number: number,
@@ -187,7 +190,7 @@ const redirectToHome = () => {
       
       //localStorage.setItem("sesion", JSON.stringify(card));
       console.log(sesion)
-      setCardCounter(highestCardId + 2); // Aumentamos el contador
+      // Aumentamos el contador
       
      
     }
@@ -247,7 +250,7 @@ function flipCard() {
             <div className="chip"></div>
             <div id="card-number">{number}</div>
             <div id="card-name">{sesion.nombre}</div>
-            <div id="valid-until">Valid Until</div>
+            <div id="valid-until">Válido hasta</div>
             <div id="expiry-date"></div>
             <div id="expiry-date2"></div>
             <div id="nombre-tarjeta"><img src={`/${cardType}.png`} alt={cardType} className="card-image" /></div>
