@@ -201,14 +201,26 @@ const Finances = () => {
       const expenseID = listGastos.length + 1;
       const currentDate = getCurrentDate();
       
+      const gastoidmasalto = listGastos.reduce((tarjetaMax, tarjetaActual) => {
+        return tarjetaActual.id_gastos > (tarjetaMax ? tarjetaMax.id_gastos : 0) ? tarjetaActual : tarjetaMax;
+      }, null);
+      console.log(gastoidmasalto)
+      // Imprimir la tarjeta con el ID más alto
+      console.log("Tarjeta con el ID más alto:", gastoidmasalto);
+      
+      // Generar el nuevo ID sumándole 1 al ID de la tarjeta con el ID más alto
+      const nuevoId = gastoidmasalto ? gastoidmasalto.id_gastos + 1 : 1;
+      
+      console.log("Nuevo ID:", nuevoId);
 
+      const expense = { id_gastos: nuevoId, monto: newExpense, fecha_gastos: currentDate, id_categoria: expenseCategory, id_tarjeta: selectedCard.id }
 
-      const expense = { id_gastos: expenseID, monto: newExpense, fecha_gastos: currentDate, id_categoria: expenseCategory, id_tarjeta: selectedCard.id }
-
+     
 
       try {
         const response = await GastosApi.create(expense);
         const mensaje = "Se añadió el gasto"
+        setListGastos([...listGastos, response.data]);
         notifySuccess(mensaje)
         LoadData(); // Esperar a que LoadData termine antes de continuar
         
