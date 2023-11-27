@@ -124,7 +124,7 @@ const EliminarGasto = ({ListaGastos,selectedCardId,listcards,listCategorias,tota
                 // Eliminación exitosa
                 alert('Eliminación exitosa');
                 console.log(ingresoId)
-                const nuevosgastos = listGastos.filter((r) => r.id_gastos !== ingresoId);
+                const nuevosgastos = ListaGastos.filter((r) => r.id_gastos !== ingresoId);
                 setListGastos(nuevosgastos);
                 console.log(nuevosgastos)
                 handleOnLoadAct();
