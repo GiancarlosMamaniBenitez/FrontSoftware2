@@ -67,7 +67,18 @@ function VerTarjeta() {
     const updatedCards = listcards.filter((elem) => elem.id !== id);
     const eliminada = listcards.find((elem) => elem.id == id);
     console.log(eliminada.id)
-    const result = await TarjetasApi.remove(eliminada.id);
+
+    const response = await TarjetasApi.remove(eliminada.id);
+ 
+    if (response && response.status === 200) {
+      // Eliminación exitosa
+      alert('Eliminación exitosa');
+      const Nuevalist = listcards.filter((r) => r.id !== eliminada.id);
+      setListCards(Nuevalist);
+  } else {
+      // Manejo de errores en caso de que algo salga mal en el backend
+      alert('Error al eliminar ingreso');
+  }
     // Actualiza el estado de 'cards' para reflejar el cambio
     setListCards(updatedCards);
     }
