@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 //Toast
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"
+import { listItemTextClasses } from "@mui/material";
 
 const SignUp = () => {
 
@@ -21,11 +22,25 @@ const SignUp = () => {
   const [contrasenia, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [email, setEmail] = useState("");
-  
+  const [listUsuarios, setListUsuarios] = useState([]);
 
   const nameRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/;
 const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{5,}$/;
+const LoadData = async() =>{
+  const result3 = await UsuariosApi.findAll();
+
+  setListUsuarios(result3.data)
+
  
+}
+
+useEffect(() => {
+    
+
+  LoadData();
+  
+      
+}, []);
 
   const notifyError = (mensaje) => {
     toast.error(mensaje , {
@@ -79,7 +94,14 @@ const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{5
       return;
     }
 
-      const userId = usuarios.length + 1;
+          const ultimoID = listUsuarios[listUsuarios.length - 1];
+          console.log("ultimo reporte",listUsuarios)
+          console.log("ultimo reporte",ultimoID)
+      // Genera el nuevo ID sumándole 1 al ID del último reporte
+      const nuevoId = ultimoID ? ultimoID.id + 1 : 1;
+
+      // Utiliza el nuevo ID en tu lógica
+      const userId = nuevoId
       const user = {
         id: userId,
         nombres,
@@ -119,7 +141,7 @@ const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{5
       //console.log("Lista de usuarios actualizada:", usersList);
       // Aquí puedes llamar a tu función registrarUsuario si es necesario
       // registrarUsuario(email, password, firstName, lastName, username);
-      //window.location.href = `/Congrats?userId=${userId}`;
+      //window.location.href = /Congrats?userId=${userId};
     
   };
   
@@ -233,4 +255,4 @@ const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{5
   );
 };
 
-export default SignUp;
+export default SignUp;
