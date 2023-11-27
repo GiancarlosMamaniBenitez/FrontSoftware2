@@ -213,7 +213,7 @@ const Profile = () => {
         <Link href="/">
           <button className="edit-button">Regresar</button>
         </Link>
-          <button className ="eliminar-button" onClick ={handleDelete}>Eliminar Usuario</button>
+          <button className ="eliminar-button" onClick ={handleDelete}>Eliminar Cuenta</button>
       </div>
     </div>
     

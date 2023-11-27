@@ -159,7 +159,7 @@ const redirectToHome = () => {
 
       const idUser = usuario.id;
       const card = {
-         id: nuevoId,
+         // Aumentamos el ID en 1
         cardType: cardType,
         cvv: cvv,  
         number: number,
@@ -201,7 +201,7 @@ const redirectToHome = () => {
       
       //localStorage.setItem("sesion", JSON.stringify(card));
       console.log(sesion)
-      setCardCounter(highestCardId + 2); // Aumentamos el contador
+      // Aumentamos el contador
       
      
     }
@@ -261,7 +261,7 @@ function flipCard() {
             <div className="chip"></div>
             <div id="card-number">{number}</div>
             <div id="card-name">{sesion.nombre}</div>
-            <div id="valid-until">Valid Until</div>
+            <div id="valid-until">Válido hasta</div>
             <div id="expiry-date"></div>
             <div id="expiry-date2"></div>
             <div id="nombre-tarjeta"><img src={`/${cardType}.png`} alt={cardType} className="card-image" /></div>

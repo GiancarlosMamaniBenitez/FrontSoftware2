@@ -81,6 +81,7 @@ function VerTarjeta() {
   }
     // Actualiza el estado de 'cards' para reflejar el cambio
     setListCards(updatedCards);
+    
     }
   
 
