@@ -13,6 +13,7 @@ import TarjetasApi from "../api_fronted/tarjetas";
 import $ from 'jquery';
 
 const AddCard = ({ selectedCard }) => {
+  const [listCards,setListCards] = useState([]);
   const [number, setNumber] = useState("");
   const [mm, setMm] = useState("");
   const [yyyy, setYyyy] = useState("");
@@ -42,6 +43,7 @@ const AddCard = ({ selectedCard }) => {
       try{
           const result = await TarjetasApi.findAll();
           setCards(result.data);
+          setListCards(result.data)
           console.log(usuarios)
       } catch (error) {
           console.error('Error al obtener usuarios:', error);
@@ -143,9 +145,21 @@ const redirectToHome = () => {
       const highestCardId = (usuario.cards || []).reduce((maxId, card) => {
         return card.id > maxId ? card.id : maxId;
       }, 0);
+      const tarjetaConIDMasAlto = listCards.reduce((tarjetaMax, tarjetaActual) => {
+        return tarjetaActual.id > (tarjetaMax ? tarjetaMax.id : 0) ? tarjetaActual : tarjetaMax;
+      }, null);
+      
+      // Imprimir la tarjeta con el ID más alto
+      console.log("Tarjeta con el ID más alto:", tarjetaConIDMasAlto);
+      
+      // Generar el nuevo ID sumándole 1 al ID de la tarjeta con el ID más alto
+      const nuevoId = tarjetaConIDMasAlto ? tarjetaConIDMasAlto.id + 1 : 1;
+      
+      console.log("Nuevo ID:", nuevoId);
+
       const idUser = usuario.id;
       const card = {
-         // Aumentamos el ID en 1
+         id: nuevoId,
         cardType: cardType,
         cvv: cvv,  
         number: number,
