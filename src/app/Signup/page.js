@@ -141,7 +141,7 @@ useEffect(() => {
       //console.log("Lista de usuarios actualizada:", usersList);
       // Aquí puedes llamar a tu función registrarUsuario si es necesario
       // registrarUsuario(email, password, firstName, lastName, username);
-      //window.location.href = `/Congrats?userId=${userId}`;
+      //window.location.href = /Congrats?userId=${userId};
     
   };
   
@@ -255,4 +255,4 @@ useEffect(() => {
   );
 };
 
-export default SignUp;
+export default SignUp;
