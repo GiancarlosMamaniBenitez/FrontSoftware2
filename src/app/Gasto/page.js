@@ -21,7 +21,7 @@ import LimiteGasto from '@/Components/LimiteGasto';
 const Finances = () => {
   const [selectedCard, setSelectedCard] = useState("");
   const [totalExpenseAmount, setTotalExpenseAmount] = useState(0);
-
+const [expensesChanged, setExpensesChanged] = useState(false);
   const [selectedCategorie, setSelectedCategorie] = useState("")
   const [selectedCategorieId, setSelectedCategorieId] = useState(0)
 
@@ -55,8 +55,15 @@ const Finances = () => {
 
 
   }
-
-
+  const updateGastosList = async () => {
+    try {
+      const result = await GastosApi.findAll();
+      setListGastos(result.data);
+    } catch (error) {
+      console.error('Error al actualizar la lista de gastos:', error);
+    }
+  };
+  
 
   const notifyError = (mensaje) => {
     toast.error( mensaje ,{
@@ -220,6 +227,7 @@ const Finances = () => {
       try {
         const response = await GastosApi.create(expense);
         const mensaje = "Se añadió el gasto"
+        
         setListGastos([...listGastos, response.data]);
         notifySuccess(mensaje)
         LoadData(); // Esperar a que LoadData termine antes de continuar
@@ -277,11 +285,12 @@ const Finances = () => {
 
 
 
-  const calculateTotalsExpenses = () => {
-
+  const calculateTotalsExpenses = async() => {
+   
+    
 
     if (selectedCard && listGastos.length > 0) {
-
+      
       const cardExpenses = listGastos.filter((expense) => expense.id_tarjeta === selectedCard.id);
       console.log("Gastos filtrados:", cardExpenses);
 
@@ -292,9 +301,35 @@ const Finances = () => {
     }
 
   };
+  const calculateNewTotalExpenseAmount = (gastoId, gastosList) => {
+    // Filtrar el gasto específico
+    const filteredGastos = gastosList.filter((gasto) => gasto.id_gastos !== gastoId);
+  
+    // Calcular el nuevo total de gastos
+    const newTotalExpenseAmount = filteredGastos.reduce((total, expense) => total + parseFloat(expense.monto), 0);
+  
+    return newTotalExpenseAmount;
+  };
+  
+  const updateTotalExpenseAmount = (gastoId) => {
+    // Calcular el nuevo total de gastos después de borrar el gasto con el ID gastoId
+    // Puedes usar la lista actualizada de gastos (listGastos) para recalcular el total
 
+    const updatedTotalExpenseAmount = calculateNewTotalExpenseAmount(gastoId, listGastos);
 
-
+    // Actualizar totalExpenseAmount en el estado
+    setTotalExpenseAmount(updatedTotalExpenseAmount);
+  };
+  const updateListGastos = async () => {
+    try {
+      const result = await GastosApi.findAll();
+      setListGastos(result.data);
+      console.log(listGastos)
+      calculateTotalsExpenses(); 
+    } catch (error) {
+      console.error('Error al actualizar la lista de gastos:', error);
+    }
+  };
 
   const handleSpendingLimitChange = (event) => {
 
@@ -363,10 +398,11 @@ const Finances = () => {
             </div>
             {selectedCard && (
               <div>
-                <div className="horizonta2">
+                <div className="horizonta2"> 
                   <div className="finanza">
                     <div className="finanza">
-                      <TotalExpenses totalExpenseAmount={totalExpenseAmount} />
+                    <TotalExpenses totalExpenseAmount={totalExpenseAmount} updateListGastos={updateListGastos} />
+        
                     </div>
                     <div className="finanza">
                       <LimiteGasto
@@ -400,14 +436,16 @@ const Finances = () => {
 
 
                   <div className='finanza'>
-                    <EliminarGasto
-                      ListaGastos={[listGastos]}
+                  <EliminarGasto
+                      listaGastos={listGastos}
                       selectedCardId={selectedCard.id}
                       listcards={listcards}
                       listCategorias={listCategorias}
                       totalExpenseAmount={totalExpenseAmount}
+                      updateListGastos={updateListGastos} // Pasa la función como prop
                       sesionId={sesion.id}
-                    /></div>
+                    />
+</div>
 
 
                 </div>

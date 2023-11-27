@@ -6,13 +6,14 @@ import Button from 'react-bootstrap/Button';
 import GastosApi from '@/app/api_fronted/gastos';
 import Toast from 'react-bootstrap/Toast';
 import Pagination from 'react-bootstrap/Pagination';
-const EliminarGasto = ({ListaGastos,selectedCardId,listcards,listCategorias,totalExpenseAmount }) => {
+const EliminarGasto =  ({ listaGastos,selectedCardId, listcards, listCategorias, totalExpenseAmount, updateListGastos, sesionId })  => {
     let fechaArray = []; // Declarar fechaArray fuera del bloque if
     let idArray = []; // Declarar idArray
     let gastoFiltrado = [];
     let catArray = [];
     let categoriaArray = [];
     const sinFiltro = "Sin filtro"
+    const [listGastos1, setListGastos1] = useState([])
     const [selectedDate, setSelectedDate] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedCatName, setSelectedCatName] = useState('');
@@ -26,27 +27,29 @@ const EliminarGasto = ({ListaGastos,selectedCardId,listcards,listCategorias,tota
     const [currentPage, setCurrentPage] = useState(1); // Nuevo estado para la página actual
   const itemsPerPage = 3; // Número de elementos por página
   const [showNotification, setShowNotification] = useState(false);
-  const [listGastos, setListGastos] = useState([]);
-  const LoadData = async() =>{
-    
-    const result2 = await GastosApi.findAll();
+ const [listGastos,setListGastos] = useState([listaGastos])
+  const LoadData = async () => {
 
+    const result2 = await GastosApi.findAll();
     setListGastos(result2.data)
-   
-    
-  
-   
+
+
   }
-  useEffect(() => {
   
-    
+  useEffect(() => {
+
    
     LoadData()
+
+
+
+
+    //tarjetaLocal();
 
   }, []);
 
     if(selectedCardId){
-        const gastosAplanados = ListaGastos.flat();
+        const gastosAplanados = listaGastos.flat();
        
         const catAplanados = listCategorias.flat();
  
@@ -105,6 +108,7 @@ const EliminarGasto = ({ListaGastos,selectedCardId,listcards,listCategorias,tota
             if (response && response.status === 200) {
                 // Registro exitoso, redirige a la página de inicio de sesión
                 alert('Actualización exitosa!');
+                setListGastos([...listGastos, response.data])
                 handleOnLoadAct();
             } else {
                 // Manejo de errores en caso de que algo salga mal en el backend
@@ -119,15 +123,23 @@ const EliminarGasto = ({ListaGastos,selectedCardId,listcards,listCategorias,tota
         // Realiza la eliminación del ingreso en la base de datos
         try {
             const response = await GastosApi.remove(ingresoId);
+   
+
             console.log('Response:', response);
             if (response && response.status === 200) {
                 // Eliminación exitosa
                 alert('Eliminación exitosa');
+                
+
                 console.log(ingresoId)
-                const nuevosgastos = ListaGastos.filter((r) => r.id_gastos !== ingresoId);
-                setListGastos(nuevosgastos);
+                updateListGastos();
+                updateTotalExpenseAmount(gastoId);
+                console.log(listaGastos)
+                const nuevosgastos = [...usuarioRepo, response.data].filter((r) => r.id_gastos !== ingresoId);
+                //setListGastos(nuevosgastos);
+                //updateGastosList();
                 console.log(nuevosgastos)
-                handleOnLoadAct();
+               
             } else {
                 // Manejo de errores en caso de que algo salga mal en el backend
                 alert('Error al eliminar ingreso');
