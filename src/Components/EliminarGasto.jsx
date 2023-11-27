@@ -26,7 +26,25 @@ const EliminarGasto = ({ListaGastos,selectedCardId,listcards,listCategorias,tota
     const [currentPage, setCurrentPage] = useState(1); // Nuevo estado para la página actual
   const itemsPerPage = 3; // Número de elementos por página
   const [showNotification, setShowNotification] = useState(false);
+  const [listGastos, setListGastos] = useState([]);
+  const LoadData = async() =>{
+    
+    const result2 = await GastosApi.findAll();
+
+    setListGastos(result2.data)
    
+    
+  
+   
+  }
+  useEffect(() => {
+  
+    
+   
+    LoadData()
+
+  }, []);
+
     if(selectedCardId){
         const gastosAplanados = ListaGastos.flat();
        
@@ -105,6 +123,10 @@ const EliminarGasto = ({ListaGastos,selectedCardId,listcards,listCategorias,tota
             if (response && response.status === 200) {
                 // Eliminación exitosa
                 alert('Eliminación exitosa');
+                console.log(ingresoId)
+                const nuevosgastos = ListaGastos.filter((r) => r.id_gastos !== ingresoId);
+                setListGastos(nuevosgastos);
+                console.log(nuevosgastos)
                 handleOnLoadAct();
             } else {
                 // Manejo de errores en caso de que algo salga mal en el backend
