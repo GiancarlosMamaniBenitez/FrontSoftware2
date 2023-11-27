@@ -201,19 +201,24 @@ const Finances = () => {
       const expenseID = listGastos.length + 1;
       const currentDate = getCurrentDate();
       
+      const gastoConIDMasAlto = listGastos.reduce((gastoMax, gastoActual) => {
+        return gastoActual.id_gastos > (gastoMax ? gastoMax.id_gastos : 0) ? gastoActual : gastoMax;
+      }, null);
+      const nuevoId = gastoConIDMasAlto ? gastoConIDMasAlto.id + 1 : 1;
 
-
-      const expense = { id_gastos: expenseID, monto: newExpense, fecha_gastos: currentDate, id_categoria: expenseCategory, id_tarjeta: selectedCard.id }
-
+      const expense = { id_gastos: nuevoId, monto: newExpense, fecha_gastos: currentDate, id_categoria: expenseCategory, id_tarjeta: selectedCard.id }
+      console.log(expense)
 
       try {
         const response = await GastosApi.create(expense);
+        setListGastos([...listGastos, response.data]);
         const mensaje = "Se añadió el gasto"
         notifySuccess(mensaje)
         LoadData(); // Esperar a que LoadData termine antes de continuar
         
         setNewExpense(0);
         setExpenseCategory();
+        calculateTotalsExpenses()
         
         //calculateTotals(); // Calcular totales después de actualizar los datos
       } catch (error) {
@@ -275,6 +280,7 @@ const Finances = () => {
 
 
       const totalExpenseAmount1 = cardExpenses.reduce((total, expense) => total + parseFloat(expense.monto), 0);
+      console.log("total", totalExpenseAmount1)
       setTotalExpenseAmount(totalExpenseAmount1)
       
     }
