@@ -2,7 +2,8 @@
 import React, { useRef, useEffect } from 'react';
 import { Pie } from 'react-chartjs-2';
 import html2canvas from 'html2canvas';
-
+import  {Chart as ChartJS, ArcElement, Tooltip, Legend} from 'chart.js';
+ChartJS.register(ArcElement, Tooltip,Legend);
 const Chart = ({ Ingresos, Gastos }) => {
   const options = {
     responsive: true,
@@ -23,15 +24,7 @@ const Chart = ({ Ingresos, Gastos }) => {
 
   const chartRef = useRef(null);
 
-  useEffect(() => {
-    if (chartRef.current) {
-      html2canvas(chartRef.current).then((canvas) => {
-        const imageData = canvas.toDataURL('image/png');
-        // Puedes hacer algo con la imagen, como mostrarla en un preview
-        console.log(imageData);
-      });
-    }
-  }, [Ingresos, Gastos]);
+ 
 
   return <Pie data={data} options={options} ref={chartRef} />;
 };

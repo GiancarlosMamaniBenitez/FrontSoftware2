@@ -11,10 +11,12 @@ import UsuariosApi from "../api_fronted/usuarios";
 import CategoriasApi from "../api_fronted/categorias";
 import MetaApi from "../api_fronted/meta";
 import LimitgastoApi from "../api_fronted/Limitgasto";
-
+import Chart from "@/Components/Chart";
 import html2canvas from 'html2canvas';
 import ReportesApi from "../api_fronted/reportes";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { usePDF } from 'react-to-pdf';
+
 
 import { faCircleDown, faSyncAlt } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from "next/navigation";
@@ -30,7 +32,8 @@ const Reports = () => {
   const [selectedReportInform, setSelectedReportInform] = useState("general");
   const [selectedReportCategory, setSelectedReportCategory] = useState("");
   const [reportData, setReportData] = useState(null)  ;
- 
+  const { toPDF, targetRef } = usePDF({filename: 'page.pdf'});
+
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [sesion , setSesion] = useState({});
  const [usuarioRepo , setUsuarioRepo] = useState([])
@@ -237,11 +240,12 @@ const reportesId = nuevoId;
       totalGastos: totalMontoGastosCat,
       totalIngresos: totalMonto,
       ahorro: savings,
+
       
     };
     
-  
-  console.log(report);
+  setReportData(report);
+  console.log(reportData);
       
         try {
           const response = await ReportesApi.create(report);
@@ -295,6 +299,7 @@ const reportesId = nuevoId;
     yOffset = addContentToPage(`Tipo de Informe: ${report.tipo == 'daily' ? 'Diario' : 'Mensual'}`, yOffset, 200);
     yOffset = addContentToPage(`Fecha del Informe: ${report.fecha_reportes}`, yOffset, 200);
     yOffset = addContentToPage(`Nombre de la Tarjeta: ${selectedCard2 ? selectedCard2 : 'Sin Tarjeta'}`, yOffset, 200);
+    yOffset = addContentToPage(`Categoría de Gastos: ${categorias ? categorias : 'Sin Categoría'}`, yOffset, 200);
    
     if (selectedReportInform === "general") {
       yOffset = addContentToPage(`Total de Gastos: $${report.totalGastos}`, yOffset, 200, 16, "red");
@@ -333,7 +338,7 @@ const reportesId = nuevoId;
   
 
   return (
-    <div className="text-center"> {/* Agregado para centrar todo */}
+    <div className="text-center" > {/* Agregado para centrar todo */}
       <NavBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} sesion={sesion}/>
       <div className={`reports-container${isSidebarOpen ? '-shifted' : ''} mx-auto`}>
         <h1 className="tituloReporte">Reportes</h1>
@@ -349,7 +354,7 @@ const reportesId = nuevoId;
 
         <div className="chart-container" style = {{width:"450px", height:"225px"}}>
           <h2 className="chart-title">Gráfico Circular</h2>
-          
+        
         </div>
 
         <div  className="mx-auto">
@@ -387,6 +392,14 @@ const reportesId = nuevoId;
           {refreshing && <FontAwesomeIcon icon={faSyncAlt} spin style={{ marginLeft: '5px' }} />}
         </button>
         <button className ="button-report" onClick={generateReport}>Generar Reporte</button>
+        <button className="button-report" onClick={() => toPDF()}>boton prueba</button>
+        <div ref={targetRef}>
+          <h1>Reporte xs</h1>
+          <Chart
+          Ingresos={100}
+          Gastos={200}
+          />
+         </div>
         <button className ="button-report" >Categorizar los gastos</button>
 
         <div className="table-container">
