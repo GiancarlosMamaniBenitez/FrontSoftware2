@@ -420,7 +420,7 @@ useEffect(() => {
 
   return (
     <div>
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"></link>
       <div className="">
         <NavBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} sesion={sesion} />
         <ToastContainer></ToastContainer>
@@ -439,13 +439,13 @@ useEffect(() => {
               />
             </div>
             {selectedCard && (
-              <div>
-                <div className="horizonta2">
-                  <div className="finanza">
-                    <div className="finanza">
+              <div className='container my-4 text-center'>
+                <div className="row">
+                  <div className="col-4">
+                    <div className="row">
                       <TotalIncomes totalIncomeAmount={totalIncomeAmount}  updateListIngresos={updateListIngresos}/>
                     </div>
-                    <div className="finanza">
+                    <div className="row">
                       <MetaIngreso
                         Meta={savingsGoal}
                         estadoBoton = {estadoBoton}
@@ -453,14 +453,14 @@ useEffect(() => {
                         onSaveClick={handleSaveClick}
                       />
                     </div>
-                    <div className="finanza">
+                    <div className="row">
                       <OrigenForm
                         newCategory={newOrigen}
                         onNewCategoryChange={(e) => setNewOrigen(e.target.value)}
                         addNewCategory={addNewOrigen}
                       />
                     </div>
-                    <div className="finanza">
+                    <div className="row">
                       <IncomeForm
                         newIncome={newIncome}
                         selectedCat={selectedOrigen}
@@ -476,7 +476,7 @@ useEffect(() => {
                   </div>
 
 
-                  <div className='finanza'>
+                  <div className='col-8'>
                     <EliminarIngreso
                       ListaIngresos={listIngresos}
                       selectedCardId={selectedCard.id}
