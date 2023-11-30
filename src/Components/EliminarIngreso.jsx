@@ -26,7 +26,7 @@ const EliminarIngreso = ({ ListaIngresos ,selectedCardId, totalIncomeAmount, lis
     const [editingRows, setEditingRows] = useState({});
 
     const [currentPage, setCurrentPage] = useState(1); // Nuevo estado para la página actual
-  const itemsPerPage = 3; // Número de elementos por página
+  const itemsPerPage = 5; // Número de elementos por página
   const [showNotification, setShowNotification] = useState(false);
    
     if(selectedCardId){

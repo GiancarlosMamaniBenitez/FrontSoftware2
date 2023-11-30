@@ -24,6 +24,7 @@ const Reports = () => {
   const [ nombreCat, setNombreCat] = useState("")
   const [gastosPorCategoria, setGastosPorCategoria] = useState([]);
   const[totalGastos1,setTotalGastos1] =useState()
+  const [totalIngresos, setTotalIngresos] = useState()
   const [selectedCard, setSelectedCard] = useState("");
   const [selectedCard2, setSelectedCard2] = useState("");
   const [refreshing, setRefreshing] = useState(false);
@@ -243,6 +244,14 @@ const reportesId = nuevoId;
 
       
     };
+    if(report){
+      setTotalGastos1(totalMontoGastosCat)
+      setTotalIngresos(totalMonto)
+    }
+    else{
+      setTotalGastos1(totalMontoGastosCat)
+      setTotalIngresos(totalMonto)
+    }
     
   setReportData(report);
   console.log(reportData);
@@ -396,8 +405,8 @@ const reportesId = nuevoId;
         <div ref={targetRef}>
           <h1>Reporte xs</h1>
           <Chart
-          Ingresos={100}
-          Gastos={200}
+          Ingresos={totalIngresos}
+          Gastos={totalGastos1}
           />
          </div>
         <button className ="button-report" >Categorizar los gastos</button>

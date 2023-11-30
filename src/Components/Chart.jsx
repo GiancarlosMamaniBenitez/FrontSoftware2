@@ -6,8 +6,8 @@ import  {Chart as ChartJS, ArcElement, Tooltip, Legend} from 'chart.js';
 ChartJS.register(ArcElement, Tooltip,Legend);
 const Chart = ({ Ingresos, Gastos }) => {
   const options = {
-    responsive: true,
-    maintainAspectRatio: false,
+    responsive: false,
+    maintainAspectRatio: true,
   };
 
   const data = {
