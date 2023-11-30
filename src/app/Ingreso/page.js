@@ -20,6 +20,7 @@ import MetaApi from '../api_fronted/meta';
 import MetaIngreso from '@/Components/MetaIngreso';
 import OrigenApi from '../api_fronted/origen';
 const Finances = () => {
+  const [isEditing, setIsEditing] = useState(false);
   const [selectedCard, setSelectedCard] = useState("");
   const [totalIncomeAmount, setTotalIncomeAmount] = useState(0);
 
@@ -52,14 +53,14 @@ const Finances = () => {
  
     setListCards(result.data)
     setListIngresos(result2.data)
-
+    console.log(listIngresos)
 
   }
 
 
 
-  const notifyError = (mensaje) => {
-    toast.error( mensaje ,{
+  const notifyInfo = (mensaje) => {
+    toast.info( mensaje ,{
       position: "bottom-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -91,6 +92,38 @@ const Finances = () => {
   /*
   
   */
+
+
+  const handleEdit = () => {
+    setIsEditing(true);
+   
+  };
+  const handleSave = async (ingresoId, monto) => {
+    setIsEditing(false);
+    
+    const dataUpdated = {
+        monto: monto
+    }
+    try {
+        
+        const response = await IngresosApi.update(ingresoId, dataUpdated)
+        LoadData()
+
+        if (response && response.status === 200) {
+            const mensaje = "Monto actualizado 🙌"
+          notifySuccess(mensaje)
+            
+        } else {
+            // Manejo de errores en caso de que algo salga mal en el backend
+            alert('Error al actualizar usuario');
+        }
+    } catch (error) {
+       }
+
+};
+
+
+
   //almacenar la sesion en la variable sesion
   const handleOnLoad = () => {
 
@@ -149,11 +182,6 @@ const Finances = () => {
         return
       }
 
-      else {
-        const mensaje = "Añade tus Ingresos 😉"
-        notifySuccess(mensaje)
-        return
-      }
       LoadData()
     }
     
@@ -198,11 +226,13 @@ const Finances = () => {
     if (newIncome > 0 && selectedCard && IncomeOrigen) {
       const IncomeID = listIngresos.length + 1;
       const currentDate = getCurrentDate();
-      
-
+      const ingresoidmasalto = listIngresos.reduce((tarjetaMax, tarjetaActual) => {
+        return tarjetaActual.id_ingresos > (tarjetaMax ? tarjetaMax.id_ingresos : 0) ? tarjetaActual : tarjetaMax;
+      }, null);
+      const nuevoId = ingresoidmasalto ? ingresoidmasalto.id_ingresos + 1 : 1;
 
       const income = { 
-        id_ingresos: IncomeID, 
+        id_ingresos: nuevoId, 
         monto: newIncome, 
         fecha_ingresos: currentDate, 
         id_origen: IncomeOrigen, 
@@ -295,6 +325,20 @@ const Finances = () => {
     console.log(savingsGoal)
 
   };
+
+  const handleDelete = async (ingresoId) => {
+    // Realiza la eliminación del ingreso en la base de datos
+    
+        const response = await IngresosApi.remove(ingresoId);
+        LoadData()
+        if (response && response.status === 200) {
+            // Eliminación exitosa
+            const mensaje = "Se eliminó el ingreso"
+            notifyInfo(mensaje)
+        }
+        
+    
+};
 
   const handleSaveClick = async () => {
     const userId = sesion.id
@@ -395,12 +439,15 @@ const Finances = () => {
 
                   <div className='finanza'>
                     <EliminarIngreso
-                      ListaIngresos={[listIngresos]}
+                      ListaIngresos={listIngresos}
                       selectedCardId={selectedCard.id}
                       listcards={listcards}
                       listCategorias={listOrigen}
                       totalIncomeAmount={totalIncomeAmount}
-                      sesionId={sesion.id}
+                      handleDelete={handleDelete}
+                      handleEdit={handleEdit}
+                      handleSave={handleSave}
+                      isEditing={isEditing}
                     /></div>
 
 

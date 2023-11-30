@@ -1,7 +1,7 @@
 const TotalIncomes = ({ totalIncomeAmount }) => (
   <div>
-    <h3>Total Incomes:</h3>
-    <p>Total Amount: ${totalIncomeAmount}</p>
+    <h3>Ingresos totales:</h3>
+    <p style={{fontSize: 30 }}> ${totalIncomeAmount}</p>
   </div>
 )
 export default TotalIncomes;

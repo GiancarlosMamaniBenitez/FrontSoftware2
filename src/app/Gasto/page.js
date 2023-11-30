@@ -19,6 +19,7 @@ import EliminarGasto from "@/Components/EliminarGasto.jsx"
 import LimitgastoApi from '../api_fronted/Limitgasto';
 import LimiteGasto from '@/Components/LimiteGasto';
 const Finances = () => {
+  const [isEditing, setIsEditing] = useState(false);
   const [selectedCard, setSelectedCard] = useState("");
   const [totalExpenseAmount, setTotalExpenseAmount] = useState(0);
 const [expensesChanged, setExpensesChanged] = useState(false);
@@ -77,6 +78,18 @@ const [expensesChanged, setExpensesChanged] = useState(false);
     })
   }
 
+  const notifyInfo = (mensaje) => {
+    toast.info( mensaje ,{
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined
+    })
+  }
+
   const notifySuccess = (mensaje) => {
     toast.success(mensaje , {
       position: "bottom-right",
@@ -97,7 +110,42 @@ const [expensesChanged, setExpensesChanged] = useState(false);
   }
   /*
   
+
+
+  
   */
+
+
+
+
+
+  const handleEdit = () => {
+    setIsEditing(true);
+   
+  };
+  const handleSave = async (gastoId, monto) => {
+    setIsEditing(false);
+    
+    const dataUpdated = {
+        monto: monto
+    }
+    try {
+        
+        const response = await GastosApi.update(gastoId, dataUpdated)
+        LoadData()
+
+        if (response && response.status === 200) {
+            const mensaje = "Monto actualizado 🙌"
+          notifySuccess(mensaje)
+            
+        } else {
+            // Manejo de errores en caso de que algo salga mal en el backend
+            alert('Error al actualizar usuario');
+        }
+    } catch (error) {
+       }
+
+};
   //almacenar la sesion en la variable sesion
   const handleOnLoad = () => {
 
@@ -304,35 +352,6 @@ const [expensesChanged, setExpensesChanged] = useState(false);
     }
 
   };
-  const calculateNewTotalExpenseAmount = (gastoId, gastosList) => {
-    // Filtrar el gasto específico
-    const filteredGastos = gastosList.filter((gasto) => gasto.id_gastos !== gastoId);
-  
-    // Calcular el nuevo total de gastos
-    const newTotalExpenseAmount = filteredGastos.reduce((total, expense) => total + parseFloat(expense.monto), 0);
-  
-    return newTotalExpenseAmount;
-  };
-  
-  const updateTotalExpenseAmount = (gastoId) => {
-    // Calcular el nuevo total de gastos después de borrar el gasto con el ID gastoId
-    // Puedes usar la lista actualizada de gastos (listGastos) para recalcular el total
-
-    const updatedTotalExpenseAmount = calculateNewTotalExpenseAmount(gastoId, listGastos);
-
-    // Actualizar totalExpenseAmount en el estado
-    setTotalExpenseAmount(updatedTotalExpenseAmount);
-  };
-  const updateListGastos = async () => {
-    try {
-      const result = await GastosApi.findAll();
-      setListGastos(result.data);
-      console.log(listGastos)
-      calculateTotalsExpenses(); 
-    } catch (error) {
-      console.error('Error al actualizar la lista de gastos:', error);
-    }
-  };
 
   const handleSpendingLimitChange = (event) => {
 
@@ -340,6 +359,22 @@ const [expensesChanged, setExpensesChanged] = useState(false);
     setSpendingLimit(newLimit);
 
   };
+
+
+  const handleDelete = async (gastoId) => {
+    // Realiza la eliminación del ingreso en la base de datos
+    
+        const response = await GastosApi.remove(gastoId);
+        LoadData()
+        if (response && response.status === 200) {
+            // Eliminación exitosa
+            const mensaje = "Se eliminó el gasto"
+            notifyInfo(mensaje)
+        }
+        
+    
+};
+
 
   const handleSaveClick = async () => {
     const userId = sesion.id
@@ -404,7 +439,7 @@ const [expensesChanged, setExpensesChanged] = useState(false);
                 <div className="horizonta2"> 
                   <div className="finanza">
                     <div className="finanza">
-                    <TotalExpenses totalExpenseAmount={totalExpenseAmount} updateListGastos={updateListGastos} />
+                    <TotalExpenses totalExpenseAmount={totalExpenseAmount}  />
         
                     </div>
                     <div className="finanza">
@@ -445,8 +480,10 @@ const [expensesChanged, setExpensesChanged] = useState(false);
                       listcards={listcards}
                       listCategorias={listCategorias}
                       totalExpenseAmount={totalExpenseAmount}
-                      updateListGastos={updateListGastos} // Pasa la función como prop
-                      sesionId={sesion.id}
+                      handleDelete={handleDelete}
+                      handleEdit={handleEdit}
+                      handleSave={handleSave}
+                      isEditing={isEditing}
                     />
 </div>
 

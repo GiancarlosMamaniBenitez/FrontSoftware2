@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 import GastosApi from '@/app/api_fronted/gastos';
 import Toast from 'react-bootstrap/Toast';
 import Pagination from 'react-bootstrap/Pagination';
-const EliminarGasto =  ({ listaGastos,selectedCardId, listcards, listCategorias, totalExpenseAmount, updateListGastos, sesionId })  => {
+const EliminarGasto =  ({ listaGastos,selectedCardId, listcards, listCategorias, totalExpenseAmount, updateListGastos, handleDelete, handleSave, handleEdit, isEditing })  => {
     let fechaArray = []; // Declarar fechaArray fuera del bloque if
     let idArray = []; // Declarar idArray
     let gastoFiltrado = [];
@@ -20,33 +20,16 @@ const EliminarGasto =  ({ listaGastos,selectedCardId, listcards, listCategorias,
     const [selectedAmount, setSelectedAmount] = useState('');
     const [difference, setDifference] = useState(0);
     const [selectedItems, setSelectedItems] = useState([]);
-    const [isEditing, setIsEditing] = useState(false);
-    const [montos,setMontos]= useState({});
+    
+    const [montos,setMontos]= useState(0);
     const [editingRows, setEditingRows] = useState({});
 
     const [currentPage, setCurrentPage] = useState(1); // Nuevo estado para la página actual
   const itemsPerPage = 3; // Número de elementos por página
   const [showNotification, setShowNotification] = useState(false);
  const [listGastos,setListGastos] = useState([listaGastos])
-  const LoadData = async () => {
+ 
 
-    const result2 = await GastosApi.findAll();
-    setListGastos(result2.data)
-
-
-  }
-  
-  useEffect(() => {
-
-   
-    LoadData()
-
-
-
-
-    //tarjetaLocal();
-
-  }, []);
 
     if(selectedCardId){
         const gastosAplanados = listaGastos.flat();
@@ -78,76 +61,7 @@ const EliminarGasto =  ({ listaGastos,selectedCardId, listcards, listCategorias,
         
     }
 
-    const handleEdit = (ingresoId) => {
-        //setIsEditing(true);
-        setEditingRows((prevEditingRows) => ({
-            ...prevEditingRows,
-            [ingresoId]: true,
-          }));
-      };
-    const handleSave = async (ingresoId) => {
-        //setIsEditing(false);
-        setEditingRows((prevEditingRows) => ({
-            ...prevEditingRows,
-            [ingresoId]: false,
-          }));
-        
-          // Elimina la clave asociada al id_ingresos del estado montos
-        // Actualiza el estado montos con el nuevo valor del monto
-        setMontos((prevMontos) => ({
-            ...prevMontos,
-            [ingresoId]: prevMontos[ingresoId] !== undefined ? prevMontos[ingresoId] : gasto.monto,
-        }));
-
-        try {
-            // Aquí deberías llamar a tu API para actualizar el monto en la base de datos
-            // Puedes usar fetch o axios, por ejemplo
-            const response = await GastosApi.update(ingresoId, { monto: montos[ingresoId] })
-            handleOnLoadAct();
-
-            if (response && response.status === 200) {
-                // Registro exitoso, redirige a la página de inicio de sesión
-                alert('Actualización exitosa!');
-                setListGastos([...listGastos, response.data])
-                handleOnLoadAct();
-            } else {
-                // Manejo de errores en caso de que algo salga mal en el backend
-                alert('Error al actualizar usuario');
-            }
-        } catch (error) {
-           }
-
-    };
-
-    const handleDelete = async (ingresoId) => {
-        // Realiza la eliminación del ingreso en la base de datos
-        try {
-            const response = await GastosApi.remove(ingresoId);
-   
-
-            console.log('Response:', response);
-            if (response && response.status === 200) {
-                // Eliminación exitosa
-                alert('Eliminación exitosa');
-                
-
-                console.log(ingresoId)
-                updateListGastos();
-                updateTotalExpenseAmount(gastoId);
-                console.log(listaGastos)
-                const nuevosgastos = [...usuarioRepo, response.data].filter((r) => r.id_gastos !== ingresoId);
-                //setListGastos(nuevosgastos);
-                //updateGastosList();
-                console.log(nuevosgastos)
-               
-            } else {
-                // Manejo de errores en caso de que algo salga mal en el backend
-                alert('Error al eliminar ingreso');
-            }
-        } catch (error) {
-            console.error('Error en la solicitud de eliminación:', error);
-        }
-    };
+    
     useEffect(() => {
         const intervalId = setInterval(() => {
           setShowNotification(true);
@@ -205,22 +119,14 @@ const EliminarGasto =  ({ listaGastos,selectedCardId, listcards, listCategorias,
                                 <fieldset>
                                     {
                                     //isEditing
-                                    editingRows[gasto.id_gastos]  ? (
+                                    isEditing ? (
                                         <div>
                                             <input
-                                                id={`disabledMontoInput_${gasto.id_gastos}`}
+                                                
                                                 type="text"
                                                 placeholder="Editable input"
                                                 value={
-                                                    //ingreso.monto
-                                                    //monto
-                                                /* montos[ingreso.id_ingresos] !== undefined
-                                                    ? montos[ingreso.id_ingresos]
-                                                    : ingreso.monto*/
-                                                    montos[gasto.id_gastos] || gasto.monto
-
-                                                    
-                                                }
+                                                    montos}
                                                 onChange={(e) => {
                                                     console.log("Nuevo valor de monto:", e.target.value);
                                                     //setMonto(e.target.value);
@@ -228,10 +134,7 @@ const EliminarGasto =  ({ listaGastos,selectedCardId, listcards, listCategorias,
                                                     /*setDifference(
                                                         totalIncomeAmount - calculateTotalSelectedAmount(selectedItems)
                                                     );*/
-                                                    setMontos({
-                                                        ...montos,
-                                                        [gasto.id_gastos]: e.target.value,
-                                                    });
+                                                    setMontos(e.target.value);
                                                 }}
                                             />
                                         </div>
@@ -251,10 +154,10 @@ const EliminarGasto =  ({ listaGastos,selectedCardId, listcards, listCategorias,
                             <td>
                             {
                             //isEditing
-                            editingRows[gasto.id_gastos] ? (
-                                <Button className="mx-2" onClick={() => handleSave(gasto.id_gastos)}>Guardar</Button>
+                            isEditing ? (
+                                <Button className="mx-2" onClick={() => handleSave(gasto.id_gastos,montos)}>Guardar</Button>
                             ) : (
-                                <Button className="mx-2" onClick={() => handleEdit(gasto.id_gastos)}>Editar</Button>
+                                <Button className="mx-2" onClick={() => handleEdit()}>Editar</Button>
                                 
                             )}
   

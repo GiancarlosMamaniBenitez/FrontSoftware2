@@ -6,21 +6,23 @@ import IngresosApi from "@/app/api_fronted/ingresos.js"
 import Toast from 'react-bootstrap/Toast';
 
 import Pagination from 'react-bootstrap/Pagination';
-const EliminarIngreso = ({ ListaIngresos ,selectedCardId,totalIncomeAmount, listCategorias}) => {
+const EliminarIngreso = ({ ListaIngresos ,selectedCardId, totalIncomeAmount, listCategorias, handleDelete, handleSave, handleEdit, isEditing}) => {
+    
     let fechaArray = []; // Declarar fechaArray fuera del bloque if
     let idArray = []; // Declarar idArray
     let ingresoFiltrado = [];
     let oriArray = [];
     let origenArray = [];
     const sinFiltro = "Sin filtro"
+    const [ingresos, setFilteredIncomes] = useState([]);
     const [selectedDate, setSelectedDate] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedCatName, setSelectedCatName] = useState('');
     const [selectedAmount, setSelectedAmount] = useState('');
     const [difference, setDifference] = useState(0);
     const [selectedItems, setSelectedItems] = useState([]);
-    const [isEditing, setIsEditing] = useState(false);
-    const [montos,setMontos]= useState({});
+    
+    const [montos,setMontos]= useState(0);
     const [editingRows, setEditingRows] = useState({});
 
     const [currentPage, setCurrentPage] = useState(1); // Nuevo estado para la página actual
@@ -30,7 +32,7 @@ const EliminarIngreso = ({ ListaIngresos ,selectedCardId,totalIncomeAmount, list
     if(selectedCardId){
        
         const ingresosAplanados = ListaIngresos.flat();
-      
+        console.log(ingresosAplanados)
         const catAplanados = listCategorias.flat();
         
 
@@ -41,9 +43,7 @@ const EliminarIngreso = ({ ListaIngresos ,selectedCardId,totalIncomeAmount, list
         
         
         oriArray = Array.from(new Set(ingresosAplanados.filter(ingreso => ingreso.id_tarjeta === selectedCardId ).map(ingreso => ingreso.id_origen || " ")));
-        console.log("aaaaaaaa",oriArray);
 
-        
         const valorCategoria = selectedCategory;
 
         //categoriaArray = Array.from(new Set(catAplanados.map(cat => cat.nombre)));
@@ -63,62 +63,14 @@ const EliminarIngreso = ({ ListaIngresos ,selectedCardId,totalIncomeAmount, list
     
     }
 
-    const handleEdit = (ingresoId) => {
-        //setIsEditing(true);
-        setEditingRows((prevEditingRows) => ({
-            ...prevEditingRows,
-            [ingresoId]: true,
-          }));
-      };
-    const handleSave = async (ingresoId) => {
-        //setIsEditing(false);
-        setEditingRows((prevEditingRows) => ({
-            ...prevEditingRows,
-            [ingresoId]: false,
-          }));
-        
-          // Elimina la clave asociada al id_ingresos del estado montos
-        // Actualiza el estado montos con el nuevo valor del monto
-        setMontos((prevMontos) => ({
-            ...prevMontos,
-            [ingresoId]: prevMontos[ingresoId] !== undefined ? prevMontos[ingresoId] : gasto.monto,
-        }));
+    useEffect(() => {
+        // Update filteredIncomes when ingresoFiltrado changes
+       console.log(ListaIngresos)
+       
+    }, []);
 
-        try {
-            // Aquí deberías llamar a tu API para actualizar el monto en la base de datos
-            // Puedes usar fetch o axios, por ejemplo
-            const response = await IngresosApi.update(ingresoId, { monto: montos[ingresoId] })
-            handleOnLoadAct();
 
-            if (response && response.status === 200) {
-                // Registro exitoso, redirige a la página de inicio de sesión
-                alert('Actualización exitosa!');
-                handleOnLoadAct();
-            } else {
-                // Manejo de errores en caso de que algo salga mal en el backend
-                alert('Error al actualizar usuario');
-            }
-        } catch (error) {
-           }
-
-    };
-
-    const handleDelete = async (ingresoId) => {
-        // Realiza la eliminación del ingreso en la base de datos
-        try {
-            const response = await IngresosApi.remove(ingresoId);
-            if (response && response.status === 200) {
-                // Eliminación exitosa
-                alert('Eliminación exitosa');
-                handleOnLoadAct();
-            } else {
-                // Manejo de errores en caso de que algo salga mal en el backend
-                alert('Error al eliminar ingreso');
-            }
-        } catch (error) {
-            console.error('Error en la solicitud de eliminación:', error);
-        }
-    };
+    
     useEffect(() => {
         const intervalId = setInterval(() => {
           setShowNotification(true);
@@ -176,22 +128,14 @@ const EliminarIngreso = ({ ListaIngresos ,selectedCardId,totalIncomeAmount, list
                                 <fieldset>
                                     {
                                     //isEditing
-                                    editingRows[ingreso.id_ingresos]  ? (
+                                    isEditing ? (
                                         <div>
                                             <input
-                                                id={`disabledMontoInput_${ingreso.id_ingresos}`}
+                                                
                                                 type="text"
                                                 placeholder="Editable input"
                                                 value={
-                                                    //ingreso.monto
-                                                    //monto
-                                                /* montos[ingreso.id_ingresos] !== undefined
-                                                    ? montos[ingreso.id_ingresos]
-                                                    : ingreso.monto*/
-                                                    montos[ingreso.id_ingresos] || ingreso.monto
-
-                                                    
-                                                }
+                                                    montos}
                                                 onChange={(e) => {
                                                     console.log("Nuevo valor de monto:", e.target.value);
                                                     //setMonto(e.target.value);
@@ -199,10 +143,7 @@ const EliminarIngreso = ({ ListaIngresos ,selectedCardId,totalIncomeAmount, list
                                                     /*setDifference(
                                                         totalIncomeAmount - calculateTotalSelectedAmount(selectedItems)
                                                     );*/
-                                                    setMontos({
-                                                        ...montos,
-                                                        [ingreso.id_ingresos]: e.target.value,
-                                                    });
+                                                    setMontos(e.target.value);
                                                 }}
                                             />
                                         </div>
@@ -222,16 +163,18 @@ const EliminarIngreso = ({ ListaIngresos ,selectedCardId,totalIncomeAmount, list
                             <td>
                             {
                             //isEditing
-                            editingRows[ingreso.id_ingresos] ? (
-                                <Button className="mx-2" onClick={() => handleSave(ingreso.id_ingresos)}>Guardar</Button>
+                            isEditing ? (
+                                <Button className="mx-2" onClick={() => handleSave(ingreso.id_ingresos, montos)}>Guardar</Button>
                             ) : (
-                                <Button className="mx-2" onClick={() => handleEdit(ingreso.id_ingresos)}>Editar</Button>
+                                <Button className="mx-2" onClick={() => handleEdit()}>Editar</Button>
                                 
                             )}
   
                                 <Button
                                     className='mx-2 btn-danger'
-                                    onClick={() => handleDelete(ingreso.id_ingresos)}
+                                    onClick={() => {handleDelete(ingreso.id_ingresos)
+                                                    
+                                    }}
                                     
                                 >
                                     Eliminar
