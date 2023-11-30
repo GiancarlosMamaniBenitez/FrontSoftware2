@@ -50,7 +50,7 @@ const Finances = () => {
     
     setListMetas(result6.data)
     setListOrigen(result5.data)
- 
+    console.log("Lista de ingresos actualizada:", result2.data);
     setListCards(result.data)
     setListIngresos(result2.data)
     console.log(listIngresos)
@@ -162,13 +162,17 @@ const Finances = () => {
     getCurrentDate();
 
   }, [selectedCard, listcards]);
-
+useEffect(() => {
+    calculateTotalsIncomes();
+  }, [listIngresos]);
   useEffect(() => {
     //console.log("Total de Ingresos actualizado:", totalIncomes);
     //calculateTotals();
     checkSavingsGoal();
   
   }, [totalIncomeAmount]);
+
+  
 
   const checkSavingsGoal = () => {
     if (selectedCard){
@@ -242,12 +246,15 @@ const Finances = () => {
 
       try {
         const response = await IngresosApi.create(income);
+        setListIngresos([...listIngresos, response.data]);
         const mensaje = "Se añadió el Ingreso"
+        setListIngresos([...listIngresos, response.data]);
         notifySuccess(mensaje)
         LoadData(); // Esperar a que LoadData termine antes de continuar
         
         setNewIncome(0);
         setIncomeOrigen();
+        calculateTotalsIncomes()
         
         //calculateTotals(); // Calcular totales después de actualizar los datos
       } catch (error) {
@@ -310,12 +317,44 @@ const Finances = () => {
 
       const totalIncomeAmount1 = cardIncomes.reduce((total, Income) => total + parseFloat(Income.monto), 0);
       setTotalIncomeAmount(totalIncomeAmount1)
+
+      console.log("TOTAL INGRESOS XD",totalIncomeAmount1);
+      console.log("lista actualizada?",listIngresos);
       
     }
 
   };
 
+  const calculateNewTotalIncomeAmount = (ingresoId, listIngresos) => {
+    // Filtrar el gasto específico
+    const filteredIngresos = listIngresos.filter((ingreso) => ingreso.id_ingresos !== ingresoId);
+  
+    // Calcular el nuevo total de gastos
+    const newTotalIncomeAmount = filteredIngresos.reduce((total, expense) => total + parseFloat(expense.monto), 0);
+  
+    return newTotalIncomeAmount;
+  };
+  
+  const updateTotalIncomeAmount = (ingresoId) => {
+    // Calcular el nuevo total de gastos después de borrar el gasto con el ID gastoId
+    // Puedes usar la lista actualizada de gastos (listGastos) para recalcular el total
 
+    const updatedTotalIncomeAmount = calculateNewTotalIncomeAmount(ingresoId, listIngresos);
+
+    // Actualizar totalExpenseAmount en el estado
+    setTotalIncomeAmount(updatedTotalIncomeAmount);
+  };
+
+  const updateListIngresos = async () => {
+    try {
+      const result = await IngresosApi.findAll();
+      setListIngresos(result.data);
+      console.log(listIngresos)
+      calculateTotalsIncomes(); 
+    } catch (error) {
+      console.error('Error al actualizar la lista de ingresos:', error);
+    }
+  };
 
 
   const handleSavingsGoalChange = (event) => {
@@ -404,7 +443,7 @@ const Finances = () => {
                 <div className="horizonta2">
                   <div className="finanza">
                     <div className="finanza">
-                      <TotalIncomes totalIncomeAmount={totalIncomeAmount} />
+                      <TotalIncomes totalIncomeAmount={totalIncomeAmount}  updateListIngresos={updateListIngresos}/>
                     </div>
                     <div className="finanza">
                       <MetaIngreso
@@ -444,10 +483,7 @@ const Finances = () => {
                       listcards={listcards}
                       listCategorias={listOrigen}
                       totalIncomeAmount={totalIncomeAmount}
-                      handleDelete={handleDelete}
-                      handleEdit={handleEdit}
-                      handleSave={handleSave}
-                      isEditing={isEditing}
+                      sesionId={sesion.id}
                     /></div>
 
 
