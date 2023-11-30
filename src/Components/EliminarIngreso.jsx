@@ -63,62 +63,6 @@ const EliminarIngreso = ({ ListaIngresos ,selectedCardId, totalIncomeAmount, lis
     
     }
 
-    const handleEdit = (ingresoId) => {
-        //setIsEditing(true);
-        setEditingRows((prevEditingRows) => ({
-            ...prevEditingRows,
-            [ingresoId]: true,
-          }));
-      };
-    const handleSave = async (ingresoId) => {
-        //setIsEditing(false);
-        setEditingRows((prevEditingRows) => ({
-            ...prevEditingRows,
-            [ingresoId]: false,
-          }));
-        
-          // Elimina la clave asociada al id_ingresos del estado montos
-        // Actualiza el estado montos con el nuevo valor del monto
-        setMontos((prevMontos) => ({
-            ...prevMontos,
-            [ingresoId]: prevMontos[ingresoId] !== undefined ? prevMontos[ingresoId] : gasto.monto,
-        }));
-
-        try {
-            // Aquí deberías llamar a tu API para actualizar el monto en la base de datos
-            // Puedes usar fetch o axios, por ejemplo
-            const response = await IngresosApi.update(ingresoId, { monto: montos[ingresoId] })
-            handleOnLoadAct();
-
-            if (response && response.status === 200) {
-                // Registro exitoso, redirige a la página de inicio de sesión
-                alert('Actualización exitosa!');
-                handleOnLoadAct();
-            } else {
-                // Manejo de errores en caso de que algo salga mal en el backend
-                alert('Error al actualizar usuario');
-            }
-        } catch (error) {
-           }
-
-    };
-
-    const handleDelete = async (ingresoId) => {
-        // Realiza la eliminación del ingreso en la base de datos
-        try {
-            const response = await IngresosApi.remove(ingresoId);
-            if (response && response.status === 200) {
-                // Eliminación exitosa
-                alert('Eliminación exitosa');
-                handleOnLoadAct();
-            } else {
-                // Manejo de errores en caso de que algo salga mal en el backend
-                alert('Error al eliminar ingreso');
-            }
-        } catch (error) {
-            console.error('Error en la solicitud de eliminación:', error);
-        }
-    };
     useEffect(() => {
         const intervalId = setInterval(() => {
           setShowNotification(true);

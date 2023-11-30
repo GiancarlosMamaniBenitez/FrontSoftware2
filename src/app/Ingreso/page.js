@@ -483,7 +483,10 @@ useEffect(() => {
                       listcards={listcards}
                       listCategorias={listOrigen}
                       totalIncomeAmount={totalIncomeAmount}
-                      sesionId={sesion.id}
+                      handleDelete={handleDelete}
+                      handleEdit={handleEdit}
+                      handleSave={handleSave}
+                      isEditing={isEditing}
                     /></div>
 
 
