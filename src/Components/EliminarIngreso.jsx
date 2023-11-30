@@ -6,7 +6,7 @@ import IngresosApi from "@/app/api_fronted/ingresos.js"
 import Toast from 'react-bootstrap/Toast';
 
 import Pagination from 'react-bootstrap/Pagination';
-const EliminarIngreso = ({ ListaIngresos ,selectedCardId,totalIncomeAmount, listCategorias}) => {
+const EliminarIngreso = ({ ListaIngresos ,selectedCardId,totalIncomeAmount, listCategorias, updateListIngresos, sesionId, updateTotalIncomeAmount}) => {
     let fechaArray = []; // Declarar fechaArray fuera del bloque if
     let idArray = []; // Declarar idArray
     let ingresoFiltrado = [];
@@ -110,7 +110,10 @@ const EliminarIngreso = ({ ListaIngresos ,selectedCardId,totalIncomeAmount, list
             if (response && response.status === 200) {
                 // Eliminación exitosa
                 alert('Eliminación exitosa');
-                handleOnLoadAct();
+                //handleOnLoadAct();
+                updateListIngresos();
+                updateTotalIncomeAmount(gastoId);
+                const nuevosingresos = [...usuarioRepo, response.data].filter((r) => r.id_ingresos !== ingresoId);
             } else {
                 // Manejo de errores en caso de que algo salga mal en el backend
                 alert('Error al eliminar ingreso');
