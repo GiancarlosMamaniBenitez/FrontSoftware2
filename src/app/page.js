@@ -10,32 +10,56 @@ import NavBar from '@/Components/NavBar';
 //Toast
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"
-
+import ModalInicio from '@/Components/ModalInicio.jsx';
+import MetaApi from '@/app/api_fronted/meta';
+import LimitgastoApi from './api_fronted/Limitgasto';
 export default function Home() {
 
-  const [sesion , setSesion] = useState({});
-// Obtén el nombre del usuario desde el Local Storage
+      const [sesion , setSesion] = useState({});
+    // Obtén el nombre del usuario desde el Local Storage
 
-const userName = sesion ? sesion.nombres : ""; // Obtén el firstName del usuario
-const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-const router = useRouter();
+    const userName = sesion ? sesion.nombres : ""; // Obtén el firstName del usuario
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const router = useRouter();
+    const [listMetas, setListMetas] = useState([]);
+    const [listLimit, setListLimit] = useState([]);
 
-  useEffect(() => {
-    // Verifica si el usuario ha iniciado sesión
-    let sesionGuardada = localStorage.getItem("sesion");
-        if(sesionGuardada == undefined){
-          
-            router.push('/')
-        }
-        setSesion(JSON.parse(sesionGuardada))
+    const [showModal, setShowModal] = useState(true);
+      useEffect(() => {
+        // Verifica si el usuario ha iniciado sesión
+        let sesionGuardada = localStorage.getItem("sesion");
+            if(sesionGuardada == undefined){
+              
+                router.push('/')
+            }
+            setSesion(JSON.parse(sesionGuardada))
+            
+              const mensaje = 'Bienvenido de vuelta! 😉';
+              notifySuccess(mensaje);
+              
+            
+            console.log(sesion)
+      }, []);
+      useEffect(() => {
+
+        LoadData()
+        getsesionMeta(listMetas, sesion)
         
-          const mensaje = 'Bienvenido de vuelta! 😉';
-          notifySuccess(mensaje);
-          
         
-        console.log(sesion)
-  }, []);
+      }, []);
 
+      const LoadData = async () => {
+            
+          
+        const result6 = await MetaApi.findAll()
+        const result7 = await LimitgastoApi.findAll()
+        
+        setListMetas(result6.data)
+        setListLimit(result7.data)
+
+
+
+      }
   const notifySuccess = (mensaje) => {
     toast(mensaje, {
       position: "bottom-right",
@@ -57,6 +81,40 @@ const router = useRouter();
     // Redirige al usuario a la página de inicio de sesión
     window.location.href = "/Login";
   };
+    const getsesionMeta =  () =>{
+      const meta = listMetas.find((e) => e.id_usuario == sesion.id);
+      console.log("meta log",meta);
+      if (meta) {
+
+          setMetaUsuario(meta.monto);
+          
+          
+          
+        }
+        console.log("meta log",meta);
+        console.log("lista metas",listMetas);
+  console.log("sesion id",sesion.id);
+
+      }
+
+//fechaArray = Array.from(new Set(ingresosAplanados.filter(ingreso => ingreso.id_tarjeta === selectedCardId).map(ingreso => (ingreso.fecha_ingresos || " ")  )));
+        const listaAplanado = listMetas.flat();
+        const montoArrayFiltered = Array.from(
+          new Set(listaAplanado.filter((item) => item.id_usuario === sesion.id).map((item) => item.monto || ""))
+        );
+        console.log("monto aplanado",montoArrayFiltered);
+
+
+        const monto123 = montoArrayFiltered.flat();
+        console.log("monto123",monto123);
+        const limiteAplanado = listLimit.flat();
+        const limiteArrayFiltered = Array.from(
+          new Set(limiteAplanado.filter((item) => item.id_usuario === sesion.id).map((item) => item.monto || ""))
+        );
+        const limite456 = limiteArrayFiltered.flat();
+        console.log("limite456",limite456);
+        const closeModal = () => {
+          setShowModal(false);};
 
   return (
     <div>
@@ -65,7 +123,9 @@ const router = useRouter();
       
       <div className={`container${isSidebarOpen ? '-shifted' : ''}`}>
       
-          
+      <div>
+          {showModal && <ModalInicio closeModal={closeModal} monto123={monto123} limite456={limite456}  />}
+          </div>
           {sesion ? (
             <div className="about-us">
               
