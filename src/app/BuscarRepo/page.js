@@ -6,6 +6,7 @@ import NavBar from "@/Components/NavBar";
 import ReportesApi from "../api_fronted/reportes";
 import TablaRepo from "@/Components/TablaRepo";
 
+import { faChartSimple } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashXmark } from '@fortawesome/free-solid-svg-icons';
 import TarjetasApi from "../api_fronted/tarjetas";

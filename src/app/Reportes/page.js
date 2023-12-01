@@ -2,6 +2,7 @@
 import jsPDF from "jspdf";
 import React, { useState, useEffect } from "react";
 import NavBar from "@/Components/NavBar";
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import "./finances.css";
 import CardSelect from "@/Components/CardSelect";
 import TarjetasApi from "../api_fronted/tarjetas";
@@ -16,10 +17,11 @@ import html2canvas from 'html2canvas';
 import ReportesApi from "../api_fronted/reportes";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { usePDF } from 'react-to-pdf';
-
-
+import { faChartSimple } from '@fortawesome/free-solid-svg-icons';
+import OrigenApi from "../api_fronted/origen";
 import { faCircleDown, faSyncAlt } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from "next/navigation";
+import { data } from "jquery";
 const Reports = () => {
   const [ nombreCat, setNombreCat] = useState("")
   const [gastosPorCategoria, setGastosPorCategoria] = useState([]);
@@ -52,8 +54,10 @@ const Reports = () => {
   const [ listReport , setListReport ] = useState([])
   const [ userReport, setUserReport] = useState([]);
   const router = useRouter();
-
-  
+  const [listOrigen, setListOrigen ] = useState ([])
+  const[selectedReportOrigen,setSelectedReportOrigen]= useState("")
+  const[origen,setOrigen]= useState([])
+  const [ingresosPorOrigen, setIngresosPorOrigen] = useState([])
   const LoadData = async() =>{
     const result = await TarjetasApi.findAll();
     const result1  = await IngresosApi.findAll();
@@ -63,6 +67,7 @@ const Reports = () => {
     const result6 = await MetaApi.findAll();
     const result7 = await LimitgastoApi.findAll();
     const result8 = await ReportesApi.findAll();
+    const result9 = await OrigenApi.findAll();
     setListCards(result.data)
     setListaIngresos(result1.data)
     setListGastos(result2.data)
@@ -71,7 +76,7 @@ const Reports = () => {
     setlistMeta(result6.data)
     setListLimit(result7.data)
     setListReport(result8.data)
-   
+    setListOrigen(result9.data)
   }
 
   const handleOnLoad = () => {
@@ -157,6 +162,21 @@ const handleBuscarRepo = () => {
     setCategorias(null)
     }
   };
+  const handleSelectedReportOrigenChange = (event) => {
+    
+    const selectedOrigenID  = event.target.value;
+    if (selectedOrigenID){
+    const origen = listOrigen.find((e) => e.id == selectedOrigenID);
+    const nombreOrigen = origen.nombre;
+    console.log(nombreOrigen)
+   
+    setSelectedReportOrigen(event.target.value);
+    setOrigen(nombreOrigen)
+    }else{
+      setSelectedReportOrigen(null);
+      setOrigen(null)
+    }
+  };
   const generateReport = async () => {
     
         const currentDate = getCurrentDate();
@@ -165,7 +185,7 @@ const handleBuscarRepo = () => {
         const selectedCardData = listcards.find((card) => card.number === selectedCard2);
         console.log(selectedCardData)
         const category = selectedReportCategory;
-        
+        const origen = selectedReportOrigen;
         const tarjeta = listcards.find((e) => e.id == selectedCardData.id);
       let reportestarjeta = []
       reportestarjeta = listReport.filter((e) => e.id_tarjeta == tarjeta.id);
@@ -173,7 +193,7 @@ const handleBuscarRepo = () => {
         setUsuarioRepo(reportestarjeta)
 
     //Reporte general o detallado
-      const informeusuario = selectedReportInform === "general"
+
       
       // Filtrar ingresos y gastos según el tipo de informe
         const ingresosusuario = selectedReportType === "daily"
@@ -188,6 +208,17 @@ const handleBuscarRepo = () => {
         const totalGastos = gastosusuario.reduce((total, gasto) => total + parseFloat(gasto.monto), 0);
       
       console.log("ingresos : " ,totalMonto)
+      //Ingreso
+      const ingrsosusuarioFiltrados = selectedReportOrigen
+          ? ingresosusuario.filter((ingreso) => ingreso.id_origen == selectedReportOrigen)
+          : ingresosusuario;
+      console.log(ingrsosusuarioFiltrados)
+      const totalMontoIngresosOrigen = ingrsosusuarioFiltrados.reduce((total, ingreso) => {
+        return total + parseFloat(ingreso.monto);
+      }, 0);
+      setIngresosPorOrigen(ingrsosusuarioFiltrados);
+      console.log("Total de ingresos por categoría:", totalMontoIngresosOrigen);
+      //Gastos
         const gastosusuarioFiltrados = selectedReportCategory
           ? gastosusuario.filter((gasto) => gasto.id_categoria == selectedReportCategory)
           : gastosusuario;
@@ -199,17 +230,7 @@ const handleBuscarRepo = () => {
 
       
       console.log("Total de gastos por categoría:", totalMontoGastosCat);
-        const gastosPorCategoria = selectedReportCategory
-          ? gastosusuarioFiltrados.reduce((acumulador, gasto) => {
-              const categoriaId = gasto.id_categoria;
-              const categoria = listCategorias.find((cat) => cat.id === categoriaId);
-              const nombreCategoria = categoria ? categoria.nombre : "Sin Categoría";
-              setCategorias(categoria.nombre)
-            
-              acumulador[nombreCategoria] = (acumulador[nombreCategoria] || 0) + parseFloat(gasto.monto);
-              return acumulador;
-            }, {})
-          : {};
+      
           
         
       
@@ -227,6 +248,8 @@ const reportesId = nuevoId;
 
         const catId = parseInt(selectedReportCategory, 10);
         console.log(selectedReportCategory)
+        const origenId = parseInt(selectedReportOrigen, 10);
+        console.log(selectedReportOrigen)
         let report; // Declarar la variable para contener el objeto report
 
 
@@ -237,6 +260,7 @@ const reportesId = nuevoId;
       informe: selectedReportInform === "general" ? "General" : "Detallado",
       fecha_reportes: selectedReportType === "daily" ? currentDate : currentMonth,
       id_tarjeta: tarjeta.id,
+      id_origen: origenId || 0,
       id_categoria: catId || 0, // Usa null si no hay categoría seleccionada
       totalGastos: totalMontoGastosCat,
       totalIngresos: totalMonto,
@@ -308,15 +332,30 @@ const reportesId = nuevoId;
     yOffset = addContentToPage(`Tipo de Informe: ${report.tipo == 'daily' ? 'Diario' : 'Mensual'}`, yOffset, 200);
     yOffset = addContentToPage(`Fecha del Informe: ${report.fecha_reportes}`, yOffset, 200);
     yOffset = addContentToPage(`Nombre de la Tarjeta: ${selectedCard2 ? selectedCard2 : 'Sin Tarjeta'}`, yOffset, 200);
-    yOffset = addContentToPage(`Categoría de Gastos: ${categorias ? categorias : 'Sin Categoría'}`, yOffset, 200);
    
     if (selectedReportInform === "general") {
+      yOffset = addContentToPage(`Total de Ingresos: $${report.totalIngresos}`, yOffset, 200, 16, "purple");
       yOffset = addContentToPage(`Total de Gastos: $${report.totalGastos}`, yOffset, 200, 16, "red");
     } else {
+      if (ingresosPorOrigen.length > 0) {
+        yOffset = addContentToPage("Ingresos por Categoría:", yOffset, 200, 16, "green");
+        console.log(ingresosPorOrigen)
+        // Sumar montos de gastos con el mismo ID
+        const ingresoSumados = ingresosPorOrigen.reduce((acumulador, ingreso) => {
+          const idOrigen = ingreso.id_origen;
+          const nombreOrigen = listOrigen.find((e) => e.id === idOrigen)?.nombre || 'Sin Categoría';
+          acumulador[nombreOrigen] = (acumulador[nombreOrigen] || 0) + parseFloat(ingreso.monto);
+          return acumulador;
+        }, {});
+    
+        for (const [nombreOrigen, monto] of Object.entries(ingresoSumados)) {
+          yOffset = addContentToPage(`Categoría: ${nombreOrigen} - Monto Total: $${monto.toFixed(2)}`, yOffset, 200, 14, "blue");
+        }
+      }
       // Gastos por categoría
       if (gastosPorCategoria.length > 0) {
         yOffset = addContentToPage("Gastos por Categoría:", yOffset, 200, 16, "green");
-    
+    console.log(gastosPorCategoria)
         // Sumar montos de gastos con el mismo ID
         const gastosSumados = gastosPorCategoria.reduce((acumulador, gasto) => {
           const idCategoria = gasto.id_categoria;
@@ -332,7 +371,7 @@ const reportesId = nuevoId;
       // Renderizar el gráfico en un elemento invisible
  
       // Resto de la información
-      yOffset = addContentToPage(`Total de Ingresos: $${report.totalIngresos}`, yOffset, 200, 16, "purple");
+      
       yOffset = addContentToPage(`Ahorro: $${report.ahorro}`, yOffset, 200, 16, "orange");
     }
     
@@ -345,7 +384,26 @@ const reportesId = nuevoId;
     
   }
   
+  const handleEliminar = async (report) => {
+    try {
+      const response = await ReportesApi.remove(report.id_reportes);
+      if (response && response.status === 200) {
+          // Eliminación exitosa
+          alert('Eliminación exitosa');
+          const nuevosReportesFiltrados = reportesFiltrado.filter((r) => r.id_reportes !== report.id_reportes);
+          setReportesFiltrado(nuevosReportesFiltrados);
+      } else {
+          // Manejo de errores en caso de que algo salga mal en el backend
+          alert('Error al eliminar ingreso');
+      }
+  } catch (error) {
+      console.error('Error en la solicitud de eliminación:', error);
+  }
 
+  }
+  const handleGraficos = async(report) =>{
+    window.location.href = `/VerGraficos?id=${report.id_reportes}`;
+  }
   return (
     <div className="text-center" > {/* Agregado para centrar todo */}
       <NavBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} sesion={sesion}/>
@@ -359,11 +417,6 @@ const reportesId = nuevoId;
             userCards={listcards.filter((e) => e.id_usuario == sesion.id)}
             handleSelectedCardChange={handleSelectedCardChange}
           />
-        </div>
-
-        <div className="chart-container" style = {{width:"450px", height:"225px"}}>
-          <h2 className="chart-title">Gráfico Circular</h2>
-        
         </div>
 
         <div  className="mx-auto">
@@ -385,7 +438,7 @@ const reportesId = nuevoId;
         <div  className="mx-auto">
           <label className="subtituloReporte">Categoria de gastos:</label>
           <select className="form-control" value={selectedReportCategory} onChange={handleSelectedReportCategoryChange}>
-            <option value="">Select Category</option>
+            <option value="">Escoge la Categoria</option>
             {listCategorias
               .filter((category) => category.id_usuario === sesion.id)
               .map((category) => (
@@ -396,20 +449,27 @@ const reportesId = nuevoId;
               ))}
           </select>
         </div>
+        <div  className="mx-auto">
+          <label className="subtituloReporte">Categoria  de Ingresos:</label>
+          <select className="form-control" value={selectedReportOrigen} onChange={handleSelectedReportOrigenChange}>
+            <option value="">Escoge la Categoria </option>
+            {listOrigen
+              .filter((origen) => origen.id_usuario === sesion.id)
+              .map((origen) => (
+                <option key={origen.id} value={origen.id}>
+                  {origen.nombre}
+
+                </option>
+              ))}
+          </select>
+        </div>
         <button className="button-report" onClick={() => handleBuscarRepo()} disabled={refreshing}>
           Buscar Reporte
           {refreshing && <FontAwesomeIcon icon={faSyncAlt} spin style={{ marginLeft: '5px' }} />}
         </button>
         <button className ="button-report" onClick={generateReport}>Generar Reporte</button>
-        <button className="button-report" onClick={() => toPDF()}>boton prueba</button>
-        <div ref={targetRef}>
-          <h1>Reporte xs</h1>
-          <Chart
-          Ingresos={totalIngresos}
-          Gastos={totalGastos1}
-          />
-         </div>
-        <button className ="button-report" >Categorizar los gastos</button>
+        
+                
 
         <div className="table-container">
  
@@ -422,6 +482,8 @@ const reportesId = nuevoId;
                 <th>Tipo</th>
                 <th>Fecha</th>
                 <th>Descargar</th>
+                <th>Graficos</th>
+                <th>Eliminar</th>
               </tr>
             </thead>
             
@@ -436,7 +498,18 @@ const reportesId = nuevoId;
                         <button className="btn btn-primary" onClick={() => generateReportPDF(report)}>
                           <FontAwesomeIcon icon={faCircleDown} style={{ color: 'black' }} />
                         </button>
-                      </td>
+                        </td>
+                        <td>
+                        <button className="btn btn-primary" onClick={() => handleGraficos(report)}>
+                        <FontAwesomeIcon icon={faChartSimple} style={{ color: 'black' }} />
+                        </button>
+                        </td>
+                        <td>
+                          <button className="btn btn-primary" onClick={() => handleEliminar(report)}>
+                          <FontAwesomeIcon icon={faTrash}   style={{ color: 'black' }} />
+                            </button>
+                          </td>
+                      
                     </tr>
                   ))
                 }

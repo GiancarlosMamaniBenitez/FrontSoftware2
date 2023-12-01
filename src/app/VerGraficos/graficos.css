@@ -1,0 +1,194 @@
+/* finances.css */
+.table-container {
+    margin: auto;
+  }
+  
+  .table-title {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .table {
+    width: 80%;
+    margin: auto;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .table th, .table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .table th {
+    background-color: #f2f2f2;
+  }
+  
+  .table button {
+    padding: 6px 12px;
+  }
+  /* Estilos para el contenedor principal */
+  .finances-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .reports-container {
+         
+    width: 80%;
+    /* margin: 0 auto; */
+    position: relative;
+    left: 8%;
+   
+    padding: 20px;
+    border: 1px solid #ddd;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+  
+    
+    .reports-container-shifted {
+      width: 80%;
+      padding: 20px;
+      margin-left: 13%;
+      margin-top: 5%;
+      border: 1px solid #ddd;
+      background-color: white;
+      border-radius: 50px;
+  }
+  
+    
+    /* Estilos para el título de la página */
+    h1 {
+      font-size: 24px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    /* Estilos para el menú desplegable de selección de tarjeta */
+    select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 16px;
+    }
+    
+    /* Estilos para el gráfico de categorías */
+    .category-chart {
+      text-align: center;
+      margin: 20px 0;
+    }
+    
+    /* Estilos para otros gráficos */
+    .other-charts {
+      margin: 20px 0;
+    }
+     .button-report{
+        margin-top: 10px;
+      background-color: rgb(144,12,63);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 0 5px;
+      transition: background-color 0.3s ease;
+    }
+  
+    .button-report:hover{
+      background-color: rgb(117, 6, 49);
+    }
+    .subtituloReporte{
+      text-align: center;
+      font-family: cursive;
+      font-size: larger;
+    }
+    .tituloReporte{
+      text-align: center;
+      font-family:cursive;
+      font-size: xx-large;
+    }
+    .flex {
+        display: flex;
+        position: relative;
+    left: 130px;
+      }
+      /* En el archivo finances.css o tu archivo de estilos */
+.chart-container,
+.additional-container {
+  max-width: 600px; /* Ajusta el ancho máximo según tu preferencia */
+  margin: auto; /* Centra el contenedor horizontalmente */
+}
+
+.chart-container canvas,
+.additional-container canvas {
+  max-width: 100%; /* Hace que el gráfico se ajuste al ancho del contenedor */
+  height: auto; /* Mantiene la proporción de aspecto del gráfico */
+}
+
+/* Agrega el siguiente estilo si deseas centrar también el botón */
+.button-report {
+  display: block;
+  margin: 0 auto;
+}
+
+
+      .chart-container,
+      .additional-container {
+        /* Cambia el color del borde según tus preferencias */
+        
+        background-color: whitesmoke; /* Fondo de color whitesmoke */
+      }
+      .chart-container,.chart1-container {
+        background-color: #f8f8f8;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      
+      .additional-container {
+        background-color: #f8f8f8;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      .button-report {
+          
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    /* margin: 10px 0; */
+    transition: background-color 0.3s ease;
+    text-align: center;
+      }
+      
+      .button-report:hover {
+        background-color: #c26ec2;
+      }
+      
+      
+      .tituloReporte {
+        text-align: center;
+        font-family: cursive;
+        font-size: 2em;
+        margin-bottom: 20px;
+      }
+      
+      .subtituloReporte {
+        text-align: center;
+        font-family: cursive;
+        font-size: 1.5em;
+        margin-bottom: 20px;
+      }
+      
+      .flex1{
+        display:flex
+      }
+      
+      

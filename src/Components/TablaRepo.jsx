@@ -1,5 +1,6 @@
 // ReportTable.js
 import React from "react";
+import { faChartSimple } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleDown } from '@fortawesome/free-solid-svg-icons';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -15,6 +16,7 @@ const TablaRepo = ({ usuarioRepo, generateReportPDF,eliminar }) => {
             <th>Fecha</th>
             <th>Descargar</th>
             <th>ELiminar</th>
+            <th>Graficos</th>
           </tr>
         </thead>
         <tbody>
@@ -31,10 +33,17 @@ const TablaRepo = ({ usuarioRepo, generateReportPDF,eliminar }) => {
                 
               </td>
               <td>
+                        <button className="btn btn-primary" onClick={() => generateReportPDF(report)}>
+                        <FontAwesomeIcon icon={faChartSimple} style={{ color: 'black' }} />
+                        </button>
+                        
+                      </td>
+              <td>
               <button className="btn btn-primary" onClick={() => eliminar(report)}>
               <FontAwesomeIcon icon={faTrash}   style={{ color: 'black' }} />
                 </button>
               </td>
+              
             </tr>
           ))}
         </tbody>
