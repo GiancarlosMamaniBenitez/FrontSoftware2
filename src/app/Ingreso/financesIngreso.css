@@ -38,7 +38,7 @@
   }
 
   .finances-container-shifted{
-    max-width: 700px;
+
     margin: 0 auto;
     padding: 20px;
     font-family: Arial, sans-serif;
@@ -51,6 +51,7 @@
     margin-top: 30px;
    /* Adjust the value to match the sidebar width */
     transition: width 0.3s ease;
+    margin-left: 15%;
        }
   
   h1 {

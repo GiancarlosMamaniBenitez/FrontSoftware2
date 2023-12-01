@@ -201,10 +201,18 @@ useEffect(() => {
 
 
   const handleSelectedCardChange = (event) => {
-    
-    const selectedCardData = listcards.find((e) => e.number === event.target.value);
+    const numero = event.target.value
+      
+        const selectedCardData = listcards.find((card) => card.number == numero);
+        if(numero){
+  
     setSelectedCard(selectedCardData);
     setSelectedCard2(selectedCardData.number);
+        }else{
+          setSelectedCard(null)
+          setSelectedCard2(null)
+        }
+        
 
     if (selectedCardData) {
       const meta = listMetas.find((e) => e.id_usuario === sesion.id)
@@ -427,7 +435,7 @@ useEffect(() => {
   return (
     <div>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"></link>
-      <div className="">
+      
         <NavBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} sesion={sesion} />
         <ToastContainer></ToastContainer>
         <div className={`finances-container${isSidebarOpen ? '-shifted' : ''}`}>
@@ -502,7 +510,7 @@ useEffect(() => {
           </div>
         </div>
       </div>
-    </div>
+
 
   );
 };

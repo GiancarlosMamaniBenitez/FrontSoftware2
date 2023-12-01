@@ -23,7 +23,7 @@ function NavBar({ isSidebarOpen, setIsSidebarOpen, sesion }){
     return (
         //        <div className={`navbar ${isSidebarOpen ? 'sidebar-open' : ''}`}>
 
-        <div className="navbar">
+       <>
         {sesion ? (
                 <div className="navbar-content">
                     <button className="left-button" onClick={toggleSidebar}>
@@ -54,8 +54,8 @@ function NavBar({ isSidebarOpen, setIsSidebarOpen, sesion }){
                     </div>
                 </div>
             )}{isSidebarOpen && <Sidebar />}
-        </div>
         
+        </>
     );
 }
 
