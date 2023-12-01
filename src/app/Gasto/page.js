@@ -19,6 +19,7 @@ import EliminarGasto from "@/Components/EliminarGasto.jsx"
 import LimitgastoApi from '../api_fronted/Limitgasto';
 import LimiteGasto from '@/Components/LimiteGasto';
 const Finances = () => {
+  const [editingRows, setEditingRows] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [selectedCard, setSelectedCard] = useState("");
   const [totalExpenseAmount, setTotalExpenseAmount] = useState(0);
@@ -119,13 +120,17 @@ const [expensesChanged, setExpensesChanged] = useState(false);
 
 
 
-  const handleEdit = () => {
+  const handleEdit = (gastoId) => {
     setIsEditing(true);
-   
+    setEditingRows((prevEditingRows) => ({
+      ...prevEditingRows,
+      [gastoId]: true,}));
   };
   const handleSave = async (gastoId, monto) => {
     setIsEditing(false);
-    
+    setEditingRows((prevEditingRows) => ({
+      ...prevEditingRows,
+      [gastoId]: false,}));
     const dataUpdated = {
         monto: monto
     }
@@ -483,7 +488,7 @@ const [expensesChanged, setExpensesChanged] = useState(false);
                       handleDelete={handleDelete}
                       handleEdit={handleEdit}
                       handleSave={handleSave}
-                      isEditing={isEditing}
+                      isEditing={editingRows}
                     />
 </div>
 

@@ -20,6 +20,7 @@ import MetaApi from '../api_fronted/meta';
 import MetaIngreso from '@/Components/MetaIngreso';
 import OrigenApi from '../api_fronted/origen';
 const Finances = () => {
+  const [editingRows, setEditingRows] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [selectedCard, setSelectedCard] = useState("");
   const [totalIncomeAmount, setTotalIncomeAmount] = useState(0);
@@ -94,13 +95,18 @@ const Finances = () => {
   */
 
 
-  const handleEdit = () => {
+  const handleEdit = (ingresoId) => {
     setIsEditing(true);
+    setEditingRows((prevEditingRows) => ({
+      ...prevEditingRows,
+      [ingresoId]: true,}));
    
   };
   const handleSave = async (ingresoId, monto) => {
     setIsEditing(false);
-    
+    setEditingRows((prevEditingRows) => ({
+      ...prevEditingRows,
+      [ingresoId]: false,}));
     const dataUpdated = {
         monto: monto
     }
@@ -494,7 +500,7 @@ useEffect(() => {
                       handleDelete={handleDelete}
                       handleEdit={handleEdit}
                       handleSave={handleSave}
-                      isEditing={isEditing}
+                      isEditing={editingRows}
                     /></div>
 
 
