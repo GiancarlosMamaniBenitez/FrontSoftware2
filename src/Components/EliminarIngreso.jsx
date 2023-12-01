@@ -120,7 +120,7 @@ const EliminarIngreso = ({ ListaIngresos ,selectedCardId, totalIncomeAmount, lis
                                 <fieldset>
                                     {
                                     //isEditing
-                                    isEditing ? (
+                                    isEditing[ingreso.id_ingresos] ? (
                                         <div>
                                             <input
                                                 
@@ -155,10 +155,10 @@ const EliminarIngreso = ({ ListaIngresos ,selectedCardId, totalIncomeAmount, lis
                             <td>
                             {
                             //isEditing
-                            isEditing ? (
+                            isEditing[ingreso.id_ingresos] ? (
                                 <Button className="mx-2" onClick={() => handleSave(ingreso.id_ingresos, montos)}>Guardar</Button>
                             ) : (
-                                <Button className="mx-2" onClick={() => handleEdit()}>Editar</Button>
+                                <Button className="mx-2" onClick={() => handleEdit(ingreso.id_ingresos)}>Editar</Button>
                                 
                             )}
   
